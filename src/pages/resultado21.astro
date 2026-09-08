@@ -1,7 +1,8 @@
 ---
 const checkoutUrl = 'https://pay.cakto.com.br/34cucrz';
 const canonicalUrl = 'https://sucesso.com.br/resultado21';
-const title = 'Projeto Resultado 21 | IA Aplicada à Gestão e aos Negócios';
+const productName = 'IA Aplicada à Gestão e aos Negócios — Outubro/2026';
+const title = `${productName} | Resultado 21`;
 const description = 'Oficina ao vivo para empresários e gestores aplicarem inteligência artificial a uma oportunidade real de receita durante 21 dias.';
 
 const etapas = [
@@ -32,10 +33,10 @@ const etapas = [
 ];
 
 const encontros = [
-  { data: '08/10', titulo: 'Encontrar o dinheiro', entrega: 'Oportunidade escolhida, linha de base, primeira ação e placar.' },
-  { data: '15/10', titulo: 'Diagnosticar o gargalo', entrega: 'Dados reais, segundo teste e ação comercial revisada.' },
-  { data: '22/10', titulo: 'Executar com IA', entrega: 'Tarefa completa delegada à IA e roteiro reutilizável.' },
-  { data: '29/10', titulo: 'Transformar em processo', entrega: 'Resultado medido, procedimento final e próximo ciclo.' }
+  { data: '08/10', competencia: 'Conversar', aplicacao: 'Encontrar o dinheiro', entrega: 'Oportunidade escolhida, linha de base, primeira ação e placar.' },
+  { data: '15/10', competencia: 'Contextualizar', aplicacao: 'Diagnosticar o gargalo', entrega: 'Dados reais, segundo teste e ação comercial revisada.' },
+  { data: '22/10', competencia: 'Delegar', aplicacao: 'Executar com IA', entrega: 'Tarefa completa delegada à IA e roteiro reutilizável.' },
+  { data: '29/10', competencia: 'Padronizar', aplicacao: 'Transformar em processo', entrega: 'Resultado medido, procedimento final e próximo ciclo.' }
 ];
 
 const receita = [
@@ -70,7 +71,7 @@ const receita = [
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Course',
-      name: 'IA Aplicada à Gestão e aos Negócios — Projeto Resultado 21',
+      name: productName,
       description,
       provider: {
         '@type': 'Organization',
@@ -491,11 +492,11 @@ const receita = [
     <main id="conteudo">
       <section class="hero">
         <div class="container hero__content">
-          <p class="eyebrow">Turma fundadora · outubro de 2026 · ao vivo</p>
+          <p class="eyebrow">Oficina ao vivo · outubro de 2026</p>
           <h1>Encontre uma oportunidade real de receita e coloque a <span class="hero__accent">IA para trabalhar nela</span> em 21 dias.</h1>
           <p class="lead">Uma oficina prática para empresários e gestores que querem sair da conversa genérica sobre inteligência artificial e executar uma ação mensurável no próprio negócio.</p>
           <div class="hero__actions">
-            <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero entrar na turma fundadora</a>
+            <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero participar em outubro</a>
             <div class="hero__price">R$ 497 <small>pagamento único</small></div>
           </div>
           <p class="microcopy">Turma limitada a 20 pessoas · Pix ou cartão · ChatGPT Plus contratado separadamente</p>
@@ -514,7 +515,7 @@ const receita = [
             <p class="eyebrow">O ponto de partida</p>
             <h2>A IA não começa na ferramenta. Começa onde o dinheiro entra — ou deixa de entrar.</h2>
             <p class="section-intro">Você escolherá uma única oportunidade do seu negócio. O objetivo não é estudar dezenas de aplicações, mas usar a IA para formular, executar, medir e corrigir uma ação real.</p>
-            <div class="scope-note"><strong>Escopo da turma fundadora:</strong> receita. Margem, despesa, desperdício e retrabalho ficam para uma etapa posterior ou acompanhamento individual.</div>
+            <div class="scope-note"><strong>Escopo desta edição:</strong> receita. Margem, despesa, desperdício e retrabalho ficam para uma etapa posterior ou acompanhamento individual.</div>
           </div>
           <ul class="money-list">
             {receita.map((item) => <li>{item}</li>)}
@@ -531,8 +532,8 @@ const receita = [
             {etapas.map((etapa) => (
               <article class="method-card">
                 <span class="method-card__number">{etapa.numero}</span>
-                <p class="method-card__skill">{etapa.competencia}</p>
-                <h3>{etapa.aplicacao}</h3>
+                <p class="method-card__skill">Competência e aplicação empresarial</p>
+                <h3>{etapa.competencia} → {etapa.aplicacao}</h3>
                 <p>{etapa.texto}</p>
               </article>
             ))}
@@ -549,7 +550,7 @@ const receita = [
             {encontros.map((encontro) => (
               <article class="meeting">
                 <time datetime={`2026-10-${encontro.data.slice(0, 2)}`}>{encontro.data}</time>
-                <h3>{encontro.titulo}</h3>
+                <h3>{encontro.competencia} → {encontro.aplicacao}</h3>
                 <p>{encontro.entrega}</p>
               </article>
             ))}
@@ -613,9 +614,9 @@ const receita = [
       <section class="section section--dark" id="inscricao">
         <div class="container offer-wrap">
           <div class="offer-copy">
-            <p class="eyebrow">Turma fundadora</p>
+            <p class="eyebrow">Inscrições · outubro de 2026</p>
             <h2>Entre com uma oportunidade. Saia com execução, medida e processo.</h2>
-            <p>O valor fundador desta primeira turma é <strong>R$ 497</strong>. A sala terá no máximo <strong>20 pessoas</strong>, contando participantes principais e segundos assentos.</p>
+            <p>O investimento para a edição de outubro é <strong>R$ 497</strong>. A sala terá no máximo <strong>20 pessoas</strong>, contando participantes principais e segundos assentos.</p>
             <p>Para acompanhar as demonstrações no mesmo ambiente, você precisará de uma conta <strong>ChatGPT Plus ativa</strong>, contratada à parte.</p>
           </div>
           <aside class="offer-card">
@@ -730,7 +731,7 @@ const receita = [
     </footer>
 
     <div class="mobile-bar" aria-label="Inscrição">
-      <span><strong>R$ 497</strong>Turma fundadora</span>
+      <span><strong>R$ 497</strong>Outubro/2026</span>
       <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero entrar</a>
     </div>
   </body>
