@@ -67,6 +67,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       .check-card p { margin: 0; color: #becbd7; font-size: .94rem; }
       .section { padding: 5.5rem 0; }
       .section--white { background: var(--white); }
+      .section--soft { background: var(--paper); }
       .section__intro { max-width: 700px; margin-bottom: 2.7rem; color: var(--muted); font-size: 1.08rem; }
       .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
       .step { padding: 1.55rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--white); }
@@ -89,9 +90,9 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       .pending { margin: 0; padding: 1rem; border: 1px solid rgba(233,185,95,.45); border-radius: .75rem; color: #f5d699; background: rgba(233,185,95,.09); font-size: .92rem; }
       .fine-print { margin: 1.05rem 0 0; color: #b9c9d5; font-size: .8rem; line-height: 1.5; }
       .guardrail { margin-top: 1.5rem; padding: 1.1rem 1.2rem; border-left: 3px solid var(--gold); color: #cbd7e0; background: rgba(255,255,255,.05); font-size: .91rem; }
-      .seat { color: var(--ink); background: var(--white); }
+      .seat { color: var(--ink); }
       .seat .section__intro { color: var(--muted); }
-      .seat-card { padding: 2rem; border: 1px solid var(--line); border-radius: 1.1rem; background: var(--paper); }
+      .seat-card { padding: 2rem; border: 1px solid var(--line); border-radius: 1.1rem; background: var(--white); }
       .seat-card p:last-child { margin-bottom: 0; color: var(--muted); }
       footer { padding: 2.2rem 0; color: #9aabb9; background: var(--navy-950); font-size: .83rem; }
       footer p { margin: 0; }
@@ -135,7 +136,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
           </div>
           </section>
 
-          <section class="section section--white" id="passos">
+          <section class="section section--soft" id="passos">
         <div class="container">
           <p class="eyebrow" style="color: var(--green-dark)">Passo 1 · Prepare-se antes do curso</p>
           <h2>Faça isso antes do primeiro encontro.</h2>
@@ -189,13 +190,13 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
         </div>
       </section>
 
-      <section class="section seat">
+      <section class="section section--soft seat">
         <div class="container">
           <p class="eyebrow" style="color: var(--green-dark)">Passo 3 · Traga alguém para acompanhar</p>
           <h2>Contrate mais um assento na aula.</h2>
           <p class="section__intro">Um sócio, gestor ou pessoa-chave do mesmo projeto pode acompanhar os encontros e ajudar a transformar a aplicação em progresso compartilhado.</p>
           <div class="seat-card">
-            <h3>Inclua mais uma pessoa no projeto.</h3>
+            <h3>Inclua mais uma pessoa no projeto por um valor acessível: R$ 197.</h3>
             <p>Adicione um segundo assento para um sócio, gestor ou pessoa-chave acompanhar as aulas e contribuir com a execução.</p>
             <p>Mais uma pessoa envolvida pode ajudar o projeto a avançar com alinhamento, aplicação e continuidade.</p>
             <a class="cta" href="https://pay.cakto.com.br/35pxnzg">Quero adicionar um assento</a>
