@@ -193,8 +193,8 @@ const receita = [
         padding: 1.35rem 0;
       }
       .topbar__inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-      .brand { color: var(--white); font: 800 1rem/1 'Manrope', sans-serif; letter-spacing: .03em; text-decoration: none; }
-      .brand span { color: var(--green); }
+      .brand { display: inline-flex; align-items: center; width: 78px; height: 78px; padding: .16rem; border-radius: 50%; background: var(--white); box-shadow: 0 8px 22px rgba(0,0,0,.16); text-decoration: none; }
+      .brand img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
       .topbar__link { color: #dce7ee; font-size: .9rem; font-weight: 700; text-decoration: none; }
       .topbar__link:hover { color: var(--white); }
 
@@ -484,7 +484,7 @@ const receita = [
 
     <header class="topbar">
       <div class="container topbar__inner">
-        <a class="brand" href="/" aria-label="Sucesso Empresarial — página inicial">SUCESSO<span>.</span> EMPRESARIAL</a>
+        <a class="brand" href="/" aria-label="Sucesso Empresarial — página inicial"><img src="/images/logo-sucesso-empresarial-1997.jpg" alt="Sucesso Empresarial 1997" /></a>
         <a class="topbar__link" href="#programa">Ver programa e datas</a>
       </div>
     </header>
