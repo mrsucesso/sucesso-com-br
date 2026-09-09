@@ -5,7 +5,8 @@ Site institucional da **Sucesso Empresarial Ltda** (CNPJ: 01.655.728/0001-14).
 ## 🌐 Domínio
 
 - **URL:** https://sucesso.com.br
-- **Deploy:** GitHub Pages (automático via GitHub Actions)
+- **Deploy:** Cloudflare Pages — projeto `sucesso-com-br` (produção)
+- **Página Resultado 21:** https://sucesso.com.br/resultado21
 
 ## 📄 Páginas
 
@@ -29,7 +30,7 @@ Site institucional da **Sucesso Empresarial Ltda** (CNPJ: 01.655.728/0001-14).
 
 ## 🚀 Deploy
 
-Deploy automático via GitHub Actions sempre que houver push na branch `main` ou `master`.
+A produção é servida pelo Cloudflare Pages. O site está publicado e validado em https://sucesso.com.br/resultado21. O workflow antigo de GitHub Pages não deve ser tratado como destino de produção.
 
 ### Configurar GitHub Pages:
 
