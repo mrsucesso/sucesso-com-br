@@ -1,147 +1,295 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+const siteUrl = 'https://sucesso.com.br';
+const title = 'Sucesso Empresarial | IA, Automação e Gestão';
+const description = 'Inteligência artificial, automação e gestão aplicadas aos processos e às oportunidades reais da sua empresa.';
+const resultadoUrl = '/resultado21/';
+
+const pilares = [
+  {
+    numero: '01',
+    titulo: 'IA aplicada aos negócios',
+    texto: 'Encontre onde a inteligência artificial pode melhorar uma decisão, uma rotina ou uma oportunidade de receita.'
+  },
+  {
+    numero: '02',
+    titulo: 'Automação de processos',
+    texto: 'Conecte ferramentas, reduza tarefas repetitivas e faça a operação depender menos de trabalho manual.'
+  },
+  {
+    numero: '03',
+    titulo: 'Gestão orientada à execução',
+    texto: 'Transforme diagnóstico em prioridade, prioridade em movimento e movimento em resultado acompanhado.'
+  }
+];
+
+const frentes = [
+  ['Consultoria e implantação', 'Diagnóstico, desenho e implementação de soluções compatíveis com a realidade da empresa.'],
+  ['Treinamentos práticos', 'Capacitação para gestores e equipes usarem IA com contexto, critério e responsabilidade.'],
+  ['Integrações e automações', 'Fluxos entre sistemas, atendimento, CRM, marketing e operação sem acumular ferramenta sem uso.'],
+  ['Produtos e projetos', 'Soluções próprias para problemas específicos de gestão, aquisição e eficiência empresarial.']
+];
 ---
 
-<BaseLayout title="Sucesso Empresarial Ltda - Consultoria e Treinamentos">
-  <style>
-    .hero {
-      text-align: center;
-      margin-bottom: 80px;
-    }
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#061522" />
+    <link rel="canonical" href={siteUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Sucesso Empresarial" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Sucesso Empresarial',
+      legalName: 'Sucesso Empresarial Ltda',
+      url: siteUrl,
+      email: 'mauricio@sucesso.com.br',
+      founder: { '@type': 'Person', name: 'Mauricio Ruiz' }
+    })} />
+    <style is:global>
+      :root {
+        --navy-950: #061522;
+        --navy-900: #0a1d2d;
+        --navy-800: #12344f;
+        --green: #19c77a;
+        --green-soft: #e1f8ed;
+        --gold: #e5b75d;
+        --ink: #132334;
+        --muted: #5a6978;
+        --paper: #f4f7f8;
+        --line: #dbe4e9;
+        --white: #fff;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; color: var(--ink); background: var(--paper); font-family: Inter, system-ui, sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+      a { color: inherit; }
+      img { display: block; max-width: 100%; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1, h2, h3 { font-family: Manrope, Inter, sans-serif; line-height: 1.1; letter-spacing: -.035em; }
+      :focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+      .container { width: min(1140px, calc(100% - 2.5rem)); margin: 0 auto; }
+      .topbar { position: absolute; inset: 0 0 auto; z-index: 3; padding: 1.35rem 0; color: var(--white); }
+      .topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+      .brand { color: var(--white); font: 800 1rem/1 Manrope, sans-serif; letter-spacing: .03em; text-decoration: none; }
+      .brand span { color: var(--green); }
+      .nav { display: flex; align-items: center; gap: 1.4rem; font-size: .88rem; font-weight: 700; }
+      .nav a { color: #dbe7ee; text-decoration: none; }
+      .nav a:hover { color: var(--white); }
+      .nav .nav__cta { padding: .65rem 1rem; border: 1px solid rgba(255,255,255,.28); border-radius: .6rem; color: var(--white); }
+      .hero { position: relative; isolation: isolate; min-height: 720px; display: grid; align-items: center; overflow: hidden; color: var(--white); background: var(--navy-950); }
+      .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(6,21,34,.98) 0%, rgba(6,21,34,.91) 35%, rgba(6,21,34,.34) 73%, rgba(6,21,34,.72) 100%), linear-gradient(180deg, rgba(6,21,34,.14), rgba(6,21,34,.94)), url('/images/mauricio-ruiz-hero.webp') 79% center / auto 112% no-repeat; }
+      .hero::after { content: ''; position: absolute; inset: auto 0 0; z-index: -1; height: 28%; background: linear-gradient(transparent, var(--navy-950)); }
+      .hero__content { max-width: 760px; padding: 9rem 0 5rem; }
+      .eyebrow { display: inline-flex; align-items: center; gap: .55rem; margin-bottom: 1.25rem; color: var(--green); font-size: .76rem; font-weight: 800; letter-spacing: .14em; line-height: 1.4; text-transform: uppercase; }
+      .eyebrow::before { content: ''; width: 1.8rem; height: 2px; background: currentColor; }
+      h1 { max-width: 12ch; margin-bottom: 1.4rem; font-size: clamp(2.8rem, 6vw, 5.5rem); }
+      .hero__accent { color: var(--green); }
+      .lead { max-width: 650px; color: #cfdae3; font-size: clamp(1.08rem, 2vw, 1.3rem); }
+      .actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+      .button { display: inline-flex; min-height: 3.4rem; align-items: center; justify-content: center; padding: .9rem 1.35rem; border: 1px solid transparent; border-radius: .75rem; color: #052015; background: var(--green); box-shadow: 0 14px 32px rgba(25,199,122,.22); font-weight: 800; text-decoration: none; transition: transform .2s ease, background .2s ease; }
+      .button:hover { transform: translateY(-2px); background: #2bdd8d; }
+      .button--ghost { border-color: rgba(255,255,255,.3); color: var(--white); background: transparent; box-shadow: none; }
+      .button--ghost:hover { background: rgba(255,255,255,.1); }
+      .hero__facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 3.8rem; overflow: hidden; border: 1px solid rgba(255,255,255,.15); border-radius: 1rem; background: rgba(255,255,255,.12); }
+      .fact { padding: 1.1rem 1.2rem; background: rgba(6,21,34,.72); }
+      .fact strong { display: block; color: var(--white); font: 800 1.05rem/1.2 Manrope, sans-serif; }
+      .fact span { color: #aabcca; font-size: .78rem; }
+      .section { padding: 6.5rem 0; }
+      .section--white { background: var(--white); }
+      .section--dark { color: var(--white); background: var(--navy-900); }
+      .section__heading { max-width: 720px; margin-bottom: 3rem; }
+      .section__heading h2 { max-width: 17ch; margin-bottom: 1.1rem; font-size: clamp(2.1rem, 4vw, 3.6rem); }
+      .section__heading p { max-width: 680px; color: var(--muted); font-size: 1.08rem; }
+      .section--dark .section__heading p { color: #b8c8d4; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .pillar { min-height: 290px; padding: 2rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--white); }
+      .pillar__number { display: block; margin-bottom: 4rem; color: var(--green-dark, #0d9d5d); font: 800 .8rem/1 Manrope, sans-serif; letter-spacing: .14em; }
+      .pillar h3 { margin-bottom: .7rem; font-size: 1.35rem; }
+      .pillar p { margin-bottom: 0; color: var(--muted); }
+      .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 5rem; align-items: center; }
+      .portrait { position: relative; overflow: hidden; border-radius: 1.2rem; background: var(--navy-900); }
+      .portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; }
+      .portrait__label { position: absolute; right: 1rem; bottom: 1rem; left: 1rem; padding: .9rem 1rem; border: 1px solid rgba(255,255,255,.2); border-radius: .7rem; color: var(--white); background: rgba(6,21,34,.75); backdrop-filter: blur(10px); font-size: .83rem; }
+      .split h2 { max-width: 15ch; font-size: clamp(2.1rem, 4vw, 3.5rem); }
+      .split p { color: var(--muted); font-size: 1.08rem; }
+      .quote { margin: 2rem 0 0; padding: 1.2rem 1.35rem; border-left: 3px solid var(--gold); color: var(--ink); background: #fff9ed; font-weight: 700; }
+      .solutions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 1rem; background: rgba(255,255,255,.13); }
+      .solution { padding: 2rem; background: rgba(255,255,255,.035); }
+      .solution h3 { margin-bottom: .55rem; font-size: 1.28rem; }
+      .solution p { margin-bottom: 0; color: #b9c8d3; }
+      .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+      .process__item { padding-top: 1.2rem; border-top: 2px solid var(--green); }
+      .process__item strong { display: block; margin-bottom: .5rem; font: 800 1.15rem/1.2 Manrope, sans-serif; }
+      .process__item p { margin: 0; color: var(--muted); font-size: .92rem; }
+      .feature { display: grid; grid-template-columns: 1.1fr .9fr; gap: 4rem; align-items: center; }
+      .feature__card { padding: 2.5rem; border-radius: 1.2rem; color: var(--white); background: linear-gradient(145deg, #123b5c, #071829); box-shadow: 0 24px 70px rgba(5,17,31,.17); }
+      .feature__card h3 { max-width: 13ch; font-size: 2rem; }
+      .feature__card p { color: #c4d2dd; }
+      .feature__card .button { margin-top: 1rem; }
+      .feature__side h2 { max-width: 13ch; font-size: clamp(2rem, 4vw, 3.3rem); }
+      .feature__side p { color: var(--muted); font-size: 1.08rem; }
+      .blog { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+      .blog h2 { max-width: 13ch; margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.2rem); }
+      .blog p { max-width: 480px; margin-bottom: 0; color: var(--muted); }
+      .footer { padding: 3rem 0; color: #b8c8d4; background: var(--navy-950); }
+      .footer__inner { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+      .footer strong { color: var(--white); font-family: Manrope, sans-serif; }
+      .footer a { color: var(--green); text-decoration: none; }
+      .footer__links { display: flex; gap: 1rem; font-size: .9rem; }
+      @media (max-width: 800px) {
+        .nav a:not(.nav__cta) { display: none; }
+        .hero { min-height: 760px; }
+        .hero::before { background: linear-gradient(180deg, rgba(6,21,34,.44), rgba(6,21,34,.98) 70%), url('/images/mauricio-ruiz-hero.webp') 68% top / cover no-repeat; }
+        .hero__content { padding-top: 11rem; }
+        .hero__facts, .grid-3, .process { grid-template-columns: 1fr; }
+        .hero__facts { margin-top: 2.4rem; }
+        .split, .feature { grid-template-columns: 1fr; gap: 2.5rem; }
+        .solutions { grid-template-columns: 1fr; }
+        .blog, .footer__inner { align-items: start; flex-direction: column; }
+      }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/">SUCESSO<span>.</span>EMPRESARIAL</a>
+        <nav class="nav" aria-label="Navegação principal">
+          <a href="#atuacao">Atuação</a>
+          <a href="#como-trabalhamos">Como trabalhamos</a>
+          <a href="/blog/">Conteúdos</a>
+          <a class="nav__cta" href="mailto:mauricio@sucesso.com.br">Fale com a Sucesso</a>
+        </nav>
+      </div>
+    </header>
 
-    .hero h1 {
-      font-size: 2.5rem;
-      color: var(--color-primary);
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
+    <main>
+      <section class="hero">
+        <div class="container hero__content">
+          <p class="eyebrow">Sucesso Empresarial</p>
+          <h1>IA e automação para fazer sua empresa <span class="hero__accent">avançar de verdade.</span></h1>
+          <p class="lead">Aplicamos inteligência artificial, processos e tecnologia a problemas concretos de gestão. Menos ferramenta acumulada. Mais clareza para decidir e executar.</p>
+          <div class="actions">
+            <a class="button" href="mailto:mauricio@sucesso.com.br">Fale com a Sucesso</a>
+            <a class="button button--ghost" href="#atuacao">Conheça nossa atuação</a>
+          </div>
+          <div class="hero__facts" aria-label="Áreas de atuação">
+            <div class="fact"><strong>Inteligência artificial</strong><span>aplicada ao negócio</span></div>
+            <div class="fact"><strong>Automação</strong><span>de processos e integrações</span></div>
+            <div class="fact"><strong>Gestão</strong><span>com foco em execução</span></div>
+          </div>
+        </div>
+      </section>
 
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--color-text-muted);
-      max-width: 700px;
-      margin: 0 auto 30px;
-    }
+      <section class="section section--white" id="atuacao">
+        <div class="container">
+          <div class="section__heading">
+            <p class="eyebrow">Onde entramos</p>
+            <h2>Tecnologia só vale quando melhora uma decisão ou um processo.</h2>
+            <p>A Sucesso Empresarial conecta estratégia, operação e tecnologia para transformar problemas difusos em movimentos que podem ser executados e acompanhados.</p>
+          </div>
+          <div class="grid-3">
+            {pilares.map((pilar) => (
+              <article class="pillar">
+                <span class="pillar__number">{pilar.numero}</span>
+                <h3>{pilar.titulo}</h3>
+                <p>{pilar.texto}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-    .cta-button {
-      display: inline-block;
-      background: var(--color-accent);
-      color: white;
-      padding: 15px 40px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+      <section class="section">
+        <div class="container split">
+          <div class="portrait">
+            <img src="/images/mauricio-ruiz-sobre.webp" alt="Mauricio Ruiz em ambiente empresarial" loading="lazy" decoding="async" />
+            <div class="portrait__label">Mauricio Ruiz · IA e Automação Empresarial</div>
+          </div>
+          <div>
+            <p class="eyebrow">Visão empresarial</p>
+            <h2>Não é sobre colocar IA em tudo.</h2>
+            <p>É sobre entender onde a empresa perde tempo, oportunidade ou margem e escolher a tecnologia certa para agir naquele ponto.</p>
+            <p>A Sucesso Empresarial trabalha com essa perspectiva: contexto antes da ferramenta, processo antes da automação e resultado antes do discurso.</p>
+            <p class="quote">O problema não é a falta de tecnologia. É usar tecnologia sem clareza do que precisa mudar.</p>
+          </div>
+        </div>
+      </section>
 
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
-    }
+      <section class="section section--dark">
+        <div class="container">
+          <div class="section__heading">
+            <p class="eyebrow">Soluções</p>
+            <h2>Da decisão à implantação.</h2>
+            <p>Escolha o nível de apoio que faz sentido para o momento da empresa.</p>
+          </div>
+          <div class="solutions">
+            {frentes.map(([titulo, texto]) => (
+              <article class="solution"><h3>{titulo}</h3><p>{texto}</p></article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 60px;
-    }
+      <section class="section" id="como-trabalhamos">
+        <div class="container">
+          <div class="section__heading">
+            <p class="eyebrow">Como trabalhamos</p>
+            <h2>Clareza primeiro. Movimento depois.</h2>
+            <p>O trabalho começa na realidade da empresa e termina com algo que possa ser usado, medido e melhorado.</p>
+          </div>
+          <div class="process">
+            <div class="process__item"><strong>Entender</strong><p>Mapear o cenário, o objetivo e as restrições.</p></div>
+            <div class="process__item"><strong>Priorizar</strong><p>Escolher o gargalo que merece atenção agora.</p></div>
+            <div class="process__item"><strong>Implementar</strong><p>Colocar a solução para funcionar no processo real.</p></div>
+            <div class="process__item"><strong>Acompanhar</strong><p>Medir, corrigir e decidir o próximo movimento.</p></div>
+          </div>
+        </div>
+      </section>
 
-    .service-card {
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+      <section class="section section--white">
+        <div class="container feature">
+          <div class="feature__side">
+            <p class="eyebrow">Projeto em destaque</p>
+            <h2>Uma aplicação concreta para quem quer começar agora.</h2>
+            <p>O Resultado 21 é uma oficina prática para empresários e gestores aplicarem IA em uma oportunidade real de receita durante 21 dias.</p>
+          </div>
+          <div class="feature__card">
+            <p class="eyebrow">IA aplicada aos negócios</p>
+            <h3>Projeto Resultado 21</h3>
+            <p>Quatro encontros ao vivo, execução entre as semanas e um projeto acompanhado do começo ao próximo processo.</p>
+            <a class="button" href={resultadoUrl}>Conheça o Resultado 21</a>
+          </div>
+        </div>
+      </section>
 
-    .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.12);
-    }
+      <section class="section">
+        <div class="container blog">
+          <div><p class="eyebrow">Conteúdo</p><h2>Ideias para empresas em movimento.</h2></div>
+          <div><p>Artigos práticos sobre inteligência artificial, automação, gestão e tecnologia aplicada ao dia a dia empresarial.</p><a class="button" href="/blog/" style="margin-top:1.25rem">Ler os conteúdos</a></div>
+        </div>
+      </section>
+    </main>
 
-    .service-card h3 {
-      color: var(--color-primary);
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-    }
-
-    .service-card p {
-      color: var(--color-text-muted);
-      line-height: 1.7;
-    }
-
-    .blog-preview {
-      margin-top: 80px;
-      padding: 60px 0;
-      background: white;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .blog-preview h2 {
-      color: var(--color-primary);
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .blog-preview p {
-      color: var(--color-text-muted);
-      margin-bottom: 30px;
-    }
-
-    .blog-link {
-      color: var(--color-accent);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .blog-link:hover {
-      text-decoration: underline;
-    }
-  </style>
-
-  <section class="hero">
-    <h1>Transforme sua empresa com Consultoria, Treinamentos e Automação</h1>
-    <p>
-      Ajudamos pequenas e médias empresas a crescerem de forma sustentável através de 
-      processos eficientes, equipes capacitadas e tecnologia aplicada de forma inteligente.
-    </p>
-    <a href="mailto:mauricio@sucesso.com.br" class="cta-button">Fale Conosco</a>
-  </section>
-
-  <section class="services">
-    <div class="service-card">
-      <h3>🎯 Consultoria Empresarial</h3>
-      <p>
-        Diagnóstico, reestruturação e implementação de processos que realmente funcionam. 
-        Foco em resultado financeiro, não em relatórios bonitos.
-      </p>
-    </div>
-
-    <div class="service-card">
-      <h3>📚 Treinamentos</h3>
-      <p>
-        Desenvolvimento de líderes e equipes com base em PNL, Coaching Sistêmico e 
-        metodologias comprovadas. Sem papo corporativo — só o que funciona na prática.
-      </p>
-    </div>
-
-    <div class="service-card">
-      <h3>🤖 Automação Inteligente</h3>
-      <p>
-        Implantação de sistemas e automações que economizam tempo e reduzem erros. 
-        Tecnologia como alavanca de crescimento, não como custo.
-      </p>
-    </div>
-  </section>
-
-  <section class="blog-preview">
-    <h2>Últimos Insights</h2>
-    <p>
-      Acompanhe artigos práticos sobre gestão moderna, automação e tecnologia aplicada 
-      a pequenas empresas.
-    </p>
-    <a href="/blog" class="blog-link">Ver todos os artigos →</a>
-  </section>
-</BaseLayout>
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div><p><strong>Sucesso Empresarial Ltda</strong></p><p>CNPJ: 01.655.728/0001-14</p><p><a href="mailto:mauricio@sucesso.com.br">mauricio@sucesso.com.br</a></p></div>
+        <div class="footer__links"><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="/blog/">Blog</a></div>
+      </div>
+    </footer>
+  </body>
+</html>
