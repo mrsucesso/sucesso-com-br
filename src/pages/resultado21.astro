@@ -1,0 +1,738 @@
+---
+const checkoutUrl = 'https://pay.cakto.com.br/34cucrz';
+const canonicalUrl = 'https://sucesso.com.br/resultado21';
+const productName = 'IA Aplicada à Gestão e aos Negócios — Outubro/2026';
+const title = `${productName} | Resultado 21`;
+const description = 'Oficina ao vivo para empresários e gestores aplicarem inteligência artificial a uma oportunidade real de receita durante 21 dias.';
+
+const etapas = [
+  {
+    numero: '01',
+    competencia: 'Conversar',
+    aplicacao: 'Encontrar o dinheiro',
+    texto: 'Formule o problema certo e escolha uma oportunidade de receita que possa ser trabalhada agora.'
+  },
+  {
+    numero: '02',
+    competencia: 'Contextualizar',
+    aplicacao: 'Diagnosticar o gargalo',
+    texto: 'Entregue à IA o contexto do negócio, os dados disponíveis e as restrições reais.'
+  },
+  {
+    numero: '03',
+    competencia: 'Delegar',
+    aplicacao: 'Executar com IA',
+    texto: 'Transforme a IA em executora de uma tarefa comercial concreta, sempre com revisão humana.'
+  },
+  {
+    numero: '04',
+    competencia: 'Padronizar',
+    aplicacao: 'Transformar em processo',
+    texto: 'Meça o que aconteceu, corrija o caminho e documente um procedimento que possa ser repetido.'
+  }
+];
+
+const encontros = [
+  { data: '08/10', competencia: 'Conversar', aplicacao: 'Encontrar o dinheiro', entrega: 'Oportunidade escolhida, linha de base, primeira ação e placar.' },
+  { data: '15/10', competencia: 'Contextualizar', aplicacao: 'Diagnosticar o gargalo', entrega: 'Dados reais, segundo teste e ação comercial revisada.' },
+  { data: '22/10', competencia: 'Delegar', aplicacao: 'Executar com IA', entrega: 'Tarefa completa delegada à IA e roteiro reutilizável.' },
+  { data: '29/10', competencia: 'Padronizar', aplicacao: 'Transformar em processo', entrega: 'Resultado medido, procedimento final e próximo ciclo.' }
+];
+
+const receita = [
+  'Orçamentos, propostas ou conversas que pararam',
+  'Clientes que podem voltar a comprar',
+  'Venda complementar para clientes atuais',
+  'Agenda, estoque ou capacidade ociosa',
+  'Renovação, retenção ou receita em risco'
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#071829" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Sucesso Empresarial" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: productName,
+      description,
+      provider: {
+        '@type': 'Organization',
+        name: 'Sucesso Empresarial',
+        url: 'https://sucesso.com.br'
+      },
+      offers: {
+        '@type': 'Offer',
+        price: '497.00',
+        priceCurrency: 'BRL',
+        url: checkoutUrl,
+        availability: 'https://schema.org/LimitedAvailability'
+      }
+    })} />
+    <style is:global>
+      :root {
+        --navy-950: #05111f;
+        --navy-900: #071829;
+        --navy-850: #0b2035;
+        --navy-800: #102a46;
+        --navy-700: #173d62;
+        --green: #18c77a;
+        --green-dark: #0d9d5d;
+        --green-soft: #dff8ec;
+        --gold: #e9b95f;
+        --ink: #122234;
+        --muted: #5b6878;
+        --paper: #f4f7f8;
+        --white: #ffffff;
+        --line: #dbe3e8;
+        --shadow: 0 24px 70px rgba(5, 17, 31, 0.14);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 1rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      :focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+      .skip-link {
+        position: fixed;
+        left: 1rem;
+        top: -4rem;
+        z-index: 100;
+        background: var(--white);
+        color: var(--navy-900);
+        padding: .75rem 1rem;
+        border-radius: .5rem;
+      }
+      .skip-link:focus { top: 1rem; }
+      .container { width: min(1140px, calc(100% - 2.5rem)); margin-inline: auto; }
+      .section { padding: 6rem 0; }
+      .section--dark { color: var(--white); background: var(--navy-900); }
+      .section--white { background: var(--white); }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: .55rem;
+        margin: 0 0 1.25rem;
+        color: var(--green);
+        font-size: .78rem;
+        font-weight: 800;
+        letter-spacing: .13em;
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 1.8rem;
+        height: 2px;
+        background: currentColor;
+      }
+      h1, h2, h3, p { margin-top: 0; }
+      h1, h2, h3 {
+        font-family: 'Manrope', 'Inter', sans-serif;
+        line-height: 1.12;
+        letter-spacing: -.035em;
+      }
+      h1 { max-width: 13ch; margin-bottom: 1.5rem; font-size: clamp(2.75rem, 6vw, 5.6rem); }
+      h2 { max-width: 18ch; margin-bottom: 1.25rem; font-size: clamp(2rem, 4vw, 3.5rem); }
+      h3 { margin-bottom: .7rem; font-size: 1.25rem; }
+      .lead { max-width: 690px; color: #d2dde7; font-size: clamp(1.08rem, 2vw, 1.3rem); }
+      .section-intro { max-width: 700px; margin-bottom: 3rem; color: var(--muted); font-size: 1.1rem; }
+      .section--dark .section-intro { color: #becbd7; }
+      .cta {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 3.5rem;
+        padding: .95rem 1.45rem;
+        border: 1px solid transparent;
+        border-radius: .8rem;
+        color: #042014;
+        background: var(--green);
+        box-shadow: 0 14px 32px rgba(24, 199, 122, .22);
+        font-weight: 800;
+        line-height: 1.25;
+        text-align: center;
+        text-decoration: none;
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+      }
+      .cta:hover { transform: translateY(-2px); background: #25dc8c; box-shadow: 0 18px 40px rgba(24, 199, 122, .3); }
+      .cta--full { width: 100%; }
+      .microcopy { margin: .85rem 0 0; color: #aebdca; font-size: .84rem; }
+
+      .topbar {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 3;
+        padding: 1.35rem 0;
+      }
+      .topbar__inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+      .brand { color: var(--white); font: 800 1rem/1 'Manrope', sans-serif; letter-spacing: .03em; text-decoration: none; }
+      .brand span { color: var(--green); }
+      .topbar__link { color: #dce7ee; font-size: .9rem; font-weight: 700; text-decoration: none; }
+      .topbar__link:hover { color: var(--white); }
+
+      .hero {
+        position: relative;
+        isolation: isolate;
+        min-height: 760px;
+        display: grid;
+        align-items: center;
+        overflow: hidden;
+        color: var(--white);
+        background: var(--navy-950);
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          linear-gradient(90deg, rgba(5,17,31,.98) 0%, rgba(5,17,31,.92) 38%, rgba(5,17,31,.28) 72%, rgba(5,17,31,.5) 100%),
+          linear-gradient(180deg, rgba(5,17,31,.18), rgba(5,17,31,.88)),
+          url('/images/resultado21-ia-negocios.webp') center right / cover no-repeat;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0;
+        z-index: -1;
+        height: 32%;
+        background: linear-gradient(transparent, var(--navy-950));
+      }
+      .hero__content { max-width: 790px; padding: 9rem 0 5rem; }
+      .hero__accent { color: var(--green); }
+      .hero__actions { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; }
+      .hero__price { color: var(--white); font: 800 1.15rem/1.2 'Manrope', sans-serif; }
+      .hero__price small { display: block; margin-top: .25rem; color: #aebdca; font: 500 .76rem/1.3 'Inter', sans-serif; }
+      .hero__facts {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        margin-top: 3.5rem;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 1rem;
+        background: rgba(255,255,255,.12);
+        backdrop-filter: blur(10px);
+      }
+      .fact { padding: 1.15rem 1.25rem; background: rgba(5,17,31,.7); }
+      .fact strong { display: block; color: var(--white); font: 800 1.12rem/1.2 'Manrope', sans-serif; }
+      .fact span { color: #aebdca; font-size: .78rem; }
+
+      .money-grid { display: grid; grid-template-columns: .86fr 1.14fr; gap: 5rem; align-items: start; }
+      .money-list { display: grid; gap: .85rem; margin: 0; padding: 0; list-style: none; }
+      .money-list li {
+        display: grid;
+        grid-template-columns: 2.2rem 1fr;
+        align-items: center;
+        gap: .9rem;
+        min-height: 4.2rem;
+        padding: .85rem 1rem;
+        border: 1px solid var(--line);
+        border-radius: .85rem;
+        background: var(--white);
+        font-weight: 700;
+      }
+      .money-list li::before {
+        content: '↗';
+        display: grid;
+        width: 2.2rem;
+        height: 2.2rem;
+        place-items: center;
+        border-radius: .65rem;
+        color: var(--green-dark);
+        background: var(--green-soft);
+        font-size: 1.1rem;
+      }
+      .scope-note {
+        margin-top: 1rem;
+        padding: 1rem 1.1rem;
+        border-left: 3px solid var(--gold);
+        color: var(--muted);
+        background: #fff9ec;
+        font-size: .9rem;
+      }
+
+      .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .method-card {
+        position: relative;
+        min-height: 240px;
+        padding: 2rem;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 1.1rem;
+        background: linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
+      }
+      .method-card__number {
+        display: block;
+        margin-bottom: 2.6rem;
+        color: var(--green);
+        font: 800 .82rem/1 'Manrope', sans-serif;
+        letter-spacing: .12em;
+      }
+      .method-card__skill { margin-bottom: .35rem; color: #aebdca; font-size: .82rem; font-weight: 700; text-transform: uppercase; }
+      .method-card h3 { color: var(--white); font-size: 1.55rem; }
+      .method-card p { margin-bottom: 0; color: #b8c5d0; }
+      .method-card::after {
+        content: '';
+        position: absolute;
+        right: -2.5rem;
+        bottom: -2.5rem;
+        width: 8rem;
+        height: 8rem;
+        border: 1px solid rgba(24,199,122,.2);
+        border-radius: 50%;
+      }
+
+      .schedule { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 3rem; }
+      .meeting { position: relative; padding: 1.4rem 1.4rem 1.5rem; border-top: 2px solid var(--navy-800); }
+      .meeting::before {
+        content: '';
+        position: absolute;
+        top: -7px;
+        left: 1.4rem;
+        width: 12px;
+        height: 12px;
+        border: 2px solid var(--white);
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 3px rgba(24,199,122,.18);
+      }
+      .meeting time { display: block; margin: .45rem 0 1.3rem; color: var(--green-dark); font: 800 1.7rem/1 'Manrope', sans-serif; }
+      .meeting h3 { font-size: 1.08rem; }
+      .meeting p { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+      .schedule-note { margin: 2rem 0 0; color: var(--muted); font-size: .92rem; }
+
+      .deliver-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+      .checklist { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+      .checklist li { position: relative; padding-left: 2rem; }
+      .checklist li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        top: .05rem;
+        color: var(--green);
+        font-weight: 900;
+      }
+      .deliver-panel {
+        padding: 2.2rem;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 1.2rem;
+        background: rgba(255,255,255,.055);
+      }
+      .deliver-panel h3 { color: var(--gold); font-size: 1.45rem; }
+      .deliver-panel p { color: #becbd7; }
+      .deliver-panel p:last-child { margin-bottom: 0; }
+
+      .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .fit-card { padding: 2rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--white); }
+      .fit-card--yes { border-top: 4px solid var(--green); }
+      .fit-card--no { border-top: 4px solid var(--gold); }
+      .fit-card ul { margin: 1.25rem 0 0; padding-left: 1.2rem; }
+      .fit-card li + li { margin-top: .65rem; }
+
+      .offer-wrap { display: grid; grid-template-columns: 1fr .82fr; gap: 5rem; align-items: center; }
+      .offer-card {
+        padding: 2.2rem;
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 1.3rem;
+        background: var(--white);
+        color: var(--ink);
+        box-shadow: var(--shadow);
+      }
+      .offer-card__tag { color: var(--green-dark); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+      .offer-card__price { margin: 1rem 0 .2rem; color: var(--navy-900); font: 800 clamp(3rem, 6vw, 4.7rem)/1 'Manrope', sans-serif; letter-spacing: -.06em; }
+      .offer-card__price sup { margin-right: .25rem; font-size: 1rem; letter-spacing: 0; vertical-align: 1.8em; }
+      .offer-card__sub { margin-bottom: 1.4rem; color: var(--muted); font-size: .88rem; }
+      .offer-card ul { margin: 0 0 1.6rem; padding: 0; list-style: none; }
+      .offer-card li { padding: .7rem 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+      .offer-card li::before { content: '✓'; margin-right: .65rem; color: var(--green-dark); font-weight: 900; }
+      .offer-copy h2 { color: var(--white); }
+      .offer-copy p { color: #c4d0db; }
+      .offer-copy strong { color: var(--white); }
+
+      .extras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.5rem; }
+      .extra { padding: 1.6rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--white); }
+      .extra__price { color: var(--green-dark); font: 800 1.35rem/1 'Manrope', sans-serif; }
+      .extra p { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+
+      .about { display: grid; grid-template-columns: .38fr 1fr; gap: 3rem; align-items: center; }
+      .monogram {
+        display: grid;
+        aspect-ratio: 1;
+        place-items: center;
+        border-radius: 1.25rem;
+        color: var(--white);
+        background:
+          linear-gradient(135deg, rgba(24,199,122,.92), rgba(24,199,122,.2)),
+          url('/gbp-media/sucesso-empresarial-cidade-entardecer-logo.jpg') center / cover;
+        box-shadow: var(--shadow);
+      }
+      .monogram span { padding: .7rem 1rem; border-radius: .75rem; background: rgba(5,17,31,.78); font: 800 1rem/1.2 'Manrope', sans-serif; }
+      .about h2 { max-width: 20ch; }
+      .about p { color: var(--muted); }
+
+      .faq { display: grid; gap: .75rem; max-width: 860px; }
+      details { border: 1px solid var(--line); border-radius: .85rem; background: var(--white); }
+      summary { position: relative; padding: 1.2rem 3rem 1.2rem 1.25rem; cursor: pointer; font-weight: 800; list-style: none; }
+      summary::-webkit-details-marker { display: none; }
+      summary::after { content: '+'; position: absolute; right: 1.25rem; top: 1rem; color: var(--green-dark); font-size: 1.5rem; }
+      details[open] summary::after { content: '−'; }
+      details p { padding: 0 1.25rem 1.25rem; margin: 0; color: var(--muted); }
+
+      .final-cta { text-align: center; background: linear-gradient(135deg, #e5f8ef, #f8fbfa); }
+      .final-cta h2 { max-width: 19ch; margin-inline: auto; }
+      .final-cta p { max-width: 680px; margin: 0 auto 1.8rem; color: var(--muted); }
+      footer { padding: 2.5rem 0 6.2rem; color: #aebdca; background: var(--navy-950); font-size: .84rem; }
+      .footer__inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
+      .footer__links { display: flex; flex-wrap: wrap; gap: 1rem; }
+      .footer__links a { color: #d9e4eb; text-decoration: none; }
+      .footer__links a:hover { color: var(--white); }
+      .mobile-bar { display: none; }
+
+      @media (max-width: 900px) {
+        .section { padding: 4.5rem 0; }
+        .hero { min-height: auto; }
+        .hero::before {
+          background:
+            linear-gradient(180deg, rgba(5,17,31,.52), rgba(5,17,31,.98) 62%),
+            url('/images/resultado21-ia-negocios.webp') 62% center / cover no-repeat;
+        }
+        .hero__content { padding-top: 27rem; }
+        .hero__facts { grid-template-columns: repeat(2, 1fr); }
+        .money-grid, .deliver-grid, .offer-wrap, .about { grid-template-columns: 1fr; gap: 2.5rem; }
+        .schedule { grid-template-columns: repeat(2, 1fr); row-gap: 1.5rem; }
+        .extras { grid-template-columns: 1fr; }
+        .about { max-width: 720px; }
+        .monogram { width: min(320px, 100%); }
+      }
+
+      @media (max-width: 620px) {
+        .container { width: min(100% - 1.5rem, 1140px); }
+        .section { padding: 3.8rem 0; }
+        .topbar { padding: 1rem 0; }
+        .topbar__link { display: none; }
+        .hero__content { padding-top: 21rem; padding-bottom: 3.5rem; }
+        h1 { font-size: clamp(2.4rem, 13vw, 3.55rem); }
+        h2 { font-size: clamp(1.9rem, 9vw, 2.65rem); }
+        .hero__actions { align-items: stretch; flex-direction: column; }
+        .hero__price { padding-left: .1rem; }
+        .hero__facts { margin-top: 2.2rem; }
+        .fact { padding: 1rem; }
+        .method-grid, .fit-grid, .schedule { grid-template-columns: 1fr; }
+        .method-card { min-height: 0; }
+        .meeting { border-top: 0; border-left: 2px solid var(--navy-800); padding: .3rem 1rem 1.8rem 1.5rem; }
+        .meeting::before { top: .25rem; left: -7px; }
+        .meeting time { margin-top: 0; }
+        .offer-card { padding: 1.5rem; }
+        .footer__inner { flex-direction: column; }
+        footer { padding-bottom: 7rem; }
+        .mobile-bar {
+          position: fixed;
+          inset: auto 0 0;
+          z-index: 20;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          gap: .8rem;
+          padding: .65rem .75rem max(.65rem, env(safe-area-inset-bottom));
+          border-top: 1px solid rgba(255,255,255,.12);
+          color: var(--white);
+          background: rgba(5,17,31,.96);
+          backdrop-filter: blur(12px);
+        }
+        .mobile-bar span { font-size: .78rem; }
+        .mobile-bar strong { display: block; font-size: 1rem; }
+        .mobile-bar .cta { min-height: 2.9rem; padding: .7rem 1rem; font-size: .84rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/" aria-label="Sucesso Empresarial — página inicial">SUCESSO<span>.</span> EMPRESARIAL</a>
+        <a class="topbar__link" href="#programa">Ver programa e datas</a>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <section class="hero">
+        <div class="container hero__content">
+          <p class="eyebrow">Oficina ao vivo · outubro de 2026</p>
+          <h1>Encontre uma oportunidade real de receita e coloque a <span class="hero__accent">IA para trabalhar nela</span> em 21 dias.</h1>
+          <p class="lead">Uma oficina prática para empresários e gestores que querem sair da conversa genérica sobre inteligência artificial e executar uma ação mensurável no próprio negócio.</p>
+          <div class="hero__actions">
+            <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero participar em outubro</a>
+            <div class="hero__price">R$ 497 <small>pagamento único</small></div>
+          </div>
+          <p class="microcopy">Turma limitada a 20 pessoas · Pix ou cartão · ChatGPT Plus contratado separadamente</p>
+          <div class="hero__facts" aria-label="Informações principais">
+            <div class="fact"><strong>4 encontros</strong><span>ao vivo e on-line</span></div>
+            <div class="fact"><strong>21 dias</strong><span>de aplicação acompanhada</span></div>
+            <div class="fact"><strong>Quintas</strong><span>20h às 22h · Brasília</span></div>
+            <div class="fact"><strong>8 a 29/10</strong><span>turma de 2026</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--white">
+        <div class="container money-grid">
+          <div>
+            <p class="eyebrow">O ponto de partida</p>
+            <h2>A IA não começa na ferramenta. Começa onde o dinheiro entra — ou deixa de entrar.</h2>
+            <p class="section-intro">Você escolherá uma única oportunidade do seu negócio. O objetivo não é estudar dezenas de aplicações, mas usar a IA para formular, executar, medir e corrigir uma ação real.</p>
+            <div class="scope-note"><strong>Escopo desta edição:</strong> receita. Margem, despesa, desperdício e retrabalho ficam para uma etapa posterior ou acompanhamento individual.</div>
+          </div>
+          <ul class="money-list">
+            {receita.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--dark" id="metodo">
+        <div class="container">
+          <p class="eyebrow">Projeto Resultado 21</p>
+          <h2>Quatro competências de IA traduzidas para a realidade empresarial.</h2>
+          <p class="section-intro">A sequência acompanha o ciclo real de aplicação: encontrar a oportunidade, entender o cenário, executar e transformar o aprendizado em processo.</p>
+          <div class="method-grid">
+            {etapas.map((etapa) => (
+              <article class="method-card">
+                <span class="method-card__number">{etapa.numero}</span>
+                <p class="method-card__skill">Competência e aplicação empresarial</p>
+                <h3>{etapa.competencia} → {etapa.aplicacao}</h3>
+                <p>{etapa.texto}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--white" id="programa">
+        <div class="container">
+          <p class="eyebrow">Quatro quintas-feiras</p>
+          <h2>O projeto começa no primeiro encontro e fecha com a turma reunida.</h2>
+          <p class="section-intro">Cada encontro parte do que foi realmente executado. Você volta com dados, identifica onde a ação parou e corrige o próximo movimento.</p>
+          <div class="schedule">
+            {encontros.map((encontro) => (
+              <article class="meeting">
+                <time datetime={`2026-10-${encontro.data.slice(0, 2)}`}>{encontro.data}</time>
+                <h3>{encontro.competencia} → {encontro.aplicacao}</h3>
+                <p>{encontro.entrega}</p>
+              </article>
+            ))}
+          </div>
+          <p class="schedule-note"><strong>Horário:</strong> 20h–22h, Brasília · 19h–21h, Mato Grosso do Sul. O núcleo termina às 21h45; os 15 minutos finais ficam reservados para clínica opcional de casos.</p>
+        </div>
+      </section>
+
+      <section class="section section--dark">
+        <div class="container deliver-grid">
+          <div>
+            <p class="eyebrow">O que você construirá</p>
+            <h2>Um caso real em andamento — não uma pasta cheia de prompts genéricos.</h2>
+            <ul class="checklist">
+              <li>Mapa do Caminho do Dinheiro com oito estações</li>
+              <li>Uma oportunidade de receita priorizada</li>
+              <li>Meta, linha de base e indicador verificável</li>
+              <li>Primeira ação que possa começar em até 20 minutos</li>
+              <li>Prompts e roteiros adaptados ao contexto do negócio</li>
+              <li>Placar e correções semanais</li>
+              <li>Procedimento final para repetir, melhorar ou automatizar</li>
+            </ul>
+          </div>
+          <aside class="deliver-panel">
+            <h3>A meta é financeira. A promessa é de método e acompanhamento.</h3>
+            <p>O projeto busca gerar impacto superior ao investimento da oficina. Isso é uma meta de aplicação, não garantia de faturamento, lucro ou recuperação do valor pago.</p>
+            <p>Os resultados dependem da oportunidade escolhida, da qualidade dos dados, da execução e das condições reais de cada negócio.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="eyebrow">Critério de entrada</p>
+          <h2>O centro da turma é aplicação, não curiosidade.</h2>
+          <div class="fit-grid">
+            <article class="fit-card fit-card--yes">
+              <h3>Esta turma faz sentido se você:</h3>
+              <ul>
+                <li>tem negócio, área comercial ou operação em funcionamento;</li>
+                <li>possui autonomia para colocar uma ação em prática;</li>
+                <li>consegue acessar dados, históricos ou observações reais;</li>
+                <li>participará dos quatro encontros e executará entre eles;</li>
+                <li>quer trabalhar uma oportunidade de receita já existente.</li>
+              </ul>
+            </article>
+            <article class="fit-card fit-card--no">
+              <h3>Não é a melhor escolha se você:</h3>
+              <ul>
+                <li>quer apenas conhecer ferramentas ou colecionar prompts;</li>
+                <li>ainda não tem oferta, operação ou caso sobre o qual trabalhar;</li>
+                <li>não pode executar nenhuma ação no próprio negócio;</li>
+                <li>espera que a IA venda ou decida sem revisão humana;</li>
+                <li>precisa de garantia de resultado financeiro.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--dark" id="inscricao">
+        <div class="container offer-wrap">
+          <div class="offer-copy">
+            <p class="eyebrow">Inscrições · outubro de 2026</p>
+            <h2>Entre com uma oportunidade. Saia com execução, medida e processo.</h2>
+            <p>O investimento para a edição de outubro é <strong>R$ 497</strong>. A sala terá no máximo <strong>20 pessoas</strong>, contando participantes principais e segundos assentos.</p>
+            <p>Para acompanhar as demonstrações no mesmo ambiente, você precisará de uma conta <strong>ChatGPT Plus ativa</strong>, contratada à parte.</p>
+          </div>
+          <aside class="offer-card">
+            <span class="offer-card__tag">Inscrição individual</span>
+            <div class="offer-card__price"><sup>R$</sup>497</div>
+            <p class="offer-card__sub">pagamento único</p>
+            <ul>
+              <li>Quatro encontros ao vivo de duas horas</li>
+              <li>Materiais, mapas e instruções de aplicação</li>
+              <li>Clínica coletiva e correção semanal</li>
+              <li>Projeto acompanhado durante 21 dias</li>
+              <li>Turma limitada a 20 pessoas</li>
+            </ul>
+            <a class="cta cta--full" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Garantir minha inscrição</a>
+            <p class="microcopy" style="color:#667585;text-align:center">Checkout seguro da Cakto</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section--white">
+        <div class="container">
+          <p class="eyebrow">Opções adicionais</p>
+          <h2>Dois complementos no checkout e uma condição exclusiva depois da matrícula.</h2>
+          <div class="extras">
+            <article class="extra">
+              <p class="extra__price">R$ 97</p>
+              <h3>Gravações desta turma</h3>
+              <p>Disponíveis depois do Encontro 4, com acesso de 29/10/2026 a 29/10/2027. Não substituem a participação ao vivo.</p>
+            </article>
+            <article class="extra">
+              <p class="extra__price">R$ 197</p>
+              <h3>Segundo assento</h3>
+              <p>Leve um sócio, gestor ou pessoa-chave para acompanhar o mesmo projeto. O assento conta no limite total da turma.</p>
+            </article>
+            <article class="extra">
+              <p class="extra__price">R$ 500</p>
+              <h3>Acompanhamento individual</h3>
+              <p>Depois da compra, você poderá contratar com Mauricio três horas individuais e 30 dias de WhatsApp por R$ 500 — valor normal de R$ 1.500. Somente cinco contratações.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container about">
+          <div class="monogram" role="img" aria-label="Sucesso Empresarial sobre uma cidade ao entardecer"><span>SUCESSO EMPRESARIAL</span></div>
+          <div>
+            <p class="eyebrow">Facilitação</p>
+            <h2>Mauricio Ruiz — IA e Automação Empresarial</h2>
+            <p>Há mais de 20 anos conduz treinamentos, mentorias e processos de desenvolvimento. No Projeto Resultado 21, integra experiência empresarial, modelagem de processos, inteligência artificial e automação para orientar aplicações que possam ser executadas e medidas.</p>
+            <p>A condução é direta: uma oportunidade por participante, dados reais, ação revisada e responsabilidade sobre o que será colocado em prática.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--white">
+        <div class="container">
+          <p class="eyebrow">Perguntas objetivas</p>
+          <h2>Antes de decidir.</h2>
+          <div class="faq">
+            <details>
+              <summary>Meu negócio não é prestação de serviços. Ainda funciona?</summary>
+              <p>Sim. O projeto contempla comércio, indústria, alimentação, comércio eletrônico, recorrência e outros formatos. O critério é existir uma oportunidade real de receita e autonomia para agir.</p>
+            </details>
+            <details>
+              <summary>Preciso dominar inteligência artificial?</summary>
+              <p>Não. A entrada é pelo problema empresarial. A demonstração será feita no ChatGPT, e você precisará de uma conta ChatGPT Plus ativa para acompanhar o método no mesmo ambiente.</p>
+            </details>
+            <details>
+              <summary>Existe garantia de recuperar os R$ 497?</summary>
+              <p>Não. Buscar impacto financeiro superior ao investimento é a meta de aplicação, não uma promessa. A oficina garante método, materiais, encontros e correção do projeto durante o ciclo.</p>
+            </details>
+            <details>
+              <summary>Vou receber as gravações?</summary>
+              <p>As gravações desta turma são uma opção adicional de R$ 97 no checkout. Serão liberadas depois do Encontro 4 e ficarão disponíveis de 29/10/2026 a 29/10/2027.</p>
+            </details>
+            <details>
+              <summary>Posso levar meu sócio ou gestor?</summary>
+              <p>Sim. O segundo assento custa R$ 197, acompanha o mesmo Projeto Resultado 21 e conta no limite de 20 pessoas da turma.</p>
+            </details>
+            <details>
+              <summary>Como receberei o acesso aos encontros?</summary>
+              <p>Após a confirmação do pagamento, você receberá por e-mail as instruções de preparação, o calendário e o acesso ao ambiente on-line da turma.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section final-cta">
+        <div class="container">
+          <p class="eyebrow">08 a 29 de outubro</p>
+          <h2>Escolha um caso real e coloque a IA para trabalhar no seu negócio.</h2>
+          <p>Quatro encontros ao vivo, aplicação entre as semanas e uma turma pequena o suficiente para corrigir projetos reais.</p>
+          <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero participar por R$ 497</a>
+          <p class="microcopy" style="color:#667585">Limite total de 20 pessoas · sem promessa de resultado financeiro</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer__inner">
+        <div>
+          <strong>Sucesso Empresarial Ltda.</strong><br />
+          CNPJ 01.655.728/0001-14 · Mauricio Ruiz
+        </div>
+        <nav class="footer__links" aria-label="Informações legais e contato">
+          <a href="mailto:mauricio@sucesso.com.br">mauricio@sucesso.com.br</a>
+          <a href="/privacidade">Privacidade</a>
+          <a href="/termos">Termos de uso</a>
+        </nav>
+      </div>
+    </footer>
+
+    <div class="mobile-bar" aria-label="Inscrição">
+      <span><strong>R$ 497</strong>Outubro/2026</span>
+      <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero entrar</a>
+    </div>
+  </body>
+</html>
