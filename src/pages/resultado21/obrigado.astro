@@ -61,6 +61,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       h2 { margin-bottom: 1rem; font-size: clamp(2rem, 4vw, 3.1rem); }
       h3 { margin-bottom: .55rem; font-size: 1.2rem; }
       .lead { max-width: 650px; margin-bottom: 0; color: #d2dde7; font-size: clamp(1.06rem, 2vw, 1.22rem); }
+      .next-steps-callout { margin: 2rem 0 0; padding: 1rem 1.2rem; border: 1px solid rgba(233,185,95,.55); border-radius: .8rem; color: #f5d699; background: rgba(233,185,95,.1); font-size: .98rem; font-weight: 700; }
       .check-card { padding: 1.8rem; border: 1px solid rgba(255,255,255,.18); border-radius: 1.1rem; background: rgba(5,17,31,.56); box-shadow: 0 20px 50px rgba(0,0,0,.16); }
       .check-card__icon { display: grid; width: 3.2rem; height: 3.2rem; margin-bottom: 1.1rem; place-items: center; border-radius: 50%; color: #062219; background: var(--green); font-size: 1.5rem; font-weight: 800; }
       .check-card p { margin: 0; color: #becbd7; font-size: .94rem; }
@@ -86,6 +87,10 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       .pending { margin: 0; padding: 1rem; border: 1px solid rgba(233,185,95,.45); border-radius: .75rem; color: #f5d699; background: rgba(233,185,95,.09); font-size: .92rem; }
       .fine-print { margin: 1.05rem 0 0; color: #b9c9d5; font-size: .8rem; line-height: 1.5; }
       .guardrail { margin-top: 1.5rem; padding: 1.1rem 1.2rem; border-left: 3px solid var(--gold); color: #cbd7e0; background: rgba(255,255,255,.05); font-size: .91rem; }
+      .seat { color: var(--ink); background: var(--white); }
+      .seat .section__intro { color: var(--muted); }
+      .seat-card { padding: 2rem; border: 1px solid var(--line); border-radius: 1.1rem; background: var(--paper); }
+      .seat-card p:last-child { margin-bottom: 0; color: var(--muted); }
       footer { padding: 2.2rem 0; color: #9aabb9; background: var(--navy-950); font-size: .83rem; }
       footer p { margin: 0; }
       @media (max-width: 760px) {
@@ -114,20 +119,23 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
           <div>
             <p class="eyebrow">Matrícula confirmada</p>
             <h1>Agora seu projeto entra em movimento.</h1>
-            <p class="lead">Você está dentro de <strong>IA Aplicada à Gestão e aos Negócios — Outubro/2026</strong>. Nos próximos 21 dias, vamos aplicar IA a uma oportunidade real de receita do seu negócio.</p>
+            <p class="lead">Obrigado pela sua assinatura. Na próxima turma, você terá 21 dias para aplicar IA a uma oportunidade real de receita do seu negócio.</p>
           </div>
           <aside class="check-card" aria-label="Confirmação de matrícula">
             <div class="check-card__icon" aria-hidden="true">✓</div>
             <h3>Sua vaga está reservada</h3>
-            <p>Guarde as quintas-feiras de outubro, das 20h às 22h (horário de Brasília): 08, 15, 22 e 29.</p>
+            <p class="check-card__text">Você receberá no e-mail cadastrado as datas e os horários dos encontros.</p>
           </aside>
+        </div>
+        <div class="container">
+          <p class="next-steps-callout">Importante: você ainda tem 3 passos para ter um melhor aproveitamento.</p>
         </div>
       </section>
 
       <section class="section section--white">
         <div class="container">
           <p class="eyebrow" style="color: var(--green-dark)">Próximos passos</p>
-          <h2>Faça isso antes do primeiro encontro.</h2>
+          <h2>Passo 1 · Faça isso antes do primeiro encontro.</h2>
           <p class="section__intro">A sua matrícula é o começo. Chegar com um caso real deixa a oficina mais objetiva e acelera sua aplicação.</p>
           <div class="steps">
             <article class="step">
@@ -152,20 +160,21 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       <section class="section offer" id="acompanhamento">
         <div class="container offer__grid">
           <div>
-            <p class="eyebrow">Convite pós-matrícula</p>
-            <h2>Quer conduzir seu projeto com acompanhamento individual?</h2>
-            <p class="section__intro">O <strong>Acompanhamento Individual Resultado 21</strong> existe para quem quer uma leitura mais próxima do próprio negócio durante a execução.</p>
+            <p class="eyebrow">Faça progresso mais rápido</p>
+            <h2>Passo 2 · Que tal encarar esse desafio com acompanhamento individual?</h2>
+            <p class="section__intro">O <strong>Acompanhamento Individual Resultado 21</strong> existe para quem quer uma leitura mais próxima do próprio negócio durante a execução e fazer com resultado mais fácil.</p>
             <ul class="offer__points">
-              <li>Três sessões individuais de uma hora com Mauricio.</li>
-              <li>Apoio no diagnóstico, plano, prompts, execução e leitura do resultado.</li>
+              <li>Três sessões individuais de uma hora com Mauricio Ruiz.</li>
+              <li>Apoio no diagnóstico, plano, comandos de IA, prompts, execução e leitura do resultado.</li>
+              <li>Material direcionado para o seu negócio para copiar e colar na sua I.A.</li>
               <li>Trinta dias de acompanhamento individual pelo WhatsApp.</li>
             </ul>
-            <p class="guardrail">É um acompanhamento sobre o seu projeto do Resultado 21 — não uma consultoria genérica. Há somente cinco vagas pagas, respeitando a capacidade real de atendimento.</p>
+            <p class="guardrail">É um acompanhamento sobre o seu projeto do Resultado 21 — não uma consultoria genérica. Há somente 5 (cinco) vagas pagas, respeitando a capacidade real de atendimento.</p>
           </div>
           <aside class="purchase">
             <p class="purchase__label">Condição para participantes</p>
             <p class="purchase__price">R$ 500</p>
-            <p class="purchase__regular">Condição exclusiva para participantes da oficina.</p>
+            <p class="purchase__regular">Valor de referência pelas três horas: R$ 1.500.<br />Condição exclusiva para participantes da oficina nesse momento; isso não será ofertado novamente.</p>
             {upsellCheckoutUrl ? (
               <a class="cta" href={upsellCheckoutUrl}>Quero o acompanhamento individual</a>
             ) : (
@@ -173,6 +182,19 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
             )}
             <p class="fine-print">Não há promessa de resultado financeiro. O trabalho é aplicar, medir e ajustar a oportunidade escolhida por você.</p>
           </aside>
+        </div>
+      </section>
+
+      <section class="section seat">
+        <div class="container">
+          <p class="eyebrow" style="color: var(--green-dark)">Traga alguém para acompanhar seu progresso</p>
+          <h2>Passo 3 · Contrate mais um assento na aula.</h2>
+          <p class="section__intro">Um sócio, gestor ou pessoa-chave do mesmo projeto pode acompanhar os encontros e ajudar a transformar a aplicação em progresso compartilhado.</p>
+          <div class="seat-card">
+            <h3>Não aproveitou o order bump?</h3>
+            <p>Você ainda pode incluir mais um assento para alguém acompanhar seu projeto junto com você. É uma forma de trazer quem precisa participar da execução e da continuidade.</p>
+            <p>A condição e a disponibilidade serão apresentadas no checkout da oficina.</p>
+          </div>
         </div>
       </section>
     </main>
