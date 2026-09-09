@@ -51,7 +51,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       .topbar { padding: 1.35rem 0; background: var(--navy-950); }
       .topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
       .topbar__text { color: #c7d4df; font-size: .86rem; font-weight: 700; }
-      .hero { padding: 5rem 0 4.5rem; color: var(--white); background: radial-gradient(circle at 88% 5%, rgba(24,199,122,.24), transparent 25rem), var(--navy-900); }
+      .hero { padding: 3rem 0 2.8rem; color: var(--white); background: radial-gradient(circle at 88% 5%, rgba(24,199,122,.2), transparent 25rem), var(--navy-900); }
       .hero__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); gap: 4rem; align-items: center; }
       .eyebrow { display: inline-flex; gap: .55rem; align-items: center; margin: 0 0 1.2rem; color: var(--green); font-size: .78rem; font-weight: 800; letter-spacing: .13em; line-height: 1.4; text-transform: uppercase; }
       .eyebrow::before { width: 1.8rem; height: 2px; content: ''; background: currentColor; }
@@ -72,6 +72,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       .step { padding: 1.55rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--white); }
       .step__number { display: block; margin-bottom: 1.1rem; color: var(--green-dark); font: 800 .85rem/1 'Manrope', sans-serif; letter-spacing: .08em; }
       .step p { margin: 0; color: var(--muted); }
+      .step .step__cta { display: inline-flex; margin-top: 1.2rem; color: var(--green-dark); font-weight: 800; text-decoration: underline; text-underline-offset: .2em; }
       .offer { color: var(--white); background: var(--navy-950); }
       .offer__grid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(280px, 1.05fr); gap: 4rem; align-items: start; }
       .offer .section__intro { color: #becbd7; }
@@ -83,6 +84,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       .purchase__price { margin: 0 0 .4rem; font: 800 clamp(2.4rem, 5vw, 3.5rem)/1 'Manrope', sans-serif; }
       .purchase__regular { margin-bottom: 1.4rem; color: #b9c9d5; font-size: .92rem; }
       .cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 3.6rem; padding: .95rem 1.3rem; border-radius: .8rem; color: #042014; background: var(--green); box-shadow: 0 14px 32px rgba(24,199,122,.2); font-weight: 800; line-height: 1.25; text-align: center; text-decoration: none; }
+      .cta--inline { width: auto; min-height: 3.1rem; margin-top: 1.4rem; }
       .cta:hover { background: #25dc8c; }
       .pending { margin: 0; padding: 1rem; border: 1px solid rgba(233,185,95,.45); border-radius: .75rem; color: #f5d699; background: rgba(233,185,95,.09); font-size: .92rem; }
       .fine-print { margin: 1.05rem 0 0; color: #b9c9d5; font-size: .8rem; line-height: 1.5; }
@@ -117,9 +119,10 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       <section class="hero">
         <div class="container hero__grid">
           <div>
-            <p class="eyebrow">Matrícula confirmada</p>
-            <h1>Agora seu projeto entra em movimento.</h1>
-            <p class="lead">Obrigado pela sua assinatura. Na próxima turma, você terá 21 dias para aplicar IA a uma oportunidade real de receita do seu negócio.</p>
+            <p class="eyebrow">Próximos passos</p>
+            <h1>Agora, escolha como vai aproveitar melhor.</h1>
+            <p class="lead">Sua matrícula está confirmada. Veja os três passos que podem acelerar a aplicação de IA no seu negócio.</p>
+            <a class="cta cta--inline" href="#passos">Ver os 3 passos</a>
           </div>
           <aside class="check-card" aria-label="Confirmação de matrícula">
             <div class="check-card__icon" aria-hidden="true">✓</div>
@@ -128,11 +131,11 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
           </aside>
         </div>
         <div class="container">
-          <p class="next-steps-callout">Importante: você ainda tem 3 passos para ter um melhor aproveitamento.</p>
-        </div>
-      </section>
+          <p class="next-steps-callout">Recado importante: você ainda tem 3 passos para ter um melhor aproveitamento.</p>
+          </div>
+          </section>
 
-      <section class="section section--white">
+          <section class="section section--white" id="passos">
         <div class="container">
           <p class="eyebrow" style="color: var(--green-dark)">Próximos passos</p>
           <h2>Passo 1 · Faça isso antes do primeiro encontro.</h2>
@@ -147,12 +150,14 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
               <span class="step__number">02</span>
               <h3>Escolha uma oportunidade</h3>
               <p>Traga uma venda parada, reativação, recompra, oferta complementar, capacidade ociosa ou retenção.</p>
+              <a class="step__cta" href="#acompanhamento">Ver acompanhamento individual →</a>
             </article>
             <article class="step">
               <span class="step__number">03</span>
               <h3>Prepare o ChatGPT Plus</h3>
               <p>O plano Plus é requisito da oficina e é contratado separadamente por cada participante.</p>
             </article>
+            <a class="step__cta" href="#acompanhamento">Quero avançar com acompanhamento individual →</a>
           </div>
         </div>
       </section>
@@ -194,6 +199,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
             <h3>Não aproveitou o order bump?</h3>
             <p>Você ainda pode incluir mais um assento para alguém acompanhar seu projeto junto com você. É uma forma de trazer quem precisa participar da execução e da continuidade.</p>
             <p>A condição e a disponibilidade serão apresentadas no checkout da oficina.</p>
+            <a class="cta" href="https://pay.cakto.com.br/34cucrz">Quero trazer alguém para acompanhar</a>
           </div>
         </div>
       </section>
