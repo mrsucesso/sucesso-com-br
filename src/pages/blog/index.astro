@@ -1,77 +1,93 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-const posts = [
-  {
-    slug: 'ia-para-pequenas-empresas',
-    title: 'IA para Pequenas Empresas: O Guia Pratico',
-    description: 'Descubra como pequenas empresas ja estao usando inteligencia artificial para cortar custos, automatizar tarefas e competir de igual para igual com grandes corporacoes.',
-    date: '1 de abril de 2026',
-    tags: ['IA', 'Pequenas Empresas', 'Automacao'],
-    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&h=400&fit=crop'
-  },
-  {
-    slug: 'automacao-sem-gastar-nada',
-    title: 'Automacao de Processos: Comece Sem Gastar Nada',
-    description: 'Ferramentas gratuitas para automatizar tarefas repetitivas na sua pequena empresa. Como comecar hoje sem investir um centavo.',
-    date: '1 de abril de 2026',
-    tags: ['Automacao', 'Ferramentas Gratuitas', 'Produtividade'],
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=400&fit=crop'
-  },
-  {
-    slug: 'whatsapp-business-com-ia',
-    title: 'WhatsApp Business com IA: O Futuro do Atendimento',
-    description: 'Como integrar inteligencia artificial ao WhatsApp Business para atender clientes 24 horas, reduzir custos e aumentar vendas sem contratar mais gente.',
-    date: '1 de abril de 2026',
-    tags: ['WhatsApp', 'IA', 'Atendimento'],
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=400&fit=crop'
-  },
-  {
-    slug: 'gestao-financeira-automatizada',
-    title: 'Gestao Financeira Automatizada: Pare de Fazer Planilha',
-    description: 'Como usar Asaas, Cora e outras ferramentas para automatizar a gestao financeira da sua pequena empresa. Menos planilha, mais resultado.',
-    date: '1 de abril de 2026',
-    tags: ['Financeiro', 'Automacao', 'Asaas'],
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=400&fit=crop'
-  },
-  {
-    slug: 'porque-sua-empresa-precisa-de-um-agente-de-ia',
-    title: 'Por Que Sua Empresa Precisa de um Agente de IA',
-    description: 'O que sao agentes de inteligencia artificial, porque eles estao revolucionando os negocios e como sua pequena empresa pode se beneficiar.',
-    date: '1 de abril de 2026',
-    tags: ['IA', 'Agentes', 'Automacao'],
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=400&fit=crop'
-  }
-];
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const title = 'Blog | Sucesso Empresarial';
+const description = 'Conteúdos práticos sobre inteligência artificial, automação e gestão para empresas em movimento.';
 ---
 
-<Layout title="Blog" description="Artigos sobre gestao, tecnologia, IA e automacao para pequenas empresas. Insights praticos para transformar seu negocio.">
-  <section style="text-align: center; margin-bottom: 60px;">
-    <h1 style="font-size: 2.5rem; color: #1a3a5c; margin-bottom: 15px;">Blog</h1>
-    <p style="font-size: 1.2rem; color: #4a5568; max-width: 600px; margin: 0 auto;">
-      Insights sobre gestao, tecnologia e automacao para pequenas empresas que querem crescer de verdade.
-    </p>
-  </section>
-
-  <section style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;">
-    {posts.map((post) => (
-      <article style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-        <div style="width: 100%; height: 200px; overflow: hidden;">
-          <img src={post.image} alt={post.title} style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
-        <div style="padding: 25px;">
-          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
-            {post.tags.map(tag => (
-              <span style="background: #e8f5e9; color: #2ecc71; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;">{tag}</span>
-            ))}
-          </div>
-          <h2 style="font-size: 1.3rem; color: #1a3a5c; margin-bottom: 10px; line-height: 1.3;">
-            <a href={`/blog/${post.slug}/`} style="color: inherit; text-decoration: none;">{post.title}</a>
-          </h2>
-          <p style="color: #4a5568; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">{post.description}</p>
-          <div style="color: #718096; font-size: 0.85rem;">{post.date}</div>
-        </div>
-      </article>
-    ))}
-  </section>
-</Layout>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://sucesso.com.br/blog/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sucesso.com.br/blog/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <style>
+      :root { --navy-950:#061522; --navy-900:#0a1d2d; --green:#19c77a; --gold:#e5b75d; --ink:#132334; --muted:#5a6978; --paper:#f4f7f8; --line:#dbe4e9; --white:#fff; }
+      * { box-sizing:border-box; }
+      body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter,system-ui,sans-serif; line-height:1.65; }
+      a { color:inherit; }
+      .container { width:min(1140px,calc(100% - 2.5rem)); margin:0 auto; }
+      .topbar { padding:1.25rem 0; color:var(--white); background:var(--navy-950); }
+      .topbar__inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+      .brand { color:var(--white); font:800 1rem/1 Manrope,sans-serif; letter-spacing:.03em; text-decoration:none; }
+      .brand span { color:var(--green); }
+      nav { display:flex; align-items:center; gap:1.3rem; font-size:.88rem; font-weight:700; }
+      nav a { color:#dbe7ee; text-decoration:none; }
+      nav a:hover { color:var(--white); }
+      .hero { padding:6.5rem 0 5rem; color:var(--white); background:linear-gradient(115deg,var(--navy-950),var(--navy-900) 68%,#12344f); }
+      .eyebrow { display:inline-flex; align-items:center; gap:.55rem; margin:0 0 1.2rem; color:var(--green); font-size:.76rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+      .eyebrow::before { content:''; width:1.8rem; height:2px; background:currentColor; }
+      h1,h2,h3 { margin-top:0; font-family:Manrope,Inter,sans-serif; line-height:1.1; letter-spacing:-.035em; }
+      h1 { max-width:12ch; margin-bottom:1.2rem; font-size:clamp(2.8rem,6vw,5.2rem); }
+      .hero p { max-width:680px; margin:0; color:#c8d5df; font-size:1.15rem; }
+      main { padding:5.5rem 0 7rem; }
+      .section-head { display:flex; align-items:end; justify-content:space-between; gap:2rem; margin-bottom:2.5rem; }
+      .section-head h2 { max-width:14ch; margin-bottom:0; font-size:clamp(2rem,4vw,3.2rem); }
+      .section-head p { max-width:480px; margin:0; color:var(--muted); }
+      .posts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+      .post { display:flex; flex-direction:column; min-height:330px; padding:2rem; border:1px solid var(--line); border-radius:1rem; background:var(--white); transition:transform .2s ease,box-shadow .2s ease; }
+      .post:hover { transform:translateY(-3px); box-shadow:0 18px 42px rgba(6,21,34,.1); }
+      .post__meta { display:flex; justify-content:space-between; gap:1rem; margin-bottom:3rem; color:#748392; font-size:.8rem; }
+      .post__tag { color:#0d9d5d; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+      .post h2 { margin-bottom:.8rem; font-size:1.55rem; }
+      .post h2 a { text-decoration:none; }
+      .post h2 a:hover { color:#0d9d5d; }
+      .post p { margin-bottom:1.4rem; color:var(--muted); }
+      .post__link { margin-top:auto; color:#0d9d5d; font-weight:800; text-decoration:none; }
+      .post__link::after { content:'  ↗'; }
+      .cta { margin-top:5rem; padding:3rem; border-radius:1.1rem; color:var(--white); background:var(--navy-900); }
+      .cta h2 { max-width:15ch; margin-bottom:.8rem; font-size:clamp(1.8rem,4vw,2.8rem); }
+      .cta p { max-width:620px; margin-bottom:1.4rem; color:#c4d2dd; }
+      .button { display:inline-flex; min-height:3.3rem; align-items:center; justify-content:center; padding:.9rem 1.3rem; border-radius:.7rem; color:#052015; background:var(--green); font-weight:800; text-decoration:none; }
+      footer { padding:2.8rem 0; color:#b8c8d4; background:var(--navy-950); }
+      footer .footer__inner { display:flex; justify-content:space-between; gap:2rem; }
+      footer strong { color:var(--white); font-family:Manrope,sans-serif; }
+      footer a { color:var(--green); text-decoration:none; }
+      @media (max-width:760px) { nav a:not(:last-child) { display:none; } .section-head, footer .footer__inner { align-items:start; flex-direction:column; } .posts { grid-template-columns:1fr; } .post { min-height:280px; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/">SUCESSO<span>.</span>EMPRESARIAL</a>
+        <nav aria-label="Navegação principal"><a href="/">Início</a><a href="/resultado21/">Resultado 21</a><a href="/blog/">Conteúdos</a><a href="mailto:mauricio@sucesso.com.br">Contato</a></nav>
+      </div>
+    </header>
+    <section class="hero"><div class="container"><p class="eyebrow">Conteúdo Sucesso Empresarial</p><h1>Ideias para empresas em movimento.</h1><p>Inteligência artificial, automação e gestão explicadas sem fumaça. Conteúdo para quem quer entender o problema e fazer o próximo movimento.</p></div></section>
+    <main class="container">
+      <div class="section-head"><div><p class="eyebrow">Artigos</p><h2>O que merece sua atenção agora.</h2></div><p>Leituras práticas para conectar tecnologia à operação real da empresa.</p></div>
+      <section class="posts" aria-label="Artigos do blog">
+        {posts.map((post) => (
+          <article class="post">
+            <div class="post__meta"><span class="post__tag">{post.data.tags[0] ?? 'Gestão'}</span><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' })}</time></div>
+            <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+            <p>{post.data.description}</p>
+            <a class="post__link" href={`/blog/${post.id}/`}>Ler artigo</a>
+          </article>
+        ))}
+      </section>
+      <section class="cta"><p class="eyebrow">Da leitura à execução</p><h2>Tem um problema concreto para resolver?</h2><p>A Sucesso Empresarial ajuda a transformar oportunidade, processo e tecnologia em um próximo movimento claro.</p><a class="button" href="mailto:mauricio@sucesso.com.br">Fale com a Sucesso</a></section>
+    </main>
+    <footer><div class="container footer__inner"><div><p><strong>Sucesso Empresarial Ltda</strong></p><p>CNPJ: 01.655.728/0001-14</p><p><a href="mailto:mauricio@sucesso.com.br">mauricio@sucesso.com.br</a></p></div><div><a href="/privacidade/">Privacidade</a> · <a href="/termos/">Termos</a></div></div></footer>
+  </body>
+</html>

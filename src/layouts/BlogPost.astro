@@ -1,6 +1,4 @@
 ---
-import Layout from './Layout.astro';
-
 export interface Props {
   title: string;
   description: string;
@@ -9,63 +7,45 @@ export interface Props {
   image?: string;
   tags?: string[];
 }
-
 const { title, description, pubDate, author = 'Sucesso Empresarial', image, tags = [] } = Astro.props;
-
-const formattedDate = pubDate.toLocaleDateString('pt-BR', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-});
+const formattedDate = pubDate.toLocaleDateString('pt-BR', { year:'numeric', month:'long', day:'numeric' });
 ---
 
-<Layout title={title} description={description} article={true} pubDate={pubDate} author={author} image={image}>
-  <article style="max-width: 800px; margin: 0 auto;">
-    <header style="margin-bottom: 40px; text-align: center;">
-      <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-        {tags.map(tag => (
-          <span style="background: #e8f5e9; color: #2ecc71; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">{tag}</span>
-        ))}
-      </div>
-      <h1 style="font-size: 2.5rem; color: #1a3a5c; margin-bottom: 20px; line-height: 1.2;">{title}</h1>
-      <div style="color: #718096; font-size: 0.95rem;">
-        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-        <span style="margin: 0 10px;">|</span>
-        <span>{author}</span>
-      </div>
-    </header>
-
-    {image && (
-      <img src={image} alt={title} style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-bottom: 40px;" />
-    )}
-
-    <div style="font-size: 1.1rem; line-height: 1.9; color: #2d3748;" class="prose">
-      <slot />
-    </div>
-
-    <footer style="margin-top: 60px; padding-top: 40px; border-top: 1px solid #e2e8f0;">
-      <div style="background: #f8f9fa; padding: 30px; border-radius: 12px; text-align: center;">
-        <p style="font-size: 1.1rem; color: #1a3a5c; margin-bottom: 20px;">
-          Quer saber como aplicar isso no seu negocio?
-        </p>
-        <a href="mailto:mauricio@sucesso.com.br" style="display: inline-block; background: #2ecc71; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-          Fale com a gente
-        </a>
-      </div>
-    </footer>
-  </article>
-
-  <style>
-    .prose h2 { font-size: 1.8rem; color: #1a3a5c; margin-top: 2.5rem; margin-bottom: 1rem; line-height: 1.3; }
-    .prose h3 { font-size: 1.4rem; color: #1a3a5c; margin-top: 2rem; margin-bottom: 0.75rem; }
-    .prose p { margin-bottom: 1.5rem; }
-    .prose ul, .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
-    .prose li { margin-bottom: 0.5rem; }
-    .prose strong { color: #1a3a5c; }
-    .prose a { color: #2ecc71; text-decoration: underline; }
-    .prose blockquote { border-left: 4px solid #2ecc71; padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: #4a5568; }
-    .prose table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
-    .prose th, .prose td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
-    .prose th { background: #f8f9fa; font-weight: 600; }
-  </style>
-</Layout>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} /><link rel="canonical" href={`https://sucesso.com.br${Astro.url.pathname}`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>{title} | Sucesso Empresarial</title>
+    <meta property="og:type" content="article" /><meta property="og:title" content={`${title} | Sucesso Empresarial`} /><meta property="og:description" content={description} />
+    {image && <meta property="og:image" content={image} />}
+    <style>
+      :root { --navy-950:#061522; --navy-900:#0a1d2d; --green:#19c77a; --gold:#e5b75d; --ink:#132334; --muted:#5a6978; --paper:#f4f7f8; --line:#dbe4e9; --white:#fff; }
+      * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter,system-ui,sans-serif; line-height:1.7; }
+      a { color:inherit; } .container { width:min(1140px,calc(100% - 2.5rem)); margin:0 auto; }
+      .topbar { padding:1.25rem 0; color:var(--white); background:var(--navy-950); }.topbar__inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+      .brand { color:var(--white); font:800 1rem/1 Manrope,sans-serif; letter-spacing:.03em; text-decoration:none; }.brand span { color:var(--green); }
+      nav { display:flex; gap:1.3rem; font-size:.88rem; font-weight:700; } nav a { color:#dbe7ee; text-decoration:none; } nav a:hover { color:var(--white); }
+      .article-hero { padding:5.5rem 0 4.5rem; color:var(--white); background:linear-gradient(115deg,var(--navy-950),var(--navy-900) 68%,#12344f); }
+      .eyebrow { display:inline-flex; align-items:center; gap:.55rem; margin:0 0 1.2rem; color:var(--green); font-size:.76rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }.eyebrow::before { content:''; width:1.8rem; height:2px; background:currentColor; }
+      h1,h2,h3 { font-family:Manrope,Inter,sans-serif; line-height:1.12; letter-spacing:-.035em; } h1 { max-width:18ch; margin:0 0 1.2rem; font-size:clamp(2.5rem,5vw,4.7rem); }.lede { max-width:720px; margin:0 0 1.3rem; color:#c8d5df; font-size:1.15rem; }.meta { color:#aebdca; font-size:.9rem; }
+      main { padding:5.5rem 0 7rem; }.article { width:min(780px,100%); margin:0 auto; }.cover { width:100%; max-height:440px; margin:0 0 3rem; border-radius:1rem; object-fit:cover; }
+      .prose { color:#263747; font-size:1.08rem; }.prose h2 { margin:3rem 0 1rem; color:var(--navy-900); font-size:2rem; }.prose h3 { margin:2rem 0 .7rem; color:var(--navy-900); font-size:1.35rem; }.prose p { margin:0 0 1.5rem; }.prose ul,.prose ol { margin:0 0 1.5rem; padding-left:1.4rem; }.prose li { margin-bottom:.55rem; }.prose strong { color:var(--navy-900); }.prose a { color:#0d9d5d; text-decoration:underline; }.prose blockquote { margin:2rem 0; padding:1rem 1.3rem; border-left:3px solid var(--gold); color:var(--ink); background:#fff9ed; font-weight:700; }.prose table { width:100%; border-collapse:collapse; margin:2rem 0; }.prose th,.prose td { padding:.8rem; border:1px solid var(--line); text-align:left; }.prose th { background:#eaf0f3; }
+      .article-cta { margin-top:4rem; padding:2.5rem; border-radius:1rem; color:var(--white); background:var(--navy-900); }.article-cta h2 { margin-bottom:.7rem; font-size:2rem; }.article-cta p { color:#c4d2dd; }.button { display:inline-flex; min-height:3.2rem; align-items:center; padding:.85rem 1.2rem; border-radius:.7rem; color:#052015; background:var(--green); font-weight:800; text-decoration:none; }
+      footer { padding:2.8rem 0; color:#b8c8d4; background:var(--navy-950); } footer .footer__inner { display:flex; justify-content:space-between; gap:2rem; } footer strong { color:var(--white); font-family:Manrope,sans-serif; } footer a { color:var(--green); text-decoration:none; }
+      @media (max-width:760px) { nav a:not(:last-child) { display:none; } footer .footer__inner { align-items:start; flex-direction:column; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar"><div class="container topbar__inner"><a class="brand" href="/">SUCESSO<span>.</span>EMPRESARIAL</a><nav aria-label="Navegação principal"><a href="/">Início</a><a href="/resultado21/">Resultado 21</a><a href="/blog/">Conteúdos</a><a href="mailto:mauricio@sucesso.com.br">Contato</a></nav></div></header>
+    <section class="article-hero"><div class="container"><p class="eyebrow">{tags[0] ?? 'Conteúdo'}</p><h1>{title}</h1><p class="lede">{description}</p><p class="meta"><time datetime={pubDate.toISOString()}>{formattedDate}</time> · {author}</p></div></section>
+    <main><article class="article">
+      {image && <img class="cover" src={image} alt={title} loading="lazy" decoding="async" />}
+      <div class="prose"><slot /></div>
+      <section class="article-cta"><p class="eyebrow">Próximo movimento</p><h2>Quer aplicar isso na sua empresa?</h2><p>Converse com a Sucesso Empresarial sobre o problema real por trás da ferramenta.</p><a class="button" href="mailto:mauricio@sucesso.com.br">Fale com a Sucesso</a></section>
+    </article></main>
+    <footer><div class="container footer__inner"><div><p><strong>Sucesso Empresarial Ltda</strong></p><p>CNPJ: 01.655.728/0001-14</p><p><a href="mailto:mauricio@sucesso.com.br">mauricio@sucesso.com.br</a></p></div><div><a href="/privacidade/">Privacidade</a> · <a href="/termos/">Termos</a> · <a href="/blog/">Blog</a></div></div></footer>
+  </body>
+</html>
