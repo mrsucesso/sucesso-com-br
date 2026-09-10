@@ -99,9 +99,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       </section>
 
       <section class="contact-panel" id="contact-panel" hidden aria-labelledby="contact-title">
-        <p class="kicker">ÚLTIMO PASSO <span aria-hidden="true">/</span> CONTATO</p>
+        <div class="completion-context" aria-label="Conclusão do questionário">
+          <p>Você concluiu as 9 perguntas</p>
+          <span>Falta apenas confirmar onde entregamos seu resultado.</span>
+        </div>
+        <p class="kicker">SEU RAIO-X <span aria-hidden="true">/</span> ENTREGA</p>
         <h2 id="contact-title">Onde entregamos seu resultado?</h2>
-        <p class="lead">Usaremos seu e-mail para exibir o diagnóstico nesta página e, se você autorizar, enviar conteúdo da Sucesso.</p>
+        <p class="lead">Informe seu e-mail para exibir o diagnóstico nesta página. O envio de conteúdo da Sucesso é opcional.</p>
         <form id="contact-form" novalidate>
           <label for="email">Seu melhor e-mail</label>
           <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required />
@@ -118,7 +122,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       </section>
 
       <section class="result-panel" id="result-panel" hidden aria-labelledby="result-title"><div id="result-content"></div></section>
-      <section class="error-panel" id="error-panel" hidden aria-labelledby="error-title"><p class="kicker">FALHA DE PROCESSAMENTO</p><h2 id="error-title">Não conseguimos gerar seu diagnóstico.</h2><p id="error-copy">Suas respostas continuam preenchidas nesta página. Você pode revisar o e-mail e reenviar.</p><button class="button button-secondary" id="retry-button" type="button">Revisar e reenviar</button></section>
+      <section class="error-panel" id="error-panel" hidden aria-labelledby="error-title" role="alert" aria-live="assertive"><p class="kicker">RAIO-X INTERROMPIDO</p><h2 id="error-title">Houve uma falha no processamento</h2><p id="error-copy">Suas respostas continuam preenchidas. Revise o e-mail e tente novamente.</p><button class="button button-primary button-large" id="retry-button" type="button">Voltar ao e-mail e tentar novamente</button></section>
     </main>
 
     <footer><a href="/privacidade/">Privacidade</a><span>•</span><a href="/termos/">Termos</a><span>•</span><span>Sucesso Empresarial</span></footer>
@@ -153,7 +157,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       function requestId() { return `rx-${crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`}`; }
       function getSource() { const params = new URLSearchParams(window.location.search); return sourceMap[params.get('origem')] || sourceMap[params.get('utm_source')] || 'other'; }
       function getUtm() { const params = new URLSearchParams(window.location.search); const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']; return Object.fromEntries(keys.map((key) => [key, params.get(key)]).filter(([, value]) => value)); }
-      function showOnly(panel) { [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel].forEach((item) => { item.hidden = item !== panel; }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      function showOnly(panel) { [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel].forEach((item) => { item.hidden = item !== panel; }); window.scrollTo({ top: 0, behavior: 'auto' }); }
       function updateStep({ focus = true } = {}) { questions.forEach((question, index) => { question.hidden = index !== step; }); progressCurrent.textContent = String(step + 1); progressBar.style.width = `${((step + 1) / questions.length) * 100}%`; backButton.hidden = step === 0; nextButton.textContent = step === questions.length - 1 ? 'Continuar para o contato →' : 'Continuar →'; const activeQuestion = questions[step]; activeQuestion.setAttribute('aria-current', 'step'); questions.forEach((question, index) => { if (index !== step) question.removeAttribute('aria-current'); }); requestAnimationFrame(() => { activeQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (focus) activeQuestion.querySelector('input, textarea')?.focus({ preventScroll: true }); }); }
       function validateCurrent() { const fields = [...questions[step].querySelectorAll('input:not([type="radio"]), textarea'), ...questions[step].querySelectorAll('input[type="radio"]:checked')]; const requiredField = questions[step].querySelector('input[required], textarea[required]'); if (requiredField?.type === 'radio' && !questions[step].querySelector('input[type="radio"]:checked')) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (requiredField && requiredField.type !== 'radio' && !requiredField.checkValidity()) { requiredField.reportValidity(); return false; } if (!fields.length && requiredField) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } formStatus.textContent = ''; return true; }
       document.querySelector('#start-button').addEventListener('click', () => { step = 0; showOnly(formPanel); updateStep(); });
@@ -217,7 +221,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .button-primary:hover { background: #dbff91; }
       .button-secondary { color: var(--ink); background: transparent; border-color: var(--line); }
       .button-large { align-self: flex-start; min-height: 50px; padding-inline: 22px; }
-      .form-panel, .contact-panel, .loading-panel, .result-panel, .error-panel { padding: 34px 0; animation: rise .35s ease both; }
+      .form-panel, .contact-panel, .loading-panel, .result-panel, .error-panel { padding: 24px 0; animation: rise .35s ease both; }
+      .completion-context { padding: 14px 16px; margin-bottom: 20px; border: 1px solid rgba(196, 243, 106, .45); border-left: 3px solid var(--lime); background: rgba(196, 243, 106, .08); }
+      .completion-context p { margin-bottom: 3px; color: var(--lime); font-size: .95rem; font-weight: 800; }
+      .completion-context span { color: #d6e3e8; font-size: .86rem; }
       .progress-head { display: flex; justify-content: space-between; align-items: baseline; }
       .progress-text { color: var(--muted); }
       .progress-track { height: 3px; margin: 4px 0 62px; background: var(--line); }
@@ -263,8 +270,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .continuation-option span { color: var(--muted); font-size: .84rem; }
       .choice-feedback { min-height: 2em; margin-top: 15px; color: var(--muted); }
       .limitations { color: var(--muted); font-size: .76rem; margin-top: 40px; }
-      .error-panel { text-align: center; padding-top: 90px; }
-      .error-panel .button { margin-top: 18px; }
+      .contact-panel h2, .error-panel h2 { max-width: 620px; margin-bottom: 12px; font-size: clamp(1.8rem, 4vw, 2.65rem); }
+      .contact-panel .lead { max-width: 560px; margin-bottom: 18px; font-size: clamp(.95rem, 1.8vw, 1.05rem); }
+      .contact-panel .kicker, .error-panel .kicker { margin-bottom: 10px; }
+      .contact-panel form > label:not(.consent) { display: block; margin-bottom: 7px; font-size: .9rem; font-weight: 700; }
+      .contact-panel input[type='email'] { min-height: 48px; }
+      .error-panel { max-width: 680px; padding-top: 24px; }
+      .error-panel h2 { margin-bottom: 10px; }
+      .error-panel #error-copy { max-width: 560px; color: var(--muted); margin-bottom: 0; }
+      .error-panel .button { margin-top: 20px; }
       footer { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 24px; border-top: 1px solid rgba(40, 66, 83, .6); color: var(--muted); font-size: .75rem; }
       footer a { color: var(--muted); }
       @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
