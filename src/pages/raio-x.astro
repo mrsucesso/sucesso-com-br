@@ -204,7 +204,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .intro { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; }
       .kicker, .label, .progress-text, .opportunity-number { color: var(--lime); font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; }
       h1, h2, h3, p { margin-top: 0; }
-      h1 { max-width: 720px; margin-bottom: 26px; font-size: clamp(2.45rem, 5.2vw, 4.5rem); line-height: .99; letter-spacing: -.075em; }
+      h1 { max-width: 680px; margin-bottom: 26px; font-size: clamp(2.2rem, 4.4vw, 3.8rem); line-height: 1.02; letter-spacing: -.065em; }
       h2 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.04; letter-spacing: -.06em; }
       h3 { line-height: 1.2; }
       .lead { max-width: 590px; color: var(--muted); font-size: clamp(1rem, 2vw, 1.16rem); }
@@ -269,7 +269,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       footer a { color: var(--muted); }
       @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
       @keyframes spin { to { transform: rotate(360deg); } }
-      @media (max-width: 600px) { .site-header { padding: 20px 20px 0; } .shell { width: min(100% - 32px, 780px); padding-top: 64px; } .intro { min-height: 70vh; } .choice-grid { grid-template-columns: 1fr; } .choice-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: clamp(2.5rem, 14vw, 4rem); } .progress-track { margin-bottom: 43px; } .form-actions { margin-top: 32px; } }
+      @media (max-width: 600px) { .site-header { padding: 20px 20px 0; } .shell { width: min(100% - 32px, 780px); padding-top: 64px; } .intro { min-height: 70vh; } .choice-grid { grid-template-columns: 1fr; } .choice-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: clamp(2.15rem, 9vw, 3rem); } .progress-track { margin-bottom: 43px; } .form-actions { margin-top: 32px; } }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
     </style>
   </body>
