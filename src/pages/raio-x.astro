@@ -1,0 +1,272 @@
+---
+const title = 'Raio-X do Sucesso | Sucesso Empresarial';
+const description = 'Responda 9 perguntas e receba um mapa prático de oportunidades para o seu negócio.';
+const apiBase = import.meta.env.PUBLIC_RAIO_X_API_BASE || 'http://127.0.0.1:3811';
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#071829" />
+    <link rel="canonical" href="https://sucesso.com.br/raio-x" />
+    <link rel="icon" type="image/jpeg" sizes="512x512" href="/images/favicon-sucesso-empresarial.jpg" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    {turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/" class="brand" aria-label="Sucesso Empresarial">
+        <span class="brand-mark"><img src="/images/logo-sucesso-flat-branca.png" alt="" /></span>
+        <span>Sucesso <b>Empresarial</b></span>
+      </a>
+      <a class="header-link" href="/resultado21/">Resultado 21</a>
+    </header>
+
+    <main class="shell">
+      <section class="intro" id="intro" aria-labelledby="page-title">
+        <p class="kicker">RAIO-X DO SUCESSO <span aria-hidden="true">/</span> 01</p>
+        <h1 id="page-title">Encontre onde existe dinheiro mais perto no seu negócio.</h1>
+        <p class="lead">Responda 9 perguntas objetivas. No fim, você verá três oportunidades práticas, uma ação para os próximos 7 dias e caminhos para continuar.</p>
+        <div class="trust-row"><span>9 perguntas</span><span>Sem promessa de resultado</span><span>Leva cerca de 4 minutos</span></div>
+        <button class="button button-primary button-large" id="start-button" type="button">Começar o Raio-X <span aria-hidden="true">→</span></button>
+      </section>
+
+      <section class="form-panel" id="form-panel" hidden aria-labelledby="form-title">
+        <div class="progress-head">
+          <p class="kicker" id="form-title">SEU CONTEXTO</p>
+          <p class="progress-text"><span id="progress-current">1</span> de 9</p>
+        </div>
+        <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+        <p class="status-message" id="form-status" role="status" aria-live="polite"></p>
+
+        <form id="diagnosis-form" novalidate>
+          <div class="question" data-step="0">
+            <label for="name">Como podemos chamar você?</label>
+            <p class="hint">Use seu primeiro nome ou como prefere ser chamado.</p>
+            <input id="name" name="name" type="text" autocomplete="given-name" minlength="2" maxlength="120" required />
+          </div>
+          <div class="question" data-step="1" hidden>
+            <fieldset><legend>Qual é sua relação com o negócio?</legend>
+              <div class="choice-grid"><label class="choice"><input type="radio" name="role" value="owner" required /><span>Sou dono ou sócio</span></label><label class="choice"><input type="radio" name="role" value="manager" /><span>Gerencio a operação</span></label><label class="choice"><input type="radio" name="role" value="professional" /><span>Sou profissional da empresa</span></label><label class="choice"><input type="radio" name="role" value="sales" /><span>Atuo em vendas</span></label><label class="choice"><input type="radio" name="role" value="other" /><span>Outra relação</span></label></div>
+            </fieldset>
+          </div>
+          <div class="question" data-step="2" hidden>
+            <label for="main_offer">Em uma frase, o que sua empresa vende?</label>
+            <p class="hint">Pode ser um produto, serviço ou tipo de projeto.</p>
+            <textarea id="main_offer" name="main_offer" rows="4" minlength="3" maxlength="500" required></textarea>
+          </div>
+          <div class="question" data-step="3" hidden>
+            <fieldset><legend>Como os clientes normalmente compram?</legend>
+              <div class="choice-grid"><label class="choice"><input type="radio" name="purchase_mode" value="appointment" required /><span>Agendam um horário</span></label><label class="choice"><input type="radio" name="purchase_mode" value="quote" /><span>Pedem um orçamento</span></label><label class="choice"><input type="radio" name="purchase_mode" value="direct" /><span>Compram diretamente</span></label><label class="choice"><input type="radio" name="purchase_mode" value="recurring" /><span>Pagam de forma recorrente</span></label><label class="choice"><input type="radio" name="purchase_mode" value="mixed" /><span>Depende do que é vendido</span></label></div>
+            </fieldset>
+          </div>
+          <div class="question" data-step="4" hidden>
+            <fieldset><legend>Existem pessoas que demonstraram interesse e não compraram?</legend>
+              <div class="choice-grid choice-grid--four"><label class="choice"><input type="radio" name="stalled_interest" value="many" required /><span>Muitas</span></label><label class="choice"><input type="radio" name="stalled_interest" value="some" /><span>Algumas</span></label><label class="choice"><input type="radio" name="stalled_interest" value="few" /><span>Poucas</span></label><label class="choice"><input type="radio" name="stalled_interest" value="unknown" /><span>Não sei</span></label></div>
+            </fieldset>
+          </div>
+          <div class="question" data-step="5" hidden>
+            <fieldset><legend>Existem clientes antigos que poderiam comprar novamente?</legend>
+              <div class="choice-grid"><label class="choice"><input type="radio" name="repurchase_potential" value="many" required /><span>Sim, muitos</span></label><label class="choice"><input type="radio" name="repurchase_potential" value="some" /><span>Sim, alguns</span></label><label class="choice"><input type="radio" name="repurchase_potential" value="few" /><span>Talvez poucos</span></label><label class="choice"><input type="radio" name="repurchase_potential" value="not_applicable" /><span>Não se aplica</span></label><label class="choice"><input type="radio" name="repurchase_potential" value="unknown" /><span>Não sei</span></label></div>
+            </fieldset>
+          </div>
+          <div class="question" data-step="6" hidden>
+            <fieldset><legend>Existe agenda, estoque ou capacidade que poderia vender mais?</legend>
+              <div class="choice-grid choice-grid--four"><label class="choice"><input type="radio" name="idle_capacity" value="yes" required /><span>Sim</span></label><label class="choice"><input type="radio" name="idle_capacity" value="maybe" /><span>Talvez</span></label><label class="choice"><input type="radio" name="idle_capacity" value="no" /><span>Não</span></label><label class="choice"><input type="radio" name="idle_capacity" value="unknown" /><span>Não sei</span></label></div>
+            </fieldset>
+          </div>
+          <div class="question" data-step="7" hidden>
+            <fieldset><legend>Existem clientes que poderiam comprar algo complementar ou de maior valor?</legend>
+              <div class="choice-grid"><label class="choice"><input type="radio" name="complementary_sale" value="yes" required /><span>Sim</span></label><label class="choice"><input type="radio" name="complementary_sale" value="maybe" /><span>Talvez</span></label><label class="choice"><input type="radio" name="complementary_sale" value="unknown" /><span>Não sei</span></label><label class="choice"><input type="radio" name="complementary_sale" value="not_applicable" /><span>Não se aplica</span></label></div>
+            </fieldset>
+          </div>
+          <div class="question" data-step="8" hidden>
+            <label for="priority_30_days">Se pudesse melhorar uma coisa nos próximos 30 dias, o que teria maior impacto?</label>
+            <p class="hint">Esta é a pergunta aberta. Descreva o que está mais urgente para você.</p>
+            <textarea id="priority_30_days" name="priority_30_days" rows="5" minlength="2" maxlength="1000" required></textarea>
+          </div>
+
+          <div class="form-actions"><button class="button button-secondary" id="back-button" type="button" hidden>Voltar</button><button class="button button-primary" id="next-button" type="button">Continuar <span aria-hidden="true">→</span></button></div>
+          <div class="technical-field" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+        </form>
+      </section>
+
+      <section class="contact-panel" id="contact-panel" hidden aria-labelledby="contact-title">
+        <p class="kicker">ÚLTIMO PASSO <span aria-hidden="true">/</span> CONTATO</p>
+        <h2 id="contact-title">Onde entregamos seu resultado?</h2>
+        <p class="lead">Usaremos seu e-mail para exibir o diagnóstico nesta página e, se você autorizar, enviar conteúdo da Sucesso.</p>
+        <form id="contact-form" novalidate>
+          <label for="email">Seu melhor e-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required />
+          <label class="consent"><input id="sucesso-content" name="sucesso_content" type="checkbox" /><span>Quero receber conteúdos da Sucesso Empresarial por e-mail. Posso cancelar quando quiser.</span></label>
+          <p class="privacy-note">O consentimento é opcional e separado do diagnóstico. Consulte nossa <a href="/privacidade/">política de privacidade</a>.</p>
+          {turnstileSiteKey && <div id="turnstile-widget" class="turnstile-widget" aria-label="Verificação de segurança"></div>}
+          <p class="status-message" id="contact-status" role="alert" aria-live="assertive"></p>
+          <button class="button button-primary button-large" id="submit-button" type="submit">Ver meu Raio-X <span aria-hidden="true">→</span></button>
+        </form>
+      </section>
+
+      <section class="loading-panel" id="loading-panel" hidden aria-labelledby="loading-title">
+        <div class="loader" aria-hidden="true"></div><p class="kicker">ANALISANDO RESPOSTAS</p><h2 id="loading-title">Organizando seu mapa de oportunidades.</h2><p>Isso pode levar alguns segundos. Não feche esta página.</p>
+      </section>
+
+      <section class="result-panel" id="result-panel" hidden aria-labelledby="result-title"><div id="result-content"></div></section>
+      <section class="error-panel" id="error-panel" hidden aria-labelledby="error-title"><p class="kicker">NÃO FOI POSSÍVEL CONCLUIR</p><h2 id="error-title">O resultado não chegou desta vez.</h2><p id="error-copy">Confira sua conexão e tente enviar novamente. Suas respostas continuam preenchidas nesta página.</p><button class="button button-secondary" id="retry-button" type="button">Tentar novamente</button></section>
+    </main>
+
+    <footer><a href="/privacidade/">Privacidade</a><span>•</span><a href="/termos/">Termos</a><span>•</span><span>Sucesso Empresarial</span></footer>
+
+    <script define:vars={{ apiBase, turnstileSiteKey }}>
+      const API_BASE = apiBase;
+      const TURNSTILE_SITEKEY = turnstileSiteKey;
+      const ENDPOINT = `${API_BASE.replace(/\/$/, '')}/api/raio-x/diagnoses`;
+      const form = document.querySelector('#diagnosis-form');
+      const questions = [...document.querySelectorAll('.question')];
+      const intro = document.querySelector('#intro');
+      const formPanel = document.querySelector('#form-panel');
+      const contactPanel = document.querySelector('#contact-panel');
+      const loadingPanel = document.querySelector('#loading-panel');
+      const resultPanel = document.querySelector('#result-panel');
+      const errorPanel = document.querySelector('#error-panel');
+      const nextButton = document.querySelector('#next-button');
+      const backButton = document.querySelector('#back-button');
+      const progressCurrent = document.querySelector('#progress-current');
+      const progressBar = document.querySelector('#progress-bar');
+      const formStatus = document.querySelector('#form-status');
+      let step = 0;
+      let lastSubmission = null;
+      let turnstileToken = null;
+      let turnstileWidgetId = null;
+      let turnstileLoadFailed = false;
+
+      const sourceMap = { supleno: 'supleno', resultado21: 'resultado21', instagram: 'instagram', conteudo: 'conteudo' };
+      function requestId() { return `rx-${crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`}`; }
+      function getSource() { const params = new URLSearchParams(window.location.search); return sourceMap[params.get('origem')] || sourceMap[params.get('utm_source')] || 'other'; }
+      function getUtm() { const params = new URLSearchParams(window.location.search); const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']; return Object.fromEntries(keys.map((key) => [key, params.get(key)]).filter(([, value]) => value)); }
+      function showOnly(panel) { [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel].forEach((item) => { item.hidden = item !== panel; }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      function updateStep() { questions.forEach((question, index) => { question.hidden = index !== step; }); progressCurrent.textContent = String(step + 1); progressBar.style.width = `${((step + 1) / questions.length) * 100}%`; backButton.hidden = step === 0; nextButton.textContent = step === questions.length - 1 ? 'Continuar para o contato →' : 'Continuar →'; questions[step].querySelector('input, textarea')?.focus(); }
+      function validateCurrent() { const fields = [...questions[step].querySelectorAll('input:not([type="radio"]), textarea'), ...questions[step].querySelectorAll('input[type="radio"]:checked')]; const requiredField = questions[step].querySelector('input[required], textarea[required]'); if (requiredField?.type === 'radio' && !questions[step].querySelector('input[type="radio"]:checked')) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (requiredField && requiredField.type !== 'radio' && !requiredField.checkValidity()) { requiredField.reportValidity(); return false; } if (!fields.length && requiredField) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } formStatus.textContent = ''; return true; }
+      document.querySelector('#start-button').addEventListener('click', () => { showOnly(formPanel); updateStep(); });
+      function initializeTurnstile() {
+        if (!TURNSTILE_SITEKEY || turnstileWidgetId !== null) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          const started = Date.now();
+          const wait = () => {
+            if (window.turnstile?.render) {
+              turnstileWidgetId = window.turnstile.render('#turnstile-widget', { sitekey: TURNSTILE_SITEKEY, callback: (token) => { turnstileToken = token; }, 'expired-callback': () => { turnstileToken = null; }, 'error-callback': () => { turnstileToken = null; turnstileLoadFailed = true; document.querySelector('#contact-status').textContent = 'A verificação de segurança falhou. Tente novamente.'; } });
+              resolve();
+            } else if (Date.now() - started > 8000) {
+              turnstileLoadFailed = true;
+              reject(new Error('TURNSTILE_LOAD_FAILED'));
+            } else setTimeout(wait, 50);
+          };
+          wait();
+        });
+      }
+      nextButton.addEventListener('click', () => { if (!validateCurrent()) return; if (step < questions.length - 1) { step += 1; updateStep(); } else { showOnly(contactPanel); document.querySelector('#email').focus(); initializeTurnstile().catch(() => { document.querySelector('#contact-status').textContent = 'Não foi possível carregar a verificação de segurança.'; }); } });
+      backButton.addEventListener('click', () => { if (step > 0) { step -= 1; updateStep(); } });
+      function collectAnswers() { const data = Object.fromEntries(new FormData(form).entries()); const honeypot = data.website || ''; delete data.website; return { answers: data, honeypot }; }
+      function escapeHtml(value) { return text(value).replace(/[&<>\"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' })[character]); }
+      function validResult(data) { const report = data?.report; return Boolean(data?.diagnosis_id && /^RXS-[A-Za-z0-9_-]+$/.test(data.diagnosis_id) && data.status === 'completed' && report && Array.isArray(report.opportunities) && report.opportunities.length === 3 && report.action_7_days && Array.isArray(data.continuation_options)); }
+      function text(value) { return typeof value === 'string' ? value : ''; }
+      function renderResult(data) { const report = data.report; const recommended = Number.isInteger(report.recommended_opportunity_index) ? report.recommended_opportunity_index : 0; const opportunityCards = report.opportunities.map((item, index) => `<article class="opportunity ${index === recommended ? 'opportunity--recommended' : ''}"><p class="opportunity-number">0${index + 1}${index === recommended ? ' · RECOMENDADA' : ''}</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.reason)}</p><ul>${(item.evidence_basis || []).map((evidence) => `<li>${escapeHtml(evidence)}</li>`).join('')}</ul><p class="meta">Esforço ${escapeHtml(item.effort)} · Velocidade ${escapeHtml(item.speed)}</p></article>`).join(''); const steps = (report.action_7_days.steps || []).map((item) => `<li>${escapeHtml(item)}</li>`).join(''); const options = [{ id: 'self_serve', title: 'Quero tentar sozinho', copy: 'Levar o prompt e os próximos passos para a rotina.' }, { id: 'learn_with_ai', title: 'Quero aprender a executar com IA', copy: 'Conhecer o Resultado 21 se fizer sentido para o seu momento.' }, { id: 'implementation_help', title: 'Quero ajuda para implantar', copy: 'Conversar sobre um caminho de execução para o negócio.' }].filter((option) => data.continuation_options.includes(option.id)); document.querySelector('#result-content').innerHTML = `<p class="kicker">SEU RAIO-X <span aria-hidden="true">/</span> ${escapeHtml(data.diagnosis_id)}</p><h2 id="result-title">Seu mapa de oportunidades</h2><p class="result-summary">${escapeHtml(report.summary)}</p><div class="profile"><p class="label">PERFIL RESUMIDO</p><p>${escapeHtml(report.business_profile)}</p></div><div class="opportunity-list"><h3>Três oportunidades para olhar agora</h3>${opportunityCards}</div><div class="seven-day"><p class="label">PRÓXIMOS 7 DIAS</p><h3>${escapeHtml(report.action_7_days.objective)}</h3><ol>${steps}</ol><p><b>Métrica:</b> ${escapeHtml(report.action_7_days.metric)}</p></div><div class="prompt-box"><p class="label">PROMPT PERSONALIZADO</p><p>${escapeHtml(report.personalized_prompt)}</p></div><div class="continuation"><p class="label">ESCOLHA O PRÓXIMO PASSO</p><div class="continuation-grid">${options.map((option) => `<button class="continuation-option" type="button" data-continuation="${option.id}"><b>${option.title}</b><span>${option.copy}</span></button>`).join('')}</div><p class="choice-feedback" id="choice-feedback" role="status"></p></div><p class="limitations"><b>Limitações do diagnóstico:</b> ${(report.limitations || []).map(escapeHtml).join(' ')}</p>`; document.querySelectorAll('[data-continuation]').forEach((button) => button.addEventListener('click', () => chooseContinuation(button.dataset.continuation, data))); }
+      function chooseContinuation(choice, data) { const feedback = document.querySelector('#choice-feedback'); if (choice === 'learn_with_ai') { feedback.innerHTML = 'Você pode conhecer o <a href="/resultado21/">Resultado 21</a> como uma opção de aprendizagem prática. A escolha é sua.'; return; } feedback.textContent = choice === 'self_serve' ? 'Certo. Comece pela ação de 7 dias e use o prompt como apoio.' : 'Certo. Esse interesse fica registrado para orientar o próximo contato, sem inscrição automática.'; }
+      async function submitDiagnosis(event) { event.preventDefault(); const email = document.querySelector('#email'); if (!email.checkValidity()) { email.reportValidity(); return; } if (TURNSTILE_SITEKEY) { if (turnstileLoadFailed || !turnstileToken) { document.querySelector('#contact-status').textContent = 'Conclua a verificação de segurança antes de enviar.'; return; } } const collected = collectAnswers(); if (collected.honeypot) return; lastSubmission = { request_id: requestId(), source: getSource(), utm: getUtm(), answers: collected.answers, honeypot: collected.honeypot, ...(TURNSTILE_SITEKEY ? { turnstile_token: turnstileToken } : {}), contact: { email: email.value.trim() }, consent: { sucesso_content: document.querySelector('#sucesso-content').checked } }; showOnly(loadingPanel); const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 15000); try { const response = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': lastSubmission.request_id }, body: JSON.stringify(lastSubmission), signal: controller.signal }); if (!response.ok) throw new Error(`HTTP_${response.status}`); const data = await response.json(); if (!validResult(data)) throw new Error('INVALID_RESPONSE'); renderResult(data); showOnly(resultPanel); } catch (error) { document.querySelector('#error-copy').textContent = error.name === 'AbortError' ? 'A API demorou mais que o esperado. Tente novamente em alguns instantes.' : 'Confira sua conexão e tente enviar novamente. Suas respostas continuam preenchidas nesta página.'; showOnly(errorPanel); } finally { clearTimeout(timeout); } }
+      document.querySelector('#contact-form').addEventListener('submit', submitDiagnosis);
+      document.querySelector('#retry-button').addEventListener('click', () => { showOnly(contactPanel); document.querySelector('#email').focus(); });
+    </script>
+
+    <style>
+      :root { --ink: #eaf1f5; --muted: #a4b2bd; --navy: #071829; --panel: #0d2435; --line: #284253; --lime: #c4f36a; --orange: #ff9f5a; --focus: #8bd5ff; }
+      * { box-sizing: border-box; }
+      html { background: var(--navy); }
+      body { margin: 0; color: var(--ink); background: radial-gradient(circle at 90% 0%, #173a4d 0, transparent 34rem), var(--navy); font-family: Manrope, sans-serif; line-height: 1.6; min-height: 100vh; }
+      a { color: var(--lime); }
+      button, input, textarea { font: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+      .site-header { max-width: 1180px; margin: auto; padding: 28px 28px 0; display: flex; justify-content: space-between; align-items: center; }
+      .brand { color: var(--ink); text-decoration: none; display: flex; gap: 10px; align-items: center; font-size: .84rem; letter-spacing: .04em; text-transform: uppercase; }
+      .brand b { color: var(--lime); font-weight: 700; }
+      .brand-mark { display: block; width: 42px; height: 32px; object-fit: contain; }
+      .header-link { font-size: .78rem; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+      .shell { width: min(100% - 40px, 780px); margin: 0 auto; padding: 90px 0 110px; }
+      .intro { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; }
+      .kicker, .label, .progress-text, .opportunity-number { color: var(--lime); font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { max-width: 720px; margin-bottom: 26px; font-size: clamp(2.45rem, 7vw, 5.4rem); line-height: .99; letter-spacing: -.075em; }
+      h2 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.04; letter-spacing: -.06em; }
+      h3 { line-height: 1.2; }
+      .lead { max-width: 590px; color: var(--muted); font-size: clamp(1rem, 2vw, 1.16rem); }
+      .trust-row { display: flex; flex-wrap: wrap; gap: 10px 24px; color: #d0dde4; font-size: .76rem; margin: 34px 0 42px; }
+      .trust-row span::before { content: '•'; color: var(--orange); margin-right: 8px; }
+      .button { min-height: 48px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; padding: 12px 18px; font-weight: 800; transition: transform .2s, background .2s; }
+      .button:hover { transform: translateY(-2px); }
+      .button-primary { color: var(--navy); background: var(--lime); }
+      .button-primary:hover { background: #dbff91; }
+      .button-secondary { color: var(--ink); background: transparent; border-color: var(--line); }
+      .button-large { align-self: flex-start; min-height: 54px; padding-inline: 24px; }
+      .form-panel, .contact-panel, .loading-panel, .result-panel, .error-panel { padding: 34px 0; animation: rise .35s ease both; }
+      .progress-head { display: flex; justify-content: space-between; align-items: baseline; }
+      .progress-text { color: var(--muted); }
+      .progress-track { height: 3px; margin: 4px 0 62px; background: var(--line); }
+      .progress-track span { display: block; height: 100%; background: var(--lime); transition: width .3s ease; }
+      .question label, legend { display: block; margin-bottom: 12px; font-size: clamp(1.45rem, 4vw, 2.35rem); font-weight: 700; line-height: 1.12; letter-spacing: -.05em; }
+      .hint { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
+      input[type='text'], input[type='email'], textarea { width: 100%; color: var(--ink); background: rgba(13, 36, 53, .85); border: 1px solid var(--line); border-radius: 2px; padding: 15px; }
+      input[type='text'], input[type='email'] { min-height: 52px; }
+      textarea { resize: vertical; min-height: 120px; }
+      input:focus, textarea:focus { border-color: var(--focus); outline: none; }
+      fieldset { border: 0; margin: 0; padding: 0; }
+      .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .choice { display: flex; min-height: 58px; align-items: center; gap: 11px; padding: 13px; color: #dbe7ed; background: rgba(13, 36, 53, .8); border: 1px solid var(--line); cursor: pointer; font-size: .9rem; transition: border-color .2s, background .2s; }
+      .choice:has(input:checked) { border-color: var(--lime); background: rgba(196, 243, 106, .1); color: var(--lime); }
+      .choice input { accent-color: var(--lime); flex: 0 0 auto; }
+      .form-actions { display: flex; gap: 12px; justify-content: space-between; margin-top: 44px; }
+      .form-actions .button-primary { margin-left: auto; }
+      .status-message { min-height: 1.5em; color: var(--orange); font-size: .86rem; }
+      .consent { display: flex; gap: 12px; margin: 26px 0 12px; color: #d4e0e6; font-size: .9rem; cursor: pointer; }
+      .consent input { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--lime); }
+      .privacy-note { color: var(--muted); font-size: .75rem; margin-bottom: 28px; }
+      .technical-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+      .loader { width: 38px; height: 38px; border: 3px solid var(--line); border-top-color: var(--lime); border-radius: 50%; animation: spin 1s linear infinite; margin: 35px 0; }
+      .result-summary { color: var(--muted); font-size: 1.1rem; max-width: 650px; }
+      .profile, .seven-day, .prompt-box { padding: 24px; margin: 30px 0; background: var(--panel); border-left: 3px solid var(--orange); }
+      .profile p:last-child, .prompt-box p:last-child { margin-bottom: 0; }
+      .opportunity-list { margin: 52px 0; }
+      .opportunity-list > h3 { font-size: 1.4rem; margin-bottom: 18px; }
+      .opportunity { padding: 23px; border: 1px solid var(--line); margin-top: 12px; background: rgba(13, 36, 53, .56); }
+      .opportunity--recommended { border-color: var(--lime); }
+      .opportunity-number { margin-bottom: 14px; }
+      .opportunity h3 { font-size: 1.25rem; margin-bottom: 9px; }
+      .opportunity p { color: var(--muted); }
+      .opportunity ul { color: #d3e1e7; padding-left: 19px; font-size: .88rem; }
+      .meta { font-family: 'DM Mono', monospace; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+      .seven-day { border-left-color: var(--lime); }
+      .seven-day ol { padding-left: 22px; color: #d7e3e9; }
+      .continuation { margin-top: 50px; }
+      .continuation-grid { display: grid; gap: 10px; }
+      .continuation-option { display: grid; gap: 4px; text-align: left; color: var(--ink); background: transparent; border: 1px solid var(--line); padding: 17px; cursor: pointer; min-height: 70px; }
+      .continuation-option:hover { border-color: var(--lime); }
+      .continuation-option b { color: var(--lime); }
+      .continuation-option span { color: var(--muted); font-size: .84rem; }
+      .choice-feedback { min-height: 2em; margin-top: 15px; color: var(--muted); }
+      .limitations { color: var(--muted); font-size: .76rem; margin-top: 40px; }
+      .error-panel { text-align: center; padding-top: 90px; }
+      .error-panel .button { margin-top: 18px; }
+      footer { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 24px; border-top: 1px solid rgba(40, 66, 83, .6); color: var(--muted); font-size: .75rem; }
+      footer a { color: var(--muted); }
+      @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (max-width: 600px) { .site-header { padding: 20px 20px 0; } .shell { width: min(100% - 32px, 780px); padding-top: 64px; } .intro { min-height: 70vh; } .choice-grid { grid-template-columns: 1fr; } .choice-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: clamp(2.5rem, 14vw, 4rem); } .progress-track { margin-bottom: 43px; } .form-actions { margin-top: 32px; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+    </style>
+  </body>
+</html>
