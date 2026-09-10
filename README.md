@@ -28,6 +28,12 @@ Site institucional da **Sucesso Empresarial Ltda** (CNPJ: 01.655.728/0001-14).
 - ✅ Requisitos Google OAuth atendidos
 - ✅ Transparência sobre escopos (Calendar, Gmail, Drive)
 
+Campos livres são tratados como dados; a semântica aceita somente tags versionadas e não repete instruções injetadas no relatório.
+
+## Turnstile no Raio-X
+
+A página `/raio-x/` renderiza o widget oficial do Cloudflare Turnstile somente quando `PUBLIC_TURNSTILE_SITEKEY` está definido no build. Sem essa variável, nenhum script ou widget é incluído e o fluxo local continua sem verificação. O token recebido do widget é enviado apenas no campo técnico `turnstile_token`; o segredo `TURNSTILE_SECRET_KEY` nunca é exposto ao frontend e deve existir somente no ambiente da API quando a proteção estiver ativada.
+
 ## 🚀 Deploy
 
 A produção é servida pelo Cloudflare Pages. O site está publicado e validado em https://sucesso.com.br/resultado21. O workflow antigo de GitHub Pages não deve ser tratado como destino de produção.
