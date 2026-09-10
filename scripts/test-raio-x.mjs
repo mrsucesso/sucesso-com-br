@@ -2,6 +2,24 @@ import { readFile } from 'node:fs/promises';
 import { strict as assert } from 'node:assert';
 
 const html = await readFile(new URL('../dist/raio-x/index.html', import.meta.url), 'utf8');
+const pageSources = await Promise.all([
+  ['Home', '../src/pages/index.astro'],
+  ['Resultado 21', '../src/pages/resultado21.astro'],
+  ['Resultado 21 obrigado', '../src/pages/resultado21/obrigado.astro'],
+  ['Raio-X', '../src/pages/raio-x.astro'],
+].map(async ([name, path]) => [name, await readFile(new URL(path, import.meta.url), 'utf8')]));
+
+for (const [name, source] of pageSources) {
+  if (name === 'Resultado 21 obrigado') {
+    assert.ok(source.includes('<span>sucesso</span> empresarial'), `${name} mantém a marca textual`);
+    continue;
+  }
+  const markClass = name === 'Raio-X' ? 'brand-mark' : 'brand';
+  const rule = new RegExp(`\\.${markClass}\\s*\\{[^}]*width:\\s*72px;[^}]*height:\\s*72px;`);
+  assert.match(source, rule, `${name} usa área visual 72x72`);
+  const imageRule = new RegExp(`\\.${markClass}\\s+img\\s*\\{[^}]*display:\\s*block;[^}]*width:\\s*100%;[^}]*height:\\s*100%;[^}]*object-fit:\\s*contain;`);
+  assert.match(source, imageRule, `${name} contém a imagem sem distorção`);
+}
 
 assert.match(html, /<h1[^>]*>Encontre onde existe dinheiro mais perto/);
 assert.equal((html.match(/<h1\b/g) || []).length, 1, 'a rota deve ter um único H1');
