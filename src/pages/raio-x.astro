@@ -63,7 +63,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
             <textarea id="main_offer" name="main_offer" rows="4" minlength="3" maxlength="500" required></textarea>
           </div>
           <div class="question" data-step="3" hidden>
-            <fieldset><legend>Como os clientes normalmente compram?</legend>
+            <fieldset><legend>Como os clientes normalmente compram?</legend><p class="question-instruction">Escolha a opção que melhor representa o comportamento predominante.</p>
               <div class="choice-grid"><label class="choice"><input type="radio" name="purchase_mode" value="appointment" required /><span>Agendam um horário</span></label><label class="choice"><input type="radio" name="purchase_mode" value="quote" /><span>Pedem um orçamento</span></label><label class="choice"><input type="radio" name="purchase_mode" value="direct" /><span>Compram diretamente</span></label><label class="choice"><input type="radio" name="purchase_mode" value="recurring" /><span>Pagam de forma recorrente</span></label><label class="choice"><input type="radio" name="purchase_mode" value="mixed" /><span>Depende do que é vendido</span></label></div>
             </fieldset>
           </div>
@@ -230,18 +230,19 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .progress-text { color: var(--muted); }
       .progress-track { height: 3px; margin: 4px 0 62px; background: var(--line); }
       .progress-track span { display: block; height: 100%; background: var(--lime); transition: width .3s ease; }
-      .question label, legend { display: block; margin-bottom: 12px; font-size: clamp(1.45rem, 4vw, 2.35rem); font-weight: 700; line-height: 1.12; letter-spacing: -.05em; }
+      .question label, legend { display: block; margin-bottom: 10px; font-size: clamp(1.25rem, 2.8vw, 1.85rem); font-weight: 700; line-height: 1.16; letter-spacing: -.045em; }
+      .question-instruction { margin: 0 0 18px; color: var(--muted); font-size: .86rem; }
       .hint { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
       input[type='text'], input[type='email'], textarea { width: 100%; color: var(--ink); background: rgba(13, 36, 53, .85); border: 1px solid var(--line); border-radius: 2px; padding: 15px; }
       input[type='text'], input[type='email'] { min-height: 52px; }
       textarea { resize: vertical; min-height: 120px; }
       input:focus, textarea:focus { border-color: var(--focus); outline: none; }
       fieldset { border: 0; margin: 0; padding: 0; }
-      .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-      .choice { display: flex; min-height: 48px; align-items: center; gap: 10px; padding: 10px 12px; color: #dbe7ed; background: rgba(13, 36, 53, .8); border: 1px solid var(--line); cursor: pointer; font-size: .88rem; transition: border-color .2s, background .2s; }
+      .choice-grid { display: grid; grid-template-columns: minmax(0, 600px); gap: 8px; }
+      .choice { display: flex; min-height: 46px; align-items: center; gap: 10px; padding: 9px 12px; color: #dbe7ed; background: rgba(13, 36, 53, .8); border: 1px solid var(--line); cursor: pointer; font-size: .88rem; transition: border-color .2s, background .2s; }
       .choice:has(input:checked) { border-color: var(--lime); background: rgba(196, 243, 106, .1); color: var(--lime); }
       .choice input { accent-color: var(--lime); flex: 0 0 auto; }
-      .form-actions { display: flex; gap: 12px; justify-content: space-between; margin-top: 44px; }
+      .form-actions { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; }
       .form-actions .button-primary { margin-left: auto; }
       .status-message { min-height: 1.5em; color: var(--orange); font-size: .86rem; }
       .consent { display: flex; gap: 12px; margin: 26px 0 12px; color: #d4e0e6; font-size: .9rem; cursor: pointer; }
