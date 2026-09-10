@@ -29,8 +29,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       <a class="header-link" href="/resultado21/">Resultado 21</a>
     </header>
 
-    <main class="shell">
-      <section class="intro" id="intro" aria-labelledby="page-title">
+    <main class="shell" data-state="intro">
+      <section class="intro" id="intro" data-panel-state="intro" aria-labelledby="page-title" aria-hidden="false">
         <p class="kicker">RAIO-X DO SUCESSO</p>
         <h1 id="page-title">Encontre onde existe dinheiro mais perto no seu negócio.</h1>
         <p class="lead">Responda 9 perguntas objetivas. No fim, você verá três oportunidades práticas, uma ação para os próximos 7 dias e caminhos para continuar.</p>
@@ -38,7 +38,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
         <button class="button button-primary button-large" id="start-button" type="button">Começar o Raio-X <span aria-hidden="true">→</span></button>
       </section>
 
-      <section class="form-panel" id="form-panel" hidden aria-labelledby="form-title">
+      <section class="form-panel" id="form-panel" data-panel-state="form" hidden aria-hidden="true" aria-labelledby="form-title">
         <div class="progress-head">
           <p class="kicker" id="form-title">SEU CONTEXTO</p>
           <p class="progress-text" aria-live="polite">Pergunta <span id="progress-current">1</span> de 9</p>
@@ -98,7 +98,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
         </form>
       </section>
 
-      <section class="contact-panel" id="contact-panel" hidden aria-labelledby="contact-title">
+      <section class="contact-panel" id="contact-panel" data-panel-state="contact" hidden aria-hidden="true" aria-labelledby="contact-title">
         <div class="completion-context" aria-label="Conclusão do questionário">
           <p>Você concluiu as 9 perguntas</p>
           <span>Falta apenas confirmar onde entregamos seu resultado.</span>
@@ -117,12 +117,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
         </form>
       </section>
 
-      <section class="loading-panel" id="loading-panel" hidden aria-labelledby="loading-title">
+      <section class="loading-panel" id="loading-panel" data-panel-state="loading" hidden aria-hidden="true" aria-labelledby="loading-title">
         <div class="loader" aria-hidden="true"></div><p class="kicker">ANALISANDO RESPOSTAS</p><h2 id="loading-title">Estamos analisando seu contexto.</h2><p>Estamos cruzando suas respostas para montar três oportunidades e uma ação prática para os próximos 7 dias. A análise pode levar até 90 segundos; não feche esta página.</p>
       </section>
 
-      <section class="result-panel" id="result-panel" hidden aria-labelledby="result-title"><div id="result-content"></div></section>
-      <section class="error-panel" id="error-panel" hidden aria-labelledby="error-title" role="alert" aria-live="assertive"><p class="kicker">RAIO-X INTERROMPIDO</p><h2 id="error-title">Houve uma falha no processamento</h2><p id="error-copy">Suas respostas continuam preenchidas. Revise o e-mail e tente novamente.</p><button class="button button-primary button-large" id="retry-button" type="button">Voltar ao e-mail e tentar novamente</button></section>
+      <section class="result-panel" id="result-panel" data-panel-state="result" hidden aria-hidden="true" aria-labelledby="result-title"><div id="result-content"></div></section>
+      <section class="error-panel" id="error-panel" data-panel-state="error" hidden aria-hidden="true" aria-labelledby="error-title" role="alert" aria-live="assertive"><p class="kicker">Raio-X interrompido</p><h2 id="error-title" tabindex="-1">Houve uma falha no processamento</h2><p id="error-copy">Suas respostas foram preservadas. Você não precisa responder novamente.</p><button class="button button-primary button-large" id="retry-button" type="button">Revisar e reenviar</button></section>
     </main>
 
     <footer><a href="/privacidade/">Privacidade</a><span>•</span><a href="/termos/">Termos</a><span>•</span><span>Sucesso Empresarial</span></footer>
@@ -157,7 +157,21 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       function requestId() { return `rx-${crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`}`; }
       function getSource() { const params = new URLSearchParams(window.location.search); return sourceMap[params.get('origem')] || sourceMap[params.get('utm_source')] || 'other'; }
       function getUtm() { const params = new URLSearchParams(window.location.search); const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']; return Object.fromEntries(keys.map((key) => [key, params.get(key)]).filter(([, value]) => value)); }
-      function showOnly(panel) { [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel].forEach((item) => { item.hidden = item !== panel; }); window.scrollTo({ top: 0, behavior: 'auto' }); }
+      const panels = [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel];
+      function showOnly(panel) {
+        panels.forEach((item) => {
+          const active = item === panel;
+          item.hidden = !active;
+          item.setAttribute('aria-hidden', String(!active));
+        });
+        document.querySelector('main').dataset.state = panel.dataset.panelState;
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        const heading = panel.querySelector('h1, h2');
+        if (heading) {
+          heading.focus({ preventScroll: true });
+          heading.scrollIntoView({ behavior: 'auto', block: 'start' });
+        }
+      }
       function updateStep({ focus = true } = {}) { questions.forEach((question, index) => { question.hidden = index !== step; }); progressCurrent.textContent = String(step + 1); progressBar.style.width = `${((step + 1) / questions.length) * 100}%`; backButton.hidden = step === 0; nextButton.textContent = step === questions.length - 1 ? 'Continuar para o contato →' : 'Continuar →'; const activeQuestion = questions[step]; activeQuestion.setAttribute('aria-current', 'step'); questions.forEach((question, index) => { if (index !== step) question.removeAttribute('aria-current'); }); requestAnimationFrame(() => { activeQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (focus) activeQuestion.querySelector('input, textarea')?.focus({ preventScroll: true }); }); }
       function validateCurrent() { const fields = [...questions[step].querySelectorAll('input:not([type="radio"]), textarea'), ...questions[step].querySelectorAll('input[type="radio"]:checked')]; const requiredField = questions[step].querySelector('input[required], textarea[required]'); if (requiredField?.type === 'radio' && !questions[step].querySelector('input[type="radio"]:checked')) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (requiredField && requiredField.type !== 'radio' && !requiredField.checkValidity()) { requiredField.reportValidity(); return false; } if (!fields.length && requiredField) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } formStatus.textContent = ''; return true; }
       document.querySelector('#start-button').addEventListener('click', () => { step = 0; showOnly(formPanel); updateStep(); });
@@ -185,13 +199,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       function text(value) { return typeof value === 'string' ? value : ''; }
       function renderResult(data) { const report = data.report; const recommended = Number.isInteger(report.recommended_opportunity_index) ? report.recommended_opportunity_index : 0; const opportunityCards = report.opportunities.map((item, index) => `<article class="opportunity ${index === recommended ? 'opportunity--recommended' : ''}"><p class="opportunity-number">0${index + 1}${index === recommended ? ' · RECOMENDADA' : ''}</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.reason)}</p><ul>${(item.evidence_basis || []).map((evidence) => `<li>${escapeHtml(evidence)}</li>`).join('')}</ul><p class="meta">Esforço ${escapeHtml(item.effort)} · Velocidade ${escapeHtml(item.speed)}</p></article>`).join(''); const steps = (report.action_7_days.steps || []).map((item) => `<li>${escapeHtml(item)}</li>`).join(''); const options = [{ id: 'self_serve', title: 'Quero tentar sozinho', copy: 'Levar o prompt e os próximos passos para a rotina.' }, { id: 'learn_with_ai', title: 'Quero aprender a executar com IA', copy: 'Conhecer o Resultado 21 se fizer sentido para o seu momento.' }, { id: 'implementation_help', title: 'Quero ajuda para implantar', copy: 'Conversar sobre um caminho de execução para o negócio.' }].filter((option) => data.continuation_options.includes(option.id)); document.querySelector('#result-content').innerHTML = `<p class="kicker">SEU RAIO-X <span aria-hidden="true">/</span> ${escapeHtml(data.diagnosis_id)}</p><h2 id="result-title">Seu mapa de oportunidades</h2><p class="result-summary">${escapeHtml(report.summary)}</p><div class="profile"><p class="label">PERFIL RESUMIDO</p><p>${escapeHtml(report.business_profile)}</p></div><div class="opportunity-list"><h3>Três oportunidades para olhar agora</h3>${opportunityCards}</div><div class="seven-day"><p class="label">PRÓXIMOS 7 DIAS</p><h3>${escapeHtml(report.action_7_days.objective)}</h3><ol>${steps}</ol><p><b>Métrica:</b> ${escapeHtml(report.action_7_days.metric)}</p></div><div class="prompt-box"><p class="label">PROMPT PERSONALIZADO</p><p>${escapeHtml(report.personalized_prompt)}</p></div><div class="continuation"><p class="label">ESCOLHA O PRÓXIMO PASSO</p><div class="continuation-grid">${options.map((option) => `<button class="continuation-option" type="button" data-continuation="${option.id}"><b>${option.title}</b><span>${option.copy}</span></button>`).join('')}</div><p class="choice-feedback" id="choice-feedback" role="status"></p></div><p class="limitations"><b>Limitações do diagnóstico:</b> ${(report.limitations || []).map(escapeHtml).join(' ')}</p>`; document.querySelectorAll('[data-continuation]').forEach((button) => button.addEventListener('click', () => chooseContinuation(button.dataset.continuation, data))); }
       function chooseContinuation(choice, data) { const feedback = document.querySelector('#choice-feedback'); if (choice === 'learn_with_ai') { feedback.innerHTML = 'Você pode conhecer o <a href="/resultado21/">Resultado 21</a> como uma opção de aprendizagem prática. A escolha é sua.'; return; } feedback.textContent = choice === 'self_serve' ? 'Certo. Comece pela ação de 7 dias e use o prompt como apoio.' : 'Certo. Esse interesse fica registrado para orientar o próximo contato, sem inscrição automática.'; }
-      async function submitDiagnosis(event) { event.preventDefault(); if (isSubmitting) return; if (!email.checkValidity()) { email.reportValidity(); return; } if (TURNSTILE_SITEKEY) { if (turnstileLoadFailed || !turnstileToken) { document.querySelector('#contact-status').textContent = 'Conclua a verificação de segurança antes de enviar.'; return; } } const collected = collectAnswers(); if (collected.honeypot) return; lastSubmission = { request_id: requestId(), source: getSource(), utm: getUtm(), answers: collected.answers, honeypot: collected.honeypot, ...(TURNSTILE_SITEKEY ? { turnstile_token: turnstileToken } : {}), contact: { email: email.value.trim() }, consent: { sucesso_content: document.querySelector('#sucesso-content').checked } }; isSubmitting = true; document.querySelector('#submit-button').disabled = true; showOnly(loadingPanel); const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 90000); try { const response = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': lastSubmission.request_id }, body: JSON.stringify(lastSubmission), signal: controller.signal }); if (!response.ok) throw new Error(`HTTP_${response.status}`); const data = await response.json(); if (!validResult(data)) throw new Error('INVALID_RESPONSE'); renderResult(data); showOnly(resultPanel); } catch (error) { document.querySelector('#error-copy').textContent = error.name === 'AbortError' ? 'O processamento demorou mais de 90 segundos e não foi concluído. Isso é uma falha de processamento, não das suas respostas. Elas continuam preenchidas; revise o e-mail e tente reenviar.' : 'Ocorreu uma falha de processamento ao gerar seu diagnóstico. Suas respostas continuam preenchidas; revise o e-mail e tente reenviar.'; showOnly(errorPanel); } finally { clearTimeout(timeout); isSubmitting = false; document.querySelector('#submit-button').disabled = false; } }
+      async function submitDiagnosis(event) { event.preventDefault(); if (isSubmitting) return; if (!email.checkValidity()) { email.reportValidity(); return; } if (TURNSTILE_SITEKEY) { if (turnstileLoadFailed || !turnstileToken) { document.querySelector('#contact-status').textContent = 'Conclua a verificação de segurança antes de enviar.'; return; } } const collected = collectAnswers(); if (collected.honeypot) return; lastSubmission = { request_id: requestId(), source: getSource(), utm: getUtm(), answers: collected.answers, honeypot: collected.honeypot, ...(TURNSTILE_SITEKEY ? { turnstile_token: turnstileToken } : {}), contact: { email: email.value.trim() }, consent: { sucesso_content: document.querySelector('#sucesso-content').checked } }; isSubmitting = true; document.querySelector('#submit-button').disabled = true; showOnly(loadingPanel); const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 90000); try { const response = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': lastSubmission.request_id }, body: JSON.stringify(lastSubmission), signal: controller.signal }); if (!response.ok) throw new Error(`HTTP_${response.status}`); const data = await response.json(); if (!validResult(data)) throw new Error('INVALID_RESPONSE'); renderResult(data); showOnly(resultPanel); } catch (error) { showOnly(errorPanel); } finally { clearTimeout(timeout); isSubmitting = false; document.querySelector('#submit-button').disabled = false; } }
       document.querySelector('#contact-form').addEventListener('submit', submitDiagnosis);
       document.querySelector('#retry-button').addEventListener('click', () => { showOnly(contactPanel); document.querySelector('#email').focus(); });
     </script>
 
     <style>
       :root { --ink: #eaf1f5; --muted: #a4b2bd; --navy: #071829; --panel: #0d2435; --line: #284253; --lime: #c4f36a; --orange: #ff9f5a; --focus: #8bd5ff; }
+      :global([hidden]) { display: none !important; }
       * { box-sizing: border-box; }
       html { background: var(--navy); }
       body { margin: 0; color: var(--ink); background: radial-gradient(circle at 90% 0%, #173a4d 0, transparent 34rem), var(--navy); font-family: Manrope, sans-serif; line-height: 1.6; min-height: 100vh; }
