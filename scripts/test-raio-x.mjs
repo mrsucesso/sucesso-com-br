@@ -76,9 +76,12 @@ assert.doesNotMatch(html, /(navigator\.permissions|window\.open\([^)]*authorizat
 assert.match(html, /Idempotency-Key/);
 assert.match(html, /utm_source/);
 assert.match(html, /\/api\/raio-x\/diagnoses/);
+assert.match(html, /https:\/\/raiox-api\.sucesso\.com\.br/, 'o build deve apontar para a API pública');
+assert.doesNotMatch(html, /http:\/\/127\.0\.0\.1:3811/, 'produção nunca pode apontar para localhost');
+assert.match(html, /https:\/\/challenges\.cloudflare\.com\/turnstile\/v0\/api\.js/, 'o build deve incluir o Turnstile');
+assert.match(html, /0x4AAAAAAEvIKLYNCd-eNdfh/, 'o build deve incluir apenas a site key pública correta');
 assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
-assert.match(html, /127\.0\.0\.1:3811/);
 
 const legalSources = await Promise.all([
   readFile(new URL('../src/layouts/Layout.astro', import.meta.url), 'utf8'),
