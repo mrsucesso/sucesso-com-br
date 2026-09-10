@@ -11,8 +11,8 @@ Site institucional da **Sucesso Empresarial Ltda** (CNPJ: 01.655.728/0001-14).
 ## 📄 Páginas
 
 - **`index.html`** - Página principal com apresentação da empresa e serviços
-- **`privacidade.html`** - Política de Privacidade (LGPD compliant)
-- **`termos.html`** - Termos de Uso
+- **`/privacidade/`** - Política de Privacidade (LGPD compliant)
+- **`/termos/`** - Termos de Uso
 - **`auth/callback.html`** - Página de callback OAuth do Google
 
 ## 🎨 Design

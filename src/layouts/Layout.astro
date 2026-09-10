@@ -10,7 +10,7 @@ export interface Props {
 
 const {
   title,
-  description = 'Sucesso Empresarial - Consultoria, Treinamentos e Automacao de Processos',
+  description = 'Sucesso Empresarial - Consultoria, Treinamentos e Automação de Processos',
   image,
   article = false,
   pubDate,
@@ -48,8 +48,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
   <meta property="og:title" content={`${title} | Sucesso Empresarial`}>
   <meta property="og:description" content={description}>
   <meta property="og:site_name" content="Sucesso Empresarial">
-  {image && <meta property="og:image" content={image}>}
-  <meta property="og:image" content="https://sucesso.com.br/images/og-sucesso-empresarial.jpg">
+  {image ? <meta property="og:image" content={image}> : <meta property="og:image" content="https://sucesso.com.br/images/og-sucesso-empresarial.jpg">}
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={`${title} | Sucesso Empresarial`}>
@@ -94,12 +93,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
   <header>
     <div class="container">
       <div class="logo"><a href="/">Sucesso Empresarial</a></div>
-      <div class="tagline">Consultoria, Treinamentos e Automacao</div>
+      <div class="tagline">Consultoria, Treinamentos e Automação</div>
       <nav class="nav-links">
-        <a href="/">Inicio</a>
+        <a href="/">Início</a>
         <a href="/blog/">Blog</a>
-        <a href="/privacidade.html">Privacidade</a>
-        <a href="/termos.html">Termos</a>
+        <a href="/privacidade/">Privacidade</a>
+        <a href="/termos/">Termos</a>
       </nav>
     </div>
   </header>
@@ -107,8 +106,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
   <footer>
     <div class="container">
       <div class="footer-links">
-        <a href="/privacidade.html">Politica de Privacidade</a>
-        <a href="/termos.html">Termos de Uso</a>
+        <a href="/privacidade/">Política de Privacidade</a>
+        <a href="/termos/">Termos de Uso</a>
         <a href="/blog/">Blog</a>
       </div>
       <div class="footer-info">

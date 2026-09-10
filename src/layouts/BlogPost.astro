@@ -21,8 +21,7 @@ const formattedDate = pubDate.toLocaleDateString('pt-BR', { year:'numeric', mont
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
     <title>{title} | Sucesso Empresarial</title>
     <meta property="og:type" content="article" /><meta property="og:title" content={`${title} | Sucesso Empresarial`} /><meta property="og:description" content={description} />
-    {image && <meta property="og:image" content={image} />}
-    <meta property="og:image" content="https://sucesso.com.br/images/og-sucesso-empresarial.jpg" />
+    {image ? <meta property="og:image" content={image} /> : <meta property="og:image" content="https://sucesso.com.br/images/og-sucesso-empresarial.jpg" />}
     <style>
       :root { --navy-950:#061522; --navy-900:#0a1d2d; --green:#19c77a; --gold:#e5b75d; --ink:#132334; --muted:#5a6978; --paper:#f4f7f8; --line:#dbe4e9; --white:#fff; }
       * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter,system-ui,sans-serif; line-height:1.7; }

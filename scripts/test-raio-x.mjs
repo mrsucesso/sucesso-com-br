@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { strict as assert } from 'node:assert';
 
 const html = await readFile(new URL('../dist/raio-x/index.html', import.meta.url), 'utf8');
@@ -67,4 +67,34 @@ assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 assert.match(html, /127\.0\.0\.1:3811/);
 
-console.log('Raio-X fixture: rota, contrato visual e ausência de segredo OK');
+const legalSources = await Promise.all([
+  readFile(new URL('../src/layouts/Layout.astro', import.meta.url), 'utf8'),
+  readFile(new URL('../src/layouts/BaseLayout.astro', import.meta.url), 'utf8'),
+  readFile(new URL('../src/pages/privacidade.astro', import.meta.url), 'utf8'),
+  readFile(new URL('../src/pages/termos.astro', import.meta.url), 'utf8'),
+]);
+for (const source of legalSources) {
+  assert.doesNotMatch(source, /(?:privacidade|termos)\.html/, 'links legais usam rotas trailing-slash');
+}
+const terms = legalSources[3];
+assert.match(terms, /href="\/privacidade\/"/);
+assert.doesNotMatch(terms, /ilegaiss|integrais/);
+const privacy = legalSources[2];
+assert.match(privacy, /<h2[^>]*>10\. Contato<\/h2>/);
+assert.doesNotMatch(privacy, /<h3[^>]*>10\. Contato/);
+const blogFiles = (await readdir(new URL('../src/content/blog/', import.meta.url))).filter((name) => name.endsWith('.md'));
+assert.equal(blogFiles.length, 5, 'a auditoria cobre os cinco artigos');
+for (const name of blogFiles) {
+  const source = await readFile(new URL(`../src/content/blog/${name}`, import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /管理者|globally/, `${name} não contém frase corrompida`);
+  assert.doesNotMatch(source, /\b(?:voce|Voce|nao|Nao|automacao|Automacao|inteligencia|Inteligencia|gestao|Gestao)\b/, `${name} mantém acentos básicos`);
+}
+const blogDirs = await readdir(new URL('../dist/blog/', import.meta.url), { withFileTypes: true });
+for (const entry of blogDirs.filter((item) => item.isDirectory())) {
+  const article = await readFile(new URL(`../dist/blog/${entry.name}/index.html`, import.meta.url), 'utf8');
+  assert.equal((article.match(/property="og:image"/g) || []).length, 1, `${entry.name} emite uma única og:image`);
+}
+const robots = await readFile(new URL('../public/robots.txt', import.meta.url), 'utf8');
+assert.match(robots, /^Sitemap: https:\/\/sucesso\.com\.br\/sitemap-index\.xml$/m);
+
+console.log('Raio-X e correções críticas: rota, conteúdo, OG e sitemap OK');

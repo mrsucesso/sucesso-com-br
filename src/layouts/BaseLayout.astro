@@ -18,27 +18,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <link rel="canonical" href={canonicalURL}>
   <link rel="icon" type="image/jpeg" sizes="512x512" href="/images/favicon-sucesso-empresarial.jpg">
   <link rel="apple-touch-icon" href="/images/favicon-sucesso-empresarial.jpg">
-  
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content={canonicalURL}>
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
-  {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
-  <meta property="og:image" content="https://sucesso.com.br/images/og-sucesso-empresarial.jpg">
-  
+  {image ? <meta property="og:image" content={new URL(image, Astro.site)} /> : <meta property="og:image" content="https://sucesso.com.br/images/og-sucesso-empresarial.jpg" />}
+
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
   {image && <meta name="twitter:image" content={new URL(image, Astro.site)} />}
-  
+
   <title>{title}</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <style is:global>
     * {
       margin: 0;
@@ -160,8 +159,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <div class="container">
       <p><strong>Sucesso Empresarial Ltda</strong> | CNPJ: 01.655.728/0001-14</p>
       <p style="margin-top: 10px; font-size: 0.9rem;">
-        <a href="/privacidade.html" style="color: white; margin: 0 10px;">Privacidade</a> | 
-        <a href="/termos.html" style="color: white; margin: 0 10px;">Termos</a>
+        <a href="/privacidade/" style="color: white; margin: 0 10px;">Privacidade</a> |
+        <a href="/termos/" style="color: white; margin: 0 10px;">Termos</a>
       </p>
       <p style="margin-top: 15px; opacity: 0.8; font-size: 0.85rem;">
         mauricio@sucesso.com.br
