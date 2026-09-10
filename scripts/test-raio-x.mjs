@@ -5,9 +5,15 @@ const html = await readFile(new URL('../dist/raio-x/index.html', import.meta.url
 
 assert.match(html, /<h1[^>]*>Encontre onde existe dinheiro mais perto/);
 assert.equal((html.match(/<h1\b/g) || []).length, 1, 'a rota deve ter um único H1');
+assert.doesNotMatch(html, /Sem promessa de resultado/, 'a abertura não deve exibir disclaimer financeiro');
 assert.match(html, /name="priority_30_days"/);
-assert.match(html, /name="sucesso_content"/);
+assert.match(html, /name="sucesso_content"[^>]*checked(?:=""|(?=[ >]))/);
 assert.match(html, /name="website"/);
+assert.match(html, /Pergunta[^<]*<span[^>]*id="progress-current"[^>]*>1<\/span> de 9/);
+assert.match(html, /setTimeout\(\(\) => controller\.abort\(\), 90000\)/);
+assert.match(html, /scrollIntoView\(\{ behavior: 'smooth', block: 'start' \}\)/);
+assert.match(html, /falha de processamento/i);
+assert.doesNotMatch(html, /(navigator\.permissions|window\.open\([^)]*authorization|accounts\.google)/i, 'Raio-X não deve solicitar permissões externas');
 assert.match(html, /Idempotency-Key/);
 assert.match(html, /utm_source/);
 assert.match(html, /\/api\/raio-x\/diagnoses/);

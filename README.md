@@ -34,6 +34,10 @@ Campos livres são tratados como dados; a semântica aceita somente tags version
 
 A página `/raio-x/` renderiza o widget oficial do Cloudflare Turnstile somente quando `PUBLIC_TURNSTILE_SITEKEY` está definido no build. Sem essa variável, nenhum script ou widget é incluído e o fluxo local continua sem verificação. O token recebido do widget é enviado apenas no campo técnico `turnstile_token`; o segredo `TURNSTILE_SECRET_KEY` nunca é exposto ao frontend e deve existir somente no ambiente da API quando a proteção estiver ativada.
 
+### QA do fluxo Raio-X
+
+Na revisão do fluxo, o código de `/raio-x/` foi verificado e não contém chamadas de OAuth, `navigator.permissions`, abertura de autorização ou solicitação de acesso a aplicativos/serviços externos. Ele chama apenas Google Fonts, Turnstile quando configurado e a API do diagnóstico. O callback OAuth listado acima pertence a outro fluxo do site e não é carregado pela página Raio-X.
+
 ## 🚀 Deploy
 
 A produção é servida pelo Cloudflare Pages. O site está publicado e validado em https://sucesso.com.br/resultado21. O workflow antigo de GitHub Pages não deve ser tratado como destino de produção.
