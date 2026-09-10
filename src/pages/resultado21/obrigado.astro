@@ -46,8 +46,8 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
       a { color: inherit; }
       :focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
       .container { width: min(1060px, calc(100% - 2.5rem)); margin-inline: auto; }
-      .brand { color: var(--white); font: 800 1rem/1 'Manrope', sans-serif; letter-spacing: .03em; text-decoration: none; }
-      .brand span { color: var(--green); }
+      .brand { display: inline-flex; align-items: center; width: 72px; height: 72px; text-decoration: none; }
+      .brand img { width: 100%; height: 100%; object-fit: contain; }
       .topbar { padding: 1.35rem 0; background: var(--navy-950); }
       .topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
       .topbar__text { color: #c7d4df; font-size: .86rem; font-weight: 700; }
@@ -111,7 +111,7 @@ const description = 'Próximos passos da matrícula no Resultado 21 e convite pa
   <body>
     <header class="topbar">
       <div class="container topbar__inner">
-        <a class="brand" href="https://sucesso.com.br" aria-label="Sucesso Empresarial"><span>sucesso</span> empresarial</a>
+        <a class="brand" href="https://sucesso.com.br" aria-label="Sucesso Empresarial"><img src="/images/logo-sucesso-flat-branca.png" alt="Sucesso Empresarial" /></a>
         <span class="topbar__text">Projeto Resultado 21</span>
       </div>
     </header>
