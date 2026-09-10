@@ -26,10 +26,19 @@ assert.equal((html.match(/<h1\b/g) || []).length, 1, 'a rota deve ter um único 
 assert.doesNotMatch(html, /Sem promessa de resultado/, 'a abertura não deve exibir disclaimer financeiro');
 assert.match(html, /name="priority_30_days"/);
 assert.match(html, /id="sucesso-content"[^>]*name="sucesso_content"[^>]*checked(?:=""|(?=[ >]))/);
-assert.match(html, /class="completion-context"[^>]*>\s*<p[^>]*>Você concluiu as 9 perguntas<\/p>/);
+assert.equal((html.match(/class="question"/g) || []).length, 10, 'o fluxo deve exibir 10 perguntas');
+for (const value of ['lead_generation', 'conversion', 'reactivation', 'expansion', 'capacity']) {
+  assert.match(html, new RegExp(`name="opportunity_loss" value="${value}"`), `opportunity_loss aceita ${value}`);
+}
+assert.match(html, /Onde sua empresa mais perde oportunidades hoje\?/);
+assert.match(html, /class="completion-context"[^>]*>\s*<p[^>]*>Você concluiu as 10 perguntas<\/p>/);
 assert.match(html, /Falta apenas confirmar onde entregamos seu resultado\./);
 assert.match(html, /name="website"/);
-assert.match(html, /Pergunta[^<]*<span[^>]*id="progress-current"[^>]*>1<\/span> de 9/);
+assert.match(html, /Pergunta[^<]*<span[^>]*id="progress-current"[^>]*>1<\/span> de 10/);
+assert.match(html, /<input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel"[^>]*maxlength="32"/);
+assert.doesNotMatch(html, /id="whatsapp"[^>]*required/);
+assert.match(html, /Usaremos para identificar seu diagnóstico e facilitar nossa comunicação\./);
+assert.match(html, /whatsapp: whatsapp\.value\.trim\(\) \|\| null/);
 assert.match(html, /setTimeout\(\(\) => controller\.abort\(\), 90000\)/);
 assert.match(html, /scrollIntoView\(\{ behavior: 'smooth', block: 'start' \}\)/);
 assert.match(html, /<h2[^>]*id="error-title"[^>]*>Houve uma falha no processamento<\/h2>/);
