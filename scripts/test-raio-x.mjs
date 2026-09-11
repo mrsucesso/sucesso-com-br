@@ -2,6 +2,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { strict as assert } from 'node:assert';
 
 const html = await readFile(new URL('../dist/raio-x/index.html', import.meta.url), 'utf8');
+const obrigado = await readFile(new URL('../dist/raio-x/obrigado/index.html', import.meta.url), 'utf8');
+const obrigadoSource = await readFile(new URL('../src/pages/raio-x/obrigado.astro', import.meta.url), 'utf8');
 const pageSources = await Promise.all([
   ['Home', '../src/pages/index.astro'],
   ['Resultado 21', '../src/pages/resultado21.astro'],
@@ -102,6 +104,30 @@ assert.match(raioSource, /reportEmail\.disabled = false/, 'o campo volta a ser e
 assert.match(raioSource, /Idempotency-Key.*email/, 'o envio tem chave técnica de idempotência');
 assert.match(raioSource, /const effortLabels = \{ low: 'baixo', medium: 'médio', high: 'alto' \}/, 'esforço técnico é exibido em português');
 assert.match(raioSource, /const speedLabels = \{ short: 'curto prazo', medium: 'médio prazo', long: 'longo prazo' \}/, 'prazo técnico é exibido em português');
+assert.match(html, /role="progressbar"[^>]*aria-label="Analisando seu diagnóstico"/);
+assert.match(html, /class="loading-bar"/);
+assert.match(html, /até 90 segundos/i);
+assert.match(raioSource, /prefers-reduced-motion/);
+assert.match(html, /Prompt personalizado/);
+assert.match(html, /Comando para copiar e colar na sua Inteligência Artificial\./);
+assert.match(html, /Copiar prompt/);
+assert.match(raioSource, /navigator\.clipboard\.writeText/);
+assert.match(raioSource, /Prompt copiado\./);
+assert.match(raioSource, /classification/);
+assert.match(html, /GRÁFICO DAS ALAVANCAS/);
+assert.match(html, /alavanca principal/i);
+assert.match(raioSource, /window\.location\.href = `\/raio-x\/obrigado\/\?diagnostico=/);
+assert.doesNotMatch(raioSource, /window\.location\.href[^\n]*email/);
+assert.match(obrigado, /<h1\b/);
+assert.equal((obrigado.match(/<h1\b/g) || []).length, 1, 'obrigado deve ter H1 único');
+assert.match(obrigado, /envio foi solicitado/i);
+assert.match(obrigado, /30 minutos/);
+assert.match(obrigado, /Apontamento Estratégico/);
+assert.match(obrigado, /https:\/\/calendar\.google\.com\/calendar\/appointments\/AcZssZ3uNO7sFGSNr2AdH-ckIZNTn4eEp_sCaAJ3v9Q\?gv=true/);
+assert.match(obrigado, /<iframe[^>]*width="100%"[^>]*height="600"[^>]*title="Agendar Apontamento Estratégico de 30 minutos"[^>]*loading="lazy"/);
+assert.match(obrigado, /https:\/\/calendar\.app\.google\/Yt6T9u7uctiS5bFf6/);
+assert.match(obrigado, /mauricio-ruiz-sobre\.webp/);
+assert.match(obrigadoSource, /diagnostico.*RXS-|RXS-\[a-f0-9\]\{16\}/i);
 assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 

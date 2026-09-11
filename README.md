@@ -44,7 +44,15 @@ O resultado permanece visível na página e pode ser reaberto por `?diagnostico=
 
 O botão chama `POST /api/raio-x/diagnoses/{diagnosis_id}/email` e considera aceita somente a resposta HTTP `202`. O envio é assíncrono no backend; falha na entrega nunca esconde o relatório nem bloqueia o diagnóstico. O frontend não recebe nem armazena credenciais de e-mail.
 
-## 🚀 Deploy
+O diagnóstico também apresenta uma leitura rápida com a alavanca principal, confiança e gráfico horizontal compacto somente quando a API entrega scores/ranking reais em `classification`; sem scores, o gráfico não é inventado. O prompt aparece como bloco de código com o botão discreto **Copiar prompt**.
+
+Após uma resposta HTTP `202`, o fluxo redireciona para `/raio-x/obrigado/?diagnostico=<ID>` sem e-mail na URL. A página de obrigado confirma apenas que a solicitação foi registrada, incorpora a agenda do Google e mantém um link alternativo para abrir a agenda em outra janela. O retorno ao diagnóstico só preserva IDs no formato `RXS-` + 16 caracteres hexadecimais.
+
+## Loading honesto
+
+O processamento usa uma barra indeterminada, sem percentual ou progresso simulado, com `aria-busy`, texto de até 90 segundos e suporte a `prefers-reduced-motion`.
+
+## Desenvolvimento e QA
 
 A produção é servida pelo Cloudflare Pages. O site está publicado e validado em https://sucesso.com.br/resultado21. O workflow antigo de GitHub Pages não deve ser tratado como destino de produção.
 
