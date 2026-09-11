@@ -38,6 +38,12 @@ A página `/raio-x/` renderiza o widget oficial do Cloudflare Turnstile somente 
 
 Na revisão do fluxo, o código de `/raio-x/` foi verificado e não contém chamadas de OAuth, `navigator.permissions`, abertura de autorização ou solicitação de acesso a aplicativos/serviços externos. Ele chama apenas Google Fonts, Turnstile quando configurado e a API do diagnóstico. O callback OAuth listado acima pertence a outro fluxo do site e não é carregado pela página Raio-X.
 
+### Cópia do relatório por e-mail
+
+O resultado permanece visível na página e pode ser reaberto por `?diagnostico=<diagnosis_id>`. Ao final, o bloco **“Salve seu relatório no e-mail”** mostra um campo editável e o botão **“Enviar relatório por e-mail”**. Na mesma sessão, o campo reaproveita o e-mail obrigatório já informado; na reabertura por URL ele fica vazio para não expor dados pessoais.
+
+O botão chama `POST /api/raio-x/diagnoses/{diagnosis_id}/email` e considera aceita somente a resposta HTTP `202`. O envio é assíncrono no backend; falha na entrega nunca esconde o relatório nem bloqueia o diagnóstico. O frontend não recebe nem armazena credenciais de e-mail.
+
 ## 🚀 Deploy
 
 A produção é servida pelo Cloudflare Pages. O site está publicado e validado em https://sucesso.com.br/resultado21. O workflow antigo de GitHub Pages não deve ser tratado como destino de produção.
