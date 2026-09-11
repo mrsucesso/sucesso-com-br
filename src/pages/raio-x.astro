@@ -275,7 +275,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
         reportEmail.value = lastSubmission?.contact?.email ? text(lastSubmission.contact.email) : '';
         reportEmailStatus.textContent = '';
         const report = data.report;
-        const header = data.report_header || {};
+        const publicHeader = data.report_header || {};
+        const header = lastSubmission ? {
+          date: publicHeader.date,
+          company_name: lastSubmission?.answers?.company_name || 'Não informado',
+          contact_name: lastSubmission?.answers?.name || 'Não informado',
+          email: lastSubmission?.contact?.email || 'Não informado',
+          phone: lastSubmission?.contact?.whatsapp || 'Não informado',
+        } : publicHeader;
         const declared = data.declared_priorities || {};
         const opportunityLossLabels = { lead_generation: 'Geração de leads', conversion: 'Conversão de interessados em clientes', reactivation: 'Reativação de clientes antigos', expansion: 'Expansão das vendas para clientes atuais', capacity: 'Uso da capacidade disponível' };
         const headerMarkup = `<dl class="report-header" aria-label="Identificação do relatório"><div><dt>Data</dt><dd>${escapeHtml(header.date)}</dd></div><div><dt>Empresa</dt><dd>${escapeHtml(header.company_name)}</dd></div><div><dt>Contato</dt><dd>${escapeHtml(header.contact_name)}</dd></div><div><dt>E-mail</dt><dd>${escapeHtml(header.email)}</dd></div><div><dt>Telefone</dt><dd>${escapeHtml(header.phone)}</dd></div></dl>`;
