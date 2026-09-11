@@ -1,9 +1,7 @@
 ---
 const title = 'Solicitação recebida | Raio-X do Sucesso';
 const description = 'Confirmação da solicitação do seu diagnóstico e convite para um Apontamento Estratégico.';
-const diagnosisId = Astro.url.searchParams.get('diagnostico') || '';
-const validDiagnosisId = /^RXS-[a-f0-9]{16}$/i.test(diagnosisId) ? diagnosisId : null;
-const backHref = validDiagnosisId ? `/raio-x/?diagnostico=${encodeURIComponent(validDiagnosisId)}` : '/raio-x/';
+
 ---
 <!doctype html>
 <html lang="pt-BR">
@@ -30,10 +28,16 @@ const backHref = validDiagnosisId ? `/raio-x/?diagnostico=${encodeURIComponent(v
         <p class="lead">A solicitação do seu diagnóstico foi registrada. O processamento e o envio podem levar algum tempo; não é uma entrega instantânea.</p>
         <div class="profile"><img src="/images/mauricio-ruiz-sobre.webp" alt="Maurício Ruiz, consultor da Sucesso Empresarial" /><div><p class="label">CONVERSA GRATUITA</p><h2>Como colocar o diagnóstico em prática?</h2><p>Você pode agendar uma sessão gratuita de 30 minutos de <strong>Apontamento Estratégico</strong> para transformar os achados do Raio-X em próximos movimentos claros para o negócio.</p></div></div>
         <div class="calendar-wrap"><iframe src="https://calendar.google.com/calendar/appointments/AcZssZ3uNO7sFGSNr2AdH-ckIZNTn4eEp_sCaAJ3v9Q?gv=true" width="100%" height="600" style="border:0" frameborder="0" title="Agendar Apontamento Estratégico de 30 minutos" loading="lazy"></iframe><p class="calendar-fallback">Se o calendário não aparecer, <a href="https://calendar.app.google/Yt6T9u7uctiS5bFf6" target="_blank" rel="noopener noreferrer">abra a agenda em outra janela</a>.</p></div>
-        <a class="secondary-link" href={backHref}>Voltar ao diagnóstico</a>
+        <a class="secondary-link" id="back-diagnosis-link" href="/raio-x/">Voltar ao diagnóstico</a>
       </section>
     </main>
     <footer><a href="/privacidade/">Privacidade</a><span>•</span><a href="/termos/">Termos</a><span>•</span><span>Sucesso Empresarial</span></footer>
+    <script>
+      const diagnosisId = new URLSearchParams(window.location.search).get('diagnostico') || '';
+      if (/^RXS-[a-f0-9]{16}$/i.test(diagnosisId)) {
+        document.querySelector('#back-diagnosis-link').setAttribute('href', `/raio-x/?diagnostico=${encodeURIComponent(diagnosisId)}`);
+      }
+    </script>
     <style>
       :root { --ink:#eaf1f5; --muted:#a4b2bd; --navy:#071829; --panel:#0d2435; --line:#284253; --lime:#c4f36a; --orange:#ff9f5a; --focus:#8bd5ff; }
       * { box-sizing:border-box; } html { background:var(--navy); } body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 90% 0%,#173a4d 0,transparent 34rem),var(--navy); font-family:Manrope,sans-serif; line-height:1.6; } a { color:var(--lime); } :focus-visible { outline:3px solid var(--focus); outline-offset:3px; }

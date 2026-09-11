@@ -93,7 +93,7 @@ assert.match(raioSource, /let currentDiagnosisId = null/, 'o diagnóstico atual 
 assert.match(raioSource, /currentDiagnosisId = data\.diagnosis_id/, 'o ID técnico vem do resultado validado');
 assert.match(raioSource, /id="report-email"[^>]*type="email"/, 'o bloco de e-mail usa campo editável de e-mail');
 assert.match(raioSource, /Enviar relatório por e-mail/, 'o bloco de e-mail tem CTA explícita');
-assert.match(raioSource, /Pronto\. O relatório será enviado para o e-mail informado\./, 'o envio exibe confirmação');
+assert.match(raioSource, /Pronto\. A solicitação de envio foi registrada\./, 'o envio exibe confirmação sem afirmar entrega concluída');
 assert.match(raioSource, /Não foi possível solicitar o envio agora\. Confira o e-mail e tente novamente\./, 'o envio exibe falha acionável');
 assert.match(raioSource, /\/api\/raio-x\/diagnoses\/\$\{encodeURIComponent\(id\)\}\/email/, 'o envio usa o endpoint do diagnóstico');
 assert.match(raioSource, /JSON\.stringify\(\{ email: reportEmail\.value\.trim\(\) \}\)/, 'o envio envia somente o e-mail');
@@ -116,8 +116,17 @@ assert.match(raioSource, /Prompt copiado\./);
 assert.match(raioSource, /classification/);
 assert.match(html, /GRÁFICO DAS ALAVANCAS/);
 assert.match(html, /alavanca principal/i);
+for (const lever of ['reactivation', 'repurchase', 'complementary_sale', 'idle_capacity', 'retention']) {
+  assert.match(raioSource, new RegExp(`${lever}:`), `o gráfico traduz a alavanca real ${lever}`);
+}
+assert.match(raioSource, /classification\.primary_lever/, 'a leitura rápida usa a alavanca principal real');
+assert.match(raioSource, /classification\.primary_confidence/, 'a leitura rápida usa a confiança real');
 assert.match(raioSource, /window\.location\.href = `\/raio-x\/obrigado\/\?diagnostico=/);
 assert.doesNotMatch(raioSource, /window\.location\.href[^\n]*email/);
+assert.match(raioSource, /requestReportEmail[\s\S]*response\.status !== 202[\s\S]*window\.location\.href/, 'o 202 do envio leva ao obrigado');
+assert.doesNotMatch(raioSource, /loadPersistedDiagnosis[\s\S]*response\.status === 202/, 'o GET de reabertura não tenta redirecionar');
+const submitDiagnosisSource = raioSource.match(/async function submitDiagnosis\([\s\S]*?document\.querySelector\('#contact-form'\)/)?.[0] || '';
+assert.doesNotMatch(submitDiagnosisSource, /\/raio-x\/obrigado\//, 'criar o diagnóstico não pula o relatório; o obrigado vem após solicitar o e-mail');
 assert.match(obrigado, /<h1\b/);
 assert.equal((obrigado.match(/<h1\b/g) || []).length, 1, 'obrigado deve ter H1 único');
 assert.match(obrigado, /envio foi solicitado/i);
@@ -127,7 +136,8 @@ assert.match(obrigado, /https:\/\/calendar\.google\.com\/calendar\/appointments\
 assert.match(obrigado, /<iframe[^>]*width="100%"[^>]*height="600"[^>]*title="Agendar Apontamento Estratégico de 30 minutos"[^>]*loading="lazy"/);
 assert.match(obrigado, /https:\/\/calendar\.app\.google\/Yt6T9u7uctiS5bFf6/);
 assert.match(obrigado, /mauricio-ruiz-sobre\.webp/);
-assert.match(obrigadoSource, /diagnostico.*RXS-|RXS-\[a-f0-9\]\{16\}/i);
+assert.match(obrigadoSource, /new URLSearchParams\(window\.location\.search\)/, 'o ID é lido no navegador da página estática');
+assert.ok(obrigadoSource.includes('/^RXS-[a-f0-9]{16}$/i'), 'o ID é validado antes de montar o link de retorno');
 assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 
