@@ -113,6 +113,7 @@ assert.match(html, /Comando para copiar e colar na sua Inteligência Artificial\
 assert.match(html, /Copiar prompt/);
 assert.match(raioSource, /navigator\.clipboard\.writeText/);
 assert.match(raioSource, /Prompt copiado\./);
+assert.match(raioSource, /Não foi possível copiar automaticamente\. Selecione o texto do prompt e copie manualmente\./, 'a falha de cópia também tem feedback acessível');
 assert.match(raioSource, /classification/);
 assert.match(html, /GRÁFICO DAS ALAVANCAS/);
 assert.match(html, /alavanca principal/i);
