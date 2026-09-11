@@ -80,6 +80,9 @@ assert.match(html, /https:\/\/raiox-api\.sucesso\.com\.br/, 'o build deve aponta
 assert.doesNotMatch(html, /http:\/\/127\.0\.0\.1:3811/, 'produção nunca pode apontar para localhost');
 assert.match(html, /https:\/\/challenges\.cloudflare\.com\/turnstile\/v0\/api\.js/, 'o build deve incluir o Turnstile');
 assert.match(html, /0x4AAAAAAEvIKLYNCd-eNdfh/, 'o build deve incluir apenas a site key pública correta');
+assert.match(raioSource, /typeof created\?\.result_url === 'string'/, 'o POST 201 deve ser seguido pela busca do relatório persistido');
+assert.match(raioSource, /fetch\(`\$\{API_BASE\}\$\{created\.result_url\}`/, 'o frontend busca o result_url devolvido pela API');
+assert.match(raioSource, /RESULT_REQUEST_FAILED/, 'falhas ao buscar o relatório recebem tratamento seguro');
 assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 
