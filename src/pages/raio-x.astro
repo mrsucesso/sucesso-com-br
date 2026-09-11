@@ -256,9 +256,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       loadPersistedDiagnosis();
     </script>
 
-    <style>
+    <style is:global>
       :root { --ink: #eaf1f5; --muted: #a4b2bd; --navy: #071829; --panel: #0d2435; --line: #284253; --lime: #c4f36a; --orange: #ff9f5a; --focus: #8bd5ff; }
-      :global([hidden]) { display: none !important; }
+      [hidden] { display: none !important; }
       * { box-sizing: border-box; }
       html { background: var(--navy); }
       body { margin: 0; color: var(--ink); background: radial-gradient(circle at 90% 0%, #173a4d 0, transparent 34rem), var(--navy); font-family: Manrope, sans-serif; line-height: 1.6; min-height: 100vh; }

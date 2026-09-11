@@ -46,7 +46,7 @@ assert.match(html, /scrollIntoView\(\{ behavior: 'smooth', block: 'start' \}\)/)
 assert.match(html, /<h2[^>]*id="error-title"[^>]*>Houve uma falha no processamento<\/h2>/);
 assert.match(html, /id="error-panel"[^>]*role="alert"[^>]*aria-live="assertive"/);
 const raioSource = pageSources.find(([name]) => name === 'Raio-X')?.[1] || '';
-assert.match(raioSource, /:global\(\[hidden\]\)\s*\{\s*display:\s*none\s*!important;/);
+assert.match(raioSource, /\[hidden\]\s*\{\s*display:\s*none\s*!important;/);
 assert.match(html, /data-state="intro"/);
 assert.match(html, /item\.setAttribute\('aria-hidden', String\(!active\)\)/);
 assert.match(html, /item\.hidden = !active/);
@@ -121,6 +121,9 @@ for (const lever of ['reactivation', 'repurchase', 'complementary_sale', 'idle_c
 }
 assert.match(raioSource, /classification\.primary_lever/, 'a leitura rápida usa a alavanca principal real');
 assert.match(raioSource, /classification\.primary_confidence/, 'a leitura rápida usa a confiança real');
+assert.match(raioSource, /<style is:global>/, 'estilos do relatório inserido por innerHTML não dependem dos atributos de escopo do Astro');
+assert.match(raioSource, /\[hidden\] \{ display: none !important; \}/, 'painéis ocultos continuam isolados no CSS global');
+assert.doesNotMatch(raioSource, /:global\(\[hidden\]\)/, 'o CSS global não deixa pseudo-seletor inválido no artefato');
 assert.match(raioSource, /\.prompt-code code \{ display: block; min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; \}/, 'o prompt não provoca rolagem horizontal');
 assert.match(raioSource, /window\.location\.href = `\/raio-x\/obrigado\/\?diagnostico=/);
 assert.doesNotMatch(raioSource, /window\.location\.href[^\n]*email/);
