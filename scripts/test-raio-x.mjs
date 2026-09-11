@@ -86,6 +86,8 @@ assert.match(raioSource, /RESULT_REQUEST_FAILED/, 'falhas ao buscar o relatório
 assert.match(raioSource, /get\('diagnostico'\)/, 'um diagnóstico persistido pode ser reaberto por URL');
 assert.match(raioSource, /\/\^RXS-\[a-f0-9\]\{16\}\$\/i/, 'o ID recebido pela URL é validado antes da consulta');
 assert.match(raioSource, /loadPersistedDiagnosis\(\)/, 'o carregamento do resultado persistido é iniciado na abertura');
+assert.match(raioSource, /const effortLabels = \{ low: 'baixo', medium: 'médio', high: 'alto' \}/, 'esforço técnico é exibido em português');
+assert.match(raioSource, /const speedLabels = \{ short: 'curto prazo', medium: 'médio prazo', long: 'longo prazo' \}/, 'prazo técnico é exibido em português');
 assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 
