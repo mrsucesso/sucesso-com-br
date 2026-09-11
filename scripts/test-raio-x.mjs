@@ -87,6 +87,8 @@ assert.match(raioSource, /get\('diagnostico'\)/, 'um diagnóstico persistido pod
 assert.match(raioSource, /\/\^RXS-\[a-f0-9\]\{16\}\$\/i/, 'o ID recebido pela URL é validado antes da consulta');
 assert.match(raioSource, /loadPersistedDiagnosis\(\)/, 'o carregamento do resultado persistido é iniciado na abertura');
 assert.match(raioSource, /Salve seu relatório no e-mail/, 'o resultado oferece salvamento por e-mail');
+assert.match(raioSource, /let currentDiagnosisId = null/, 'o diagnóstico atual é mantido como estado técnico');
+assert.match(raioSource, /currentDiagnosisId = data\.diagnosis_id/, 'o ID técnico vem do resultado validado');
 assert.match(raioSource, /id="report-email"[^>]*type="email"/, 'o bloco de e-mail usa campo editável de e-mail');
 assert.match(raioSource, /Enviar relatório por e-mail/, 'o bloco de e-mail tem CTA explícita');
 assert.match(raioSource, /Pronto\. O relatório será enviado para o e-mail informado\./, 'o envio exibe confirmação');
