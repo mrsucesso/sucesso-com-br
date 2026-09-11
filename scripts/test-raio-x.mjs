@@ -141,6 +141,12 @@ assert.match(obrigado, /https:\/\/calendar\.google\.com\/calendar\/appointments\
 assert.match(obrigado, /<iframe[^>]*width="100%"[^>]*height="600"[^>]*title="Agendar Apontamento Estratégico de 30 minutos"[^>]*loading="lazy"/);
 assert.match(obrigado, /https:\/\/calendar\.app\.google\/Yt6T9u7uctiS5bFf6/);
 assert.match(obrigado, /mauricio-ruiz-sobre\.webp/);
+assert.match(obrigadoSource, /<details[^>]*class="calendar-disclosure"/, 'o calendário começa em um controle nativo recolhido');
+assert.match(obrigadoSource, /<summary[^>]*>\s*Ver horários disponíveis/, 'a ação principal deixa claro onde clicar');
+assert.match(obrigadoSource, /Agora toque no cartão abaixo para escolher o dia e o horário\./, 'a instrução explica o segundo clique exigido pelo Google');
+assert.match(obrigadoSource, /calendar-frame/, 'o iframe branco recebe moldura integrada ao layout');
+assert.match(obrigadoSource, /calendarDisclosure\.addEventListener\('toggle'/, 'abrir o calendário dispara o comportamento de foco visual');
+assert.match(obrigadoSource, /calendarInstruction\.scrollIntoView\(\{ behavior: 'smooth', block: 'start' \}\)/, 'o calendário aberto entra na área visível');
 assert.match(obrigadoSource, /new URLSearchParams\(window\.location\.search\)/, 'o ID é lido no navegador da página estática');
 assert.ok(obrigadoSource.includes('/^RXS-[a-f0-9]{16}$/i'), 'o ID é validado antes de montar o link de retorno');
 assert.match(html, /resultado21/);
