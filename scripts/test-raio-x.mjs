@@ -83,6 +83,9 @@ assert.match(html, /0x4AAAAAAEvIKLYNCd-eNdfh/, 'o build deve incluir apenas a si
 assert.match(raioSource, /typeof created\?\.result_url === 'string'/, 'o POST 201 deve ser seguido pela busca do relatório persistido');
 assert.match(raioSource, /fetch\(`\$\{API_BASE\}\$\{created\.result_url\}`/, 'o frontend busca o result_url devolvido pela API');
 assert.match(raioSource, /RESULT_REQUEST_FAILED/, 'falhas ao buscar o relatório recebem tratamento seguro');
+assert.match(raioSource, /get\('diagnostico'\)/, 'um diagnóstico persistido pode ser reaberto por URL');
+assert.match(raioSource, /\/\^RXS-\[a-f0-9\]\{16\}\$\/i/, 'o ID recebido pela URL é validado antes da consulta');
+assert.match(raioSource, /loadPersistedDiagnosis\(\)/, 'o carregamento do resultado persistido é iniciado na abertura');
 assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 
