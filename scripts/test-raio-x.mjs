@@ -121,6 +121,7 @@ for (const lever of ['reactivation', 'repurchase', 'complementary_sale', 'idle_c
 }
 assert.match(raioSource, /classification\.primary_lever/, 'a leitura rápida usa a alavanca principal real');
 assert.match(raioSource, /classification\.primary_confidence/, 'a leitura rápida usa a confiança real');
+assert.match(raioSource, /\.prompt-code code \{ display: block; min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; \}/, 'o prompt não provoca rolagem horizontal');
 assert.match(raioSource, /window\.location\.href = `\/raio-x\/obrigado\/\?diagnostico=/);
 assert.doesNotMatch(raioSource, /window\.location\.href[^\n]*email/);
 assert.match(raioSource, /requestReportEmail[\s\S]*response\.status !== 202[\s\S]*window\.location\.href/, 'o 202 do envio leva ao obrigado');
