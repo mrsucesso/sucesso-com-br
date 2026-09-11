@@ -38,6 +38,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
         <button class="button button-primary button-large" id="start-button" type="button">Começar o Raio-X <span aria-hidden="true">→</span></button>
       </section>
 
+      <section class="identity-panel" id="identity-panel" data-panel-state="identity" hidden aria-hidden="true" aria-labelledby="identity-title">
+        <p class="kicker">ANTES DE COMEÇARMOS</p>
+        <h2 id="identity-title" tabindex="-1">Antes de começarmos, como posso te chamar?</h2>
+        <p class="lead">Assim o seu diagnóstico fica identificado corretamente.</p>
+        <form id="identity-form" novalidate>
+          <label for="name">Seu nome completo</label>
+          <input id="name" name="name" type="text" autocomplete="name" minlength="2" maxlength="120" placeholder="Coloque aqui seu nome completo" required />
+          <button class="button button-primary button-large" type="submit">Começar as perguntas <span aria-hidden="true">→</span></button>
+        </form>
+      </section>
+
       <section class="form-panel" id="form-panel" data-panel-state="form" hidden aria-hidden="true" aria-labelledby="form-title">
         <div class="progress-head">
           <p class="kicker" id="form-title">SEU CONTEXTO</p>
@@ -48,9 +59,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
 
         <form id="diagnosis-form" novalidate>
           <div class="question" data-step="0">
-            <label for="name">Como podemos chamar você?</label>
-            <p class="hint">Use seu primeiro nome ou como prefere ser chamado.</p>
-            <input id="name" name="name" type="text" autocomplete="given-name" minlength="2" maxlength="120" required />
+            <label for="company_name">Qual é o nome da sua empresa ou negócio?</label>
+            <p class="hint">Use o nome pelo qual seus clientes reconhecem a empresa.</p>
+            <input id="company_name" name="company_name" type="text" autocomplete="organization" minlength="2" maxlength="160" placeholder="Digite o nome da empresa ou negócio" required />
           </div>
           <div class="question" data-step="1" hidden>
             <fieldset><legend>Qual é sua relação com o negócio?</legend>
@@ -89,7 +100,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
           </div>
           <div class="question" data-step="8" hidden>
             <fieldset><legend>Onde sua empresa mais perde oportunidades hoje?</legend>
-              <div class="choice-grid"><label class="choice"><input type="radio" name="opportunity_loss" value="lead_generation" required /><span>Geração de leads</span></label><label class="choice"><input type="radio" name="opportunity_loss" value="conversion" /><span>Conversão de interessados em clientes</span></label><label class="choice"><input type="radio" name="opportunity_loss" value="reactivation" /><span>Reativação de clientes antigos</span></label><label class="choice"><input type="radio" name="opportunity_loss" value="expansion" /><span>Expansão das vendas para clientes atuais</span></label><label class="choice"><input type="radio" name="opportunity_loss" value="capacity" /><span>Uso da capacidade disponível</span></label></div>
+              <p class="question-instruction">Escolha uma prioridade principal e duas secundárias. A principal orienta o diagnóstico; as secundárias ajudam a preparar os próximos passos.</p>
+              <p class="choice-group-title">Prioridade principal</p>
+              <div class="choice-grid"><label class="choice"><input type="radio" name="opportunity_loss_primary" value="lead_generation" required /><span>Geração de leads</span></label><label class="choice"><input type="radio" name="opportunity_loss_primary" value="conversion" /><span>Conversão de interessados em clientes</span></label><label class="choice"><input type="radio" name="opportunity_loss_primary" value="reactivation" /><span>Reativação de clientes antigos</span></label><label class="choice"><input type="radio" name="opportunity_loss_primary" value="expansion" /><span>Expansão das vendas para clientes atuais</span></label><label class="choice"><input type="radio" name="opportunity_loss_primary" value="capacity" /><span>Uso da capacidade disponível</span></label></div>
+              <p class="choice-group-title choice-group-title--secondary">Duas prioridades secundárias</p>
+              <div class="choice-grid"><label class="choice"><input type="checkbox" name="opportunity_loss_secondary" value="lead_generation" /><span>Geração de leads</span></label><label class="choice"><input type="checkbox" name="opportunity_loss_secondary" value="conversion" /><span>Conversão de interessados em clientes</span></label><label class="choice"><input type="checkbox" name="opportunity_loss_secondary" value="reactivation" /><span>Reativação de clientes antigos</span></label><label class="choice"><input type="checkbox" name="opportunity_loss_secondary" value="expansion" /><span>Expansão das vendas para clientes atuais</span></label><label class="choice"><input type="checkbox" name="opportunity_loss_secondary" value="capacity" /><span>Uso da capacidade disponível</span></label></div>
+              <p class="secondary-count" id="secondary-count" aria-live="polite">0 de 2 selecionadas</p>
             </fieldset>
           </div>
           <div class="question" data-step="9" hidden>
@@ -141,8 +157,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       const TURNSTILE_SITEKEY = turnstileSiteKey;
       const ENDPOINT = `${API_BASE.replace(/\/$/, '')}/api/raio-x/diagnoses`;
       const form = document.querySelector('#diagnosis-form');
+      const identityForm = document.querySelector('#identity-form');
       const questions = [...document.querySelectorAll('.question')];
       const intro = document.querySelector('#intro');
+      const identityPanel = document.querySelector('#identity-panel');
       const formPanel = document.querySelector('#form-panel');
       const contactPanel = document.querySelector('#contact-panel');
       const loadingPanel = document.querySelector('#loading-panel');
@@ -158,6 +176,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       const reportEmailButton = document.querySelector('#report-email-button');
       const reportEmailStatus = document.querySelector('#report-email-status');
       const whatsapp = document.querySelector('#whatsapp');
+      const name = document.querySelector('#name');
+      const secondaryCount = document.querySelector('#secondary-count');
       let step = 0;
       let lastSubmission = null;
       let currentDiagnosisId = null;
@@ -170,7 +190,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       function requestId() { return `rx-${crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`}`; }
       function getSource() { const params = new URLSearchParams(window.location.search); return sourceMap[params.get('origem')] || sourceMap[params.get('utm_source')] || 'other'; }
       function getUtm() { const params = new URLSearchParams(window.location.search); const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']; return Object.fromEntries(keys.map((key) => [key, params.get(key)]).filter(([, value]) => value)); }
-      const panels = [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel];
+      const panels = [intro, identityPanel, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel];
       function showOnly(panel) {
         panels.forEach((item) => {
           const active = item === panel;
@@ -186,8 +206,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
         }
       }
       function updateStep({ focus = true } = {}) { questions.forEach((question, index) => { question.hidden = index !== step; }); progressCurrent.textContent = String(step + 1); progressBar.style.width = `${((step + 1) / questions.length) * 100}%`; backButton.hidden = step === 0; nextButton.textContent = step === questions.length - 1 ? 'Continuar para o contato →' : 'Continuar →'; const activeQuestion = questions[step]; activeQuestion.setAttribute('aria-current', 'step'); questions.forEach((question, index) => { if (index !== step) question.removeAttribute('aria-current'); }); requestAnimationFrame(() => { activeQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (focus) activeQuestion.querySelector('input, textarea')?.focus({ preventScroll: true }); }); }
-      function validateCurrent() { const fields = [...questions[step].querySelectorAll('input:not([type="radio"]), textarea'), ...questions[step].querySelectorAll('input[type="radio"]:checked')]; const requiredField = questions[step].querySelector('input[required], textarea[required]'); if (requiredField?.type === 'radio' && !questions[step].querySelector('input[type="radio"]:checked')) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (requiredField && requiredField.type !== 'radio' && !requiredField.checkValidity()) { requiredField.reportValidity(); return false; } if (!fields.length && requiredField) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } formStatus.textContent = ''; return true; }
-      document.querySelector('#start-button').addEventListener('click', () => { step = 0; showOnly(formPanel); updateStep(); });
+      function validateCurrent() { const fields = [...questions[step].querySelectorAll('input:not([type="radio"]), textarea'), ...questions[step].querySelectorAll('input[type="radio"]:checked')]; const requiredField = questions[step].querySelector('input[required], textarea[required]'); if (requiredField?.type === 'radio' && !questions[step].querySelector('input[type="radio"]:checked')) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (requiredField && requiredField.type !== 'radio' && !requiredField.checkValidity()) { requiredField.reportValidity(); return false; } if (!fields.length && requiredField) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (questions[step].querySelector('[name="opportunity_loss_primary"]')) { const primary = questions[step].querySelector('[name="opportunity_loss_primary"]:checked')?.value; const secondary = [...questions[step].querySelectorAll('[name="opportunity_loss_secondary"]:checked')].map((field) => field.value); if (!primary) { formStatus.textContent = 'Escolha a prioridade principal.'; return false; } if (secondary.length !== 2) { formStatus.textContent = 'Escolha exatamente duas prioridades secundárias.'; return false; } if (secondary.includes(primary)) { formStatus.textContent = 'A prioridade principal não pode se repetir nas secundárias.'; return false; } } formStatus.textContent = ''; return true; }
+      document.querySelector('#start-button').addEventListener('click', () => { showOnly(identityPanel); name.focus(); });
+      identityForm.addEventListener('submit', (event) => { event.preventDefault(); if (!name.checkValidity()) { name.reportValidity(); return; } step = 0; showOnly(formPanel); updateStep(); });
+      const primaryLossFields = [...document.querySelectorAll('[name="opportunity_loss_primary"]')];
+      const secondaryLossFields = [...document.querySelectorAll('[name="opportunity_loss_secondary"]')];
+      function syncLossPriorities() { const primary = primaryLossFields.find((field) => field.checked)?.value; secondaryLossFields.forEach((field) => { if (field.value === primary) field.checked = false; field.disabled = field.value === primary; }); const count = secondaryLossFields.filter((field) => field.checked).length; secondaryCount.textContent = `${count} de 2 selecionadas`; }
+      primaryLossFields.forEach((field) => field.addEventListener('change', syncLossPriorities));
+      secondaryLossFields.forEach((field) => field.addEventListener('change', (event) => { const selected = secondaryLossFields.filter((item) => item.checked); if (selected.length > 2) { event.currentTarget.checked = false; formStatus.textContent = 'Escolha somente duas prioridades secundárias.'; } else { formStatus.textContent = ''; } syncLossPriorities(); }));
       function initializeTurnstile() {
         if (!TURNSTILE_SITEKEY || turnstileWidgetId !== null) return Promise.resolve();
         return new Promise((resolve, reject) => {
@@ -206,9 +232,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       }
       nextButton.addEventListener('click', () => { if (!validateCurrent()) return; if (step < questions.length - 1) { step += 1; updateStep(); } else { showOnly(contactPanel); document.querySelector('#email').focus(); initializeTurnstile().catch(() => { document.querySelector('#contact-status').textContent = 'Não foi possível carregar a verificação de segurança.'; }); } });
       backButton.addEventListener('click', () => { if (step > 0) { step -= 1; updateStep(); } });
-      function collectAnswers() { const data = Object.fromEntries(new FormData(form).entries()); const honeypot = data.website || ''; delete data.website; return { answers: data, honeypot }; }
+      function collectAnswers() { const formData = new FormData(form); const secondary = formData.getAll('opportunity_loss_secondary'); const data = Object.fromEntries(formData.entries()); data.name = name.value.trim(); data.opportunity_loss_secondary = secondary; const honeypot = data.website || ''; delete data.website; return { answers: data, honeypot }; }
       function escapeHtml(value) { return text(value).replace(/[&<>\"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' })[character]); }
-      function validResult(data) { const report = data?.report; return Boolean(data?.diagnosis_id && /^RXS-[A-Za-z0-9_-]+$/.test(data.diagnosis_id) && data.status === 'completed' && report && Array.isArray(report.opportunities) && report.opportunities.length === 3 && report.action_7_days && Array.isArray(data.continuation_options)); }
+      function validResult(data) { const report = data?.report; return Boolean(data?.diagnosis_id && /^RXS-[A-Za-z0-9_-]+$/.test(data.diagnosis_id) && data.status === 'completed' && data.report_header && data.declared_priorities && report && Array.isArray(report.opportunities) && report.opportunities.length === 3 && report.action_7_days && Array.isArray(data.continuation_options)); }
       function text(value) { return typeof value === 'string' ? value : ''; }
       const TURNSTILE_ERROR_CODES = new Set(['TURNSTILE_TOKEN_EXPIRED', 'TURNSTILE_TOKEN_INVALID', 'TURNSTILE_EXPIRED', 'TURNSTILE_REJECTED']);
       const INVALID_DATA_ERROR_CODES = new Set(['INVALID_DATA', 'VALIDATION_ERROR', 'VALIDATION_FAILED', 'INVALID_REQUEST']);
@@ -244,7 +270,26 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       function renderClassification(classification) { const rows = classificationRows(classification); if (!rows.length) return ''; const max = Math.max(...rows.map((row) => row.score)); const principalKey = classification.primary_lever; const principalLabel = classificationLabels[principalKey] || 'não informada'; const confidence = confidenceLabels[classification.primary_confidence] || 'não informada'; return `<section class="classification" aria-labelledby="classification-title"><p class="label">LEITURA RÁPIDA</p><h3 id="classification-title">Alavanca principal: ${escapeHtml(principalLabel)}</h3><p class="classification-confidence">Confiança do diagnóstico: ${escapeHtml(confidence)}</p><p class="label classification-chart-label">GRÁFICO DAS ALAVANCAS</p><div class="classification-chart">${rows.map((row) => `<div class="classification-row"><span>${escapeHtml(classificationLabels[row.key])}</span><div class="classification-track" aria-label="${escapeHtml(classificationLabels[row.key])}: ${row.score} pontos"><span style="width:${max > 0 ? (row.score / max) * 100 : 0}%"></span></div><b>${row.score}</b></div>`).join('')}</div></section>`; }
       function copyPrompt(prompt) { const value = text(prompt); const feedback = document.querySelector('#prompt-feedback'); const done = () => { feedback.textContent = 'Prompt copiado.'; }; const failed = () => { feedback.textContent = 'Não foi possível copiar automaticamente. Selecione o texto do prompt e copie manualmente.'; }; if (navigator.clipboard?.writeText) navigator.clipboard.writeText(value).then(done).catch(() => fallbackCopy(value, done, failed)); else fallbackCopy(value, done, failed); }
       function fallbackCopy(value, done, failed) { const area = document.createElement('textarea'); area.value = value; area.setAttribute('readonly', ''); area.style.position = 'fixed'; area.style.opacity = '0'; document.body.append(area); area.select(); try { document.execCommand('copy') ? done() : failed(); } catch { failed(); } finally { area.remove(); } }
-      function renderResult(data) { currentDiagnosisId = data.diagnosis_id; reportEmail.value = lastSubmission?.contact?.email ? text(lastSubmission.contact.email) : ''; reportEmailStatus.textContent = ''; const report = data.report; const recommended = Number.isInteger(report.recommended_opportunity_index) ? report.recommended_opportunity_index : 0; const opportunityCards = report.opportunities.map((item, index) => `<article class="opportunity ${index === recommended ? 'opportunity--recommended' : ''}"><p class="opportunity-number">${icon(opportunityIcons[index] || 'target')} 0${index + 1}${index === recommended ? ' · RECOMENDADA' : ''}</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.reason)}</p><ul>${(item.evidence_basis || []).map((evidence) => `<li>${escapeHtml(evidence)}</li>`).join('')}</ul><p class="meta">Esforço ${escapeHtml(effortLabels[item.effort] || item.effort)} · Prazo ${escapeHtml(speedLabels[item.speed] || item.speed)}</p></article>`).join(''); const steps = (report.action_7_days.steps || []).map((item) => `<li>${escapeHtml(item)}</li>`).join(''); const options = [{ id: 'self_serve', title: 'Quero tentar sozinho', copy: 'Levar o prompt e os próximos passos para a rotina.' }, { id: 'learn_with_ai', title: 'Quero aprender a executar com IA', copy: 'Conhecer o Resultado 21 se fizer sentido para o seu momento.' }, { id: 'implementation_help', title: 'Quero ajuda para implantar', copy: 'Conversar sobre um caminho de execução para o negócio.' }].filter((option) => data.continuation_options.includes(option.id)); const prompt = text(report.personalized_prompt); document.querySelector('#result-content').innerHTML = `<p class="kicker">SEU RAIO-X <span aria-hidden="true">/</span> ${escapeHtml(data.diagnosis_id)}</p><h2 id="result-title">Seu mapa de oportunidades</h2><p class="result-summary">${escapeHtml(report.summary)}</p><div class="profile"><p class="label">PERFIL RESUMIDO</p><p>${escapeHtml(report.business_profile)}</p></div>${renderClassification(data.classification)}<div class="opportunity-list"><h3>Três oportunidades para olhar agora</h3>${opportunityCards}</div><div class="seven-day"><p class="label">PRÓXIMOS 7 DIAS</p><h3>${escapeHtml(report.action_7_days.objective)}</h3><ol>${steps}</ol><p><b>Métrica:</b> ${escapeHtml(report.action_7_days.metric)}</p></div><div class="prompt-box"><p class="label">Prompt personalizado</p><p class="prompt-subtitle">Comando para copiar e colar na sua Inteligência Artificial.</p><pre class="prompt-code"><code>${escapeHtml(prompt)}</code></pre><button class="copy-prompt" type="button">Copiar prompt</button><p class="prompt-feedback" id="prompt-feedback" role="status" aria-live="polite"></p></div><div class="continuation"><p class="label">ESCOLHA O PRÓXIMO PASSO</p><div class="continuation-grid">${options.map((option) => `<button class="continuation-option" type="button" data-continuation="${option.id}"><b>${option.title}</b><span>${option.copy}</span></button>`).join('')}</div><p class="choice-feedback" id="choice-feedback" role="status"></p></div><p class="limitations"><b>Limitações do diagnóstico:</b> ${(report.limitations || []).map(escapeHtml).join(' ')}</p>`; document.querySelector('.copy-prompt')?.addEventListener('click', () => copyPrompt(prompt)); document.querySelectorAll('[data-continuation]').forEach((button) => button.addEventListener('click', () => chooseContinuation(button.dataset.continuation, data))); }
+      function renderResult(data) {
+        currentDiagnosisId = data.diagnosis_id;
+        reportEmail.value = lastSubmission?.contact?.email ? text(lastSubmission.contact.email) : '';
+        reportEmailStatus.textContent = '';
+        const report = data.report;
+        const header = data.report_header || {};
+        const declared = data.declared_priorities || {};
+        const opportunityLossLabels = { lead_generation: 'Geração de leads', conversion: 'Conversão de interessados em clientes', reactivation: 'Reativação de clientes antigos', expansion: 'Expansão das vendas para clientes atuais', capacity: 'Uso da capacidade disponível' };
+        const headerMarkup = `<dl class="report-header" aria-label="Identificação do relatório"><div><dt>Data</dt><dd>${escapeHtml(header.date)}</dd></div><div><dt>Empresa</dt><dd>${escapeHtml(header.company_name)}</dd></div><div><dt>Contato</dt><dd>${escapeHtml(header.contact_name)}</dd></div><div><dt>E-mail</dt><dd>${escapeHtml(header.email)}</dd></div><div><dt>Telefone</dt><dd>${escapeHtml(header.phone)}</dd></div></dl>`;
+        const secondaryLabels = Array.isArray(declared.secondary) ? declared.secondary.map((item) => opportunityLossLabels[item] || item) : [];
+        const declaredMarkup = `<div class="declared-priorities"><p class="label">PRIORIDADES DECLARADAS</p><p><b>Principal:</b> ${escapeHtml(opportunityLossLabels[declared.primary] || declared.primary)}</p><p><b>Secundárias:</b> ${secondaryLabels.length ? secondaryLabels.map(escapeHtml).join(' · ') : 'Não informadas'}</p></div>`;
+        const recommended = Number.isInteger(report.recommended_opportunity_index) ? report.recommended_opportunity_index : 0;
+        const opportunityCards = report.opportunities.map((item, index) => `<article class="opportunity ${index === recommended ? 'opportunity--recommended' : ''}"><p class="opportunity-number">${icon(opportunityIcons[index] || 'target')} 0${index + 1}${index === recommended ? ' · RECOMENDADA' : ''}</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.reason)}</p><ul>${(item.evidence_basis || []).map((evidence) => `<li>${escapeHtml(evidence)}</li>`).join('')}</ul><p class="meta">Esforço ${escapeHtml(effortLabels[item.effort] || item.effort)} · Prazo ${escapeHtml(speedLabels[item.speed] || item.speed)}</p></article>`).join('');
+        const steps = (report.action_7_days.steps || []).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+        const options = [{ id: 'self_serve', title: 'Quero tentar sozinho', copy: 'Levar o prompt e os próximos passos para a rotina.' }, { id: 'learn_with_ai', title: 'Quero aprender a executar com IA', copy: 'Conhecer o Resultado 21 se fizer sentido para o seu momento.' }, { id: 'implementation_help', title: 'Quero ajuda para implantar', copy: 'Conversar sobre um caminho de execução para o negócio.' }].filter((option) => data.continuation_options.includes(option.id));
+        const prompt = text(report.personalized_prompt);
+        document.querySelector('#result-content').innerHTML = `<p class="kicker">SEU RAIO-X <span aria-hidden="true">/</span> ${escapeHtml(data.diagnosis_id)}</p><h2 id="result-title">Seu mapa de oportunidades</h2>${headerMarkup}${declaredMarkup}<p class="result-summary">${escapeHtml(report.summary)}</p><div class="profile"><p class="label">PERFIL RESUMIDO</p><p>${escapeHtml(report.business_profile)}</p></div>${renderClassification(data.classification)}<div class="opportunity-list"><h3>Três oportunidades para olhar agora</h3>${opportunityCards}</div><div class="seven-day"><p class="label">PRÓXIMOS 7 DIAS</p><h3>${escapeHtml(report.action_7_days.objective)}</h3><ol>${steps}</ol><p><b>Métrica:</b> ${escapeHtml(report.action_7_days.metric)}</p></div><div class="prompt-box"><p class="label">Prompt personalizado</p><p class="prompt-subtitle">Comando para copiar e colar na sua Inteligência Artificial.</p><pre class="prompt-code"><code>${escapeHtml(prompt)}</code></pre><button class="copy-prompt" type="button">Copiar prompt</button><p class="prompt-feedback" id="prompt-feedback" role="status" aria-live="polite"></p></div><div class="continuation"><p class="label">ESCOLHA O PRÓXIMO PASSO</p><div class="continuation-grid">${options.map((option) => `<button class="continuation-option" type="button" data-continuation="${option.id}"><b>${option.title}</b><span>${option.copy}</span></button>`).join('')}</div><p class="choice-feedback" id="choice-feedback" role="status"></p></div><p class="limitations"><b>Limitações do diagnóstico:</b> ${(report.limitations || []).map(escapeHtml).join(' ')}</p>`;
+        document.querySelector('.copy-prompt')?.addEventListener('click', () => copyPrompt(prompt));
+        document.querySelectorAll('[data-continuation]').forEach((button) => button.addEventListener('click', () => chooseContinuation(button.dataset.continuation, data)));
+      }
 
       function chooseContinuation(choice, data) { const feedback = document.querySelector('#choice-feedback'); if (choice === 'learn_with_ai') { feedback.innerHTML = 'Você pode conhecer o <a href="/resultado21/">Resultado 21</a> como uma opção de aprendizagem prática. A escolha é sua.'; return; } feedback.textContent = choice === 'self_serve' ? 'Certo. Comece pela ação de 7 dias e use o prompt como apoio.' : 'Certo. Esse interesse fica registrado para orientar o próximo contato, sem inscrição automática.'; }
       async function requestReportEmail() { if (!reportEmail.checkValidity()) { reportEmail.reportValidity(); return; } reportEmailButton.disabled = true; reportEmail.disabled = true; reportEmailStatus.textContent = ''; const id = currentDiagnosisId; const key = requestId(); try { const response = await fetch(`${API_BASE}/api/raio-x/diagnoses/${encodeURIComponent(id)}/email`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': `email-${key}` }, body: JSON.stringify({ email: reportEmail.value.trim() }) }); if (!response.ok || response.status !== 202) throw new Error('EMAIL_REQUEST_FAILED'); reportEmailStatus.textContent = 'Pronto. A solicitação de envio foi registrada.'; setTimeout(() => { window.location.href = `/raio-x/obrigado/?diagnostico=${encodeURIComponent(id)}`; }, 700); } catch { reportEmailStatus.textContent = 'Não foi possível solicitar o envio agora. Confira o e-mail e tente novamente.'; reportEmailButton.disabled = false; reportEmail.disabled = false; } }
@@ -289,7 +334,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .button-primary:hover { background: #dbff91; }
       .button-secondary { color: var(--ink); background: transparent; border-color: var(--line); }
       .button-large { align-self: flex-start; min-height: 50px; padding-inline: 22px; }
-      .form-panel, .contact-panel, .loading-panel, .result-panel, .error-panel { padding: 24px 0; animation: rise .35s ease both; }
+      .identity-panel, .form-panel, .contact-panel, .loading-panel, .result-panel, .error-panel { padding: 24px 0; animation: rise .35s ease both; }
+      .identity-panel { max-width: 620px; }
+      .identity-panel h2 { margin-bottom: 12px; font-size: clamp(1.8rem, 4vw, 2.65rem); }
+      .identity-panel form { margin-top: 28px; }
+      .identity-panel form > label { display: block; margin-bottom: 7px; font-size: .9rem; font-weight: 700; }
+      .identity-panel input { margin-bottom: 18px; }
       .completion-context { padding: 14px 16px; margin-bottom: 20px; border: 1px solid rgba(196, 243, 106, .45); border-left: 3px solid var(--lime); background: rgba(196, 243, 106, .08); }
       .completion-context p { margin-bottom: 3px; color: var(--lime); font-size: .95rem; font-weight: 800; }
       .completion-context span { color: #d6e3e8; font-size: .86rem; }
@@ -299,6 +349,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .progress-track span { display: block; height: 100%; background: var(--lime); transition: width .3s ease; }
       .question label, legend { display: block; margin-bottom: 10px; font-size: clamp(1.25rem, 2.8vw, 1.85rem); font-weight: 700; line-height: 1.16; letter-spacing: -.045em; }
       .question-instruction { margin: 0 0 18px; color: var(--muted); font-size: .86rem; }
+      .choice-group-title { margin: 22px 0 9px; color: var(--lime); font: 500 .75rem/1.4 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+      .choice-group-title--secondary { margin-top: 28px; color: var(--orange); }
+      .secondary-count { margin: 9px 0 0; color: var(--muted); font-size: .8rem; }
       .hint { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
       input[type='text'], input[type='email'], input[type='tel'], textarea { width: 100%; color: var(--ink); background: rgba(13, 36, 53, .85); border: 1px solid var(--line); border-radius: 2px; padding: 15px; }
       input[type='text'], input[type='email'], input[type='tel'] { min-height: 52px; }
@@ -309,6 +362,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .choice { display: flex; min-height: 46px; align-items: center; gap: 10px; padding: 9px 12px; color: #dbe7ed; background: rgba(13, 36, 53, .8); border: 1px solid var(--line); cursor: pointer; font-size: .88rem; transition: border-color .2s, background .2s; }
       .choice:has(input:checked) { border-color: var(--lime); background: rgba(196, 243, 106, .1); color: var(--lime); }
       .choice input { accent-color: var(--lime); flex: 0 0 auto; }
+      .choice:has(input:disabled) { cursor: not-allowed; opacity: .42; }
       .form-actions { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; }
       .form-actions .button-primary { margin-left: auto; }
       .status-message { min-height: 1.5em; color: var(--orange); font-size: .86rem; }
@@ -320,6 +374,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
       .loading-bar { width: 100%; height: 10px; margin: 24px 0 18px; overflow: hidden; background: var(--line); border-radius: 1px; }
       .loading-bar span { display: block; width: 38%; height: 100%; background: var(--lime); animation: loading-sweep 1.6s ease-in-out infinite; }
       .result-summary { color: var(--muted); font-size: 1.1rem; max-width: 650px; }
+      .report-header { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 24px 0; padding: 1px; background: var(--line); }
+      .report-header div { min-width: 0; padding: 12px 14px; background: #091d2d; }
+      .report-header div:nth-child(2) { grid-column: span 1; }
+      .report-header dt { color: var(--muted); font: 500 .66rem/1.4 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+      .report-header dd { margin: 3px 0 0; overflow-wrap: anywhere; color: var(--ink); font-size: .88rem; font-weight: 700; }
+      .declared-priorities { margin: 0 0 28px; padding: 15px 17px; border-left: 3px solid var(--lime); background: rgba(196, 243, 106, .07); }
+      .declared-priorities p { margin-bottom: 5px; color: #d7e3e9; font-size: .86rem; }
+      .declared-priorities .label { margin-bottom: 9px; color: var(--lime); }
       .profile, .seven-day, .prompt-box { padding: 24px; margin: 30px 0; background: var(--panel); border-left: 3px solid var(--orange); }
       .profile p:last-child, .prompt-box p:last-child { margin-bottom: 0; }
       .classification { margin: 36px 0 44px; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }

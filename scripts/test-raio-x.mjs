@@ -29,10 +29,21 @@ assert.doesNotMatch(html, /Sem promessa de resultado/, 'a abertura não deve exi
 assert.match(html, /name="priority_30_days"/);
 assert.match(html, /id="sucesso-content"[^>]*name="sucesso_content"[^>]*checked(?:=""|(?=[ >]))/);
 assert.equal((html.match(/class="question"/g) || []).length, 10, 'o fluxo deve exibir 10 perguntas');
+const raioSource = pageSources.find(([name]) => name === 'Raio-X')?.[1] || '';
+assert.match(raioSource, /Antes de começarmos, como posso te chamar\?/, 'o nome é solicitado antes das perguntas');
+assert.match(raioSource, /placeholder="Coloque aqui seu nome completo"/, 'o campo explica que deve receber o nome completo');
+assert.doesNotMatch(raioSource, /class="question"[^>]*>[\s\S]{0,300}for="name"/, 'nome não conta como pergunta');
+assert.match(raioSource, /name="company_name"/, 'a pergunta 01 captura o nome da empresa ou negócio');
+assert.match(raioSource, /Qual é o nome da sua empresa ou negócio\?/, 'a pergunta 01 não pode ser confundida com o nome da pessoa');
 for (const value of ['lead_generation', 'conversion', 'reactivation', 'expansion', 'capacity']) {
-  assert.match(html, new RegExp(`name="opportunity_loss" value="${value}"`), `opportunity_loss aceita ${value}`);
+  assert.match(raioSource, new RegExp(`name="opportunity_loss_primary" value="${value}"`), `a prioridade principal aceita ${value}`);
+  assert.match(raioSource, new RegExp(`name="opportunity_loss_secondary" value="${value}"`), `as prioridades secundárias aceitam ${value}`);
 }
 assert.match(html, /Onde sua empresa mais perde oportunidades hoje\?/);
+assert.match(raioSource, /Escolha uma prioridade principal e duas secundárias/, 'a hierarquia das três escolhas é explícita');
+assert.match(raioSource, /getAll\('opportunity_loss_secondary'\)/, 'as duas prioridades secundárias são coletadas');
+assert.match(raioSource, /secondary\.length !== 2/, 'o formulário exige exatamente duas secundárias');
+assert.match(raioSource, /secondary\.includes\(primary\)/, 'a prioridade principal não pode se repetir nas secundárias');
 assert.match(html, /class="completion-context"[^>]*>\s*<p[^>]*>Você concluiu as 10 perguntas<\/p>/);
 assert.match(html, /Falta apenas confirmar onde entregamos seu resultado\./);
 assert.match(html, /name="website"/);
@@ -45,7 +56,6 @@ assert.match(html, /setTimeout\(\(\) => controller\.abort\(\), 90000\)/);
 assert.match(html, /scrollIntoView\(\{ behavior: 'smooth', block: 'start' \}\)/);
 assert.match(html, /<h2[^>]*id="error-title"[^>]*>Houve uma falha no processamento<\/h2>/);
 assert.match(html, /id="error-panel"[^>]*role="alert"[^>]*aria-live="assertive"/);
-const raioSource = pageSources.find(([name]) => name === 'Raio-X')?.[1] || '';
 assert.match(raioSource, /\[hidden\]\s*\{\s*display:\s*none\s*!important;/);
 assert.match(html, /data-state="intro"/);
 assert.match(html, /item\.setAttribute\('aria-hidden', String\(!active\)\)/);
@@ -122,6 +132,11 @@ for (const lever of ['reactivation', 'repurchase', 'complementary_sale', 'idle_c
 }
 assert.match(raioSource, /classification\.primary_lever/, 'a leitura rápida usa a alavanca principal real');
 assert.match(raioSource, /classification\.primary_confidence/, 'a leitura rápida usa a confiança real');
+assert.match(raioSource, /data\.report_header/, 'o relatório consome o cabeçalho determinístico da API');
+for (const key of ['date', 'company_name', 'contact_name', 'email', 'phone']) {
+  assert.match(raioSource, new RegExp(`header\\.${key}`), `o cabeçalho exibe ${key}`);
+}
+assert.match(raioSource, /data\.declared_priorities/, 'o relatório preserva principal e secundárias como contexto comercial');
 assert.match(raioSource, /<style is:global>/, 'estilos do relatório inserido por innerHTML não dependem dos atributos de escopo do Astro');
 assert.match(raioSource, /\[hidden\] \{ display: none !important; \}/, 'painéis ocultos continuam isolados no CSS global');
 assert.doesNotMatch(raioSource, /:global\(\[hidden\]\)/, 'o CSS global não deixa pseudo-seletor inválido no artefato');
