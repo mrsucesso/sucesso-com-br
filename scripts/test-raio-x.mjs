@@ -86,6 +86,18 @@ assert.match(raioSource, /RESULT_REQUEST_FAILED/, 'falhas ao buscar o relatório
 assert.match(raioSource, /get\('diagnostico'\)/, 'um diagnóstico persistido pode ser reaberto por URL');
 assert.match(raioSource, /\/\^RXS-\[a-f0-9\]\{16\}\$\/i/, 'o ID recebido pela URL é validado antes da consulta');
 assert.match(raioSource, /loadPersistedDiagnosis\(\)/, 'o carregamento do resultado persistido é iniciado na abertura');
+assert.match(raioSource, /Salve seu relatório no e-mail/, 'o resultado oferece salvamento por e-mail');
+assert.match(raioSource, /id="report-email"[^>]*type="email"/, 'o bloco de e-mail usa campo editável de e-mail');
+assert.match(raioSource, /Enviar relatório por e-mail/, 'o bloco de e-mail tem CTA explícita');
+assert.match(raioSource, /Pronto\. O relatório será enviado para o e-mail informado\./, 'o envio exibe confirmação');
+assert.match(raioSource, /Não foi possível solicitar o envio agora\. Confira o e-mail e tente novamente\./, 'o envio exibe falha acionável');
+assert.match(raioSource, /\/api\/raio-x\/diagnoses\/\$\{encodeURIComponent\(id\)\}\/email/, 'o envio usa o endpoint do diagnóstico');
+assert.match(raioSource, /JSON\.stringify\(\{ email: reportEmail\.value\.trim\(\) \}\)/, 'o envio envia somente o e-mail');
+assert.match(raioSource, /reportEmail\.value = lastSubmission\?\.contact\?\.email \? text\(lastSubmission\.contact\.email\) : ''/, 'o resultado da mesma sessão preenche o e-mail');
+assert.match(raioSource, /: ''/, 'o diagnóstico reaberto não expõe e-mail ausente');
+assert.match(raioSource, /reportEmail\.disabled = true/, 'o botão/campo é desabilitado durante o envio');
+assert.match(raioSource, /reportEmail\.disabled = false/, 'o campo volta a ser editável após a requisição');
+assert.match(raioSource, /Idempotency-Key.*email/, 'o envio tem chave técnica de idempotência');
 assert.match(raioSource, /const effortLabels = \{ low: 'baixo', medium: 'médio', high: 'alto' \}/, 'esforço técnico é exibido em português');
 assert.match(raioSource, /const speedLabels = \{ short: 'curto prazo', medium: 'médio prazo', long: 'longo prazo' \}/, 'prazo técnico é exibido em português');
 assert.match(html, /resultado21/);
