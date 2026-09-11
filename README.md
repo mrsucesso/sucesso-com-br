@@ -38,9 +38,11 @@ A página `/raio-x/` renderiza o widget oficial do Cloudflare Turnstile somente 
 
 Na revisão do fluxo, o código de `/raio-x/` foi verificado e não contém chamadas de OAuth, `navigator.permissions`, abertura de autorização ou solicitação de acesso a aplicativos/serviços externos. Ele chama apenas Google Fonts, Turnstile quando configurado e a API do diagnóstico. O callback OAuth listado acima pertence a outro fluxo do site e não é carregado pela página Raio-X.
 
+O nome do contato é coletado numa etapa preliminar, sem numeração, com a pergunta **“Antes de começarmos, como posso te chamar?”**. As 10 perguntas diagnósticas começam pela identificação da empresa. A pergunta de perdas exige uma prioridade principal e exatamente duas secundárias distintas; apenas a principal entra no scoring. O relatório mostra data, empresa, contato, e-mail, telefone e as três prioridades declaradas.
+
 ### Cópia do relatório por e-mail
 
-O resultado permanece visível na página e pode ser reaberto por `?diagnostico=<diagnosis_id>`. Ao final, o bloco **“Salve seu relatório no e-mail”** mostra um campo editável e o botão **“Enviar relatório por e-mail”**. Na mesma sessão, o campo reaproveita o e-mail obrigatório já informado; na reabertura por URL ele fica vazio para não expor dados pessoais.
+O resultado permanece visível na página e pode ser reaberto por `?diagnostico=<diagnosis_id>`. Na sessão atual, o cabeçalho completo usa os dados que a própria pessoa acabou de informar, mantidos somente em memória. Em reaberturas, a API protege empresa, contato, e-mail e telefone; o ID opaco não funciona como credencial para consultar dados pessoais. Ao final, o bloco **“Salve seu relatório no e-mail”** mostra um campo editável e o botão **“Enviar relatório por e-mail”**. Na mesma sessão, o campo reaproveita o e-mail obrigatório já informado; na reabertura por URL ele fica vazio.
 
 O botão chama `POST /api/raio-x/diagnoses/{diagnosis_id}/email` e considera aceita somente a resposta HTTP `202`. O envio é assíncrono no backend; falha na entrega nunca esconde o relatório nem bloqueia o diagnóstico. O frontend não recebe nem armazena credenciais de e-mail.
 
