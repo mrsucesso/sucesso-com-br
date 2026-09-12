@@ -133,6 +133,7 @@ for (const lever of ['reactivation', 'repurchase', 'complementary_sale', 'idle_c
 assert.match(raioSource, /classification\.primary_lever/, 'a leitura rápida usa a alavanca principal real');
 assert.match(raioSource, /classification\.primary_confidence/, 'a leitura rápida usa a confiança real');
 assert.match(raioSource, /data\.report_header/, 'o relatório consome o cabeçalho determinístico da API');
+assert.match(raioSource, /index === recommended \? 'RECOMENDADA' : 'PARA CONSIDERAR'/, 'todas as oportunidades exibem número e um rótulo textual');
 assert.match(raioSource, /lastSubmission\?\.answers\?\.company_name/, 'a sessão atual monta o cabeçalho sem depender de PII no GET público');
 assert.match(raioSource, /lastSubmission\?\.contact\?\.whatsapp/, 'o telefone da sessão atual vem apenas do payload local');
 for (const key of ['date', 'company_name', 'contact_name', 'email', 'phone']) {
