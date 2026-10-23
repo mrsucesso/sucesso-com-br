@@ -15,5 +15,7 @@ assert.match(html, /resultado21/);
 assert.doesNotMatch(html, /(sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH) PRIVATE KEY)/i, 'nenhum segredo deve ser embutido');
 assert.match(html, /https:\/\/raiox-api\.sucesso\.com\.br/);
 assert.doesNotMatch(html, /http:\/\/127\.0\.0\.1:3811/);
+assert.match(html, /challenges\.cloudflare\.com\/turnstile\/v0\/api\.js/);
+assert.match(html, /0x4AAAAAAEvIKLYNCd-eNdfh/);
 
 console.log('Raio-X fixture: rota, contrato visual e ausência de segredo OK');
