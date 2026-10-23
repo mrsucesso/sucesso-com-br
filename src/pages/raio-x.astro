@@ -1,7 +1,9 @@
 ---
 const title = 'Raio-X do Sucesso | Sucesso Empresarial';
 const description = 'Responda 9 perguntas e receba um mapa prático de oportunidades para o seu negócio.';
-const apiBase = import.meta.env.PUBLIC_RAIO_X_API_BASE || 'http://127.0.0.1:3811';
+// A URL pública é o fallback de produção. Desenvolvimento local deve definir
+// PUBLIC_RAIO_X_API_BASE=http://127.0.0.1:3811 explicitamente.
+const apiBase = import.meta.env.PUBLIC_RAIO_X_API_BASE || 'https://raiox-api.sucesso.com.br';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
 ---
 
