@@ -3,21 +3,42 @@ const PIXEL_ID = '28536331392735087';
 ---
 <script define:vars={{ PIXEL_ID }}>
   (() => {
+    if (!['sucesso.com.br', 'www.sucesso.com.br'].includes(window.location.hostname)) return;
     const storageKey = 'sucesso-meta-consent-v1';
     let consent = null;
     try { consent = localStorage.getItem(storageKey); } catch (_) {}
     function startPixel() {
       if (window.__sucessoMetaPixelStarted) return;
       window.__sucessoMetaPixelStarted = true;
-      window.fbq = window.fbq || function () { (window.fbq.queue = window.fbq.queue || []).push(arguments); };
+      if (!window.fbq) {
+        const fbq = function () {
+          if (fbq.callMethod) fbq.callMethod.apply(fbq, arguments);
+          else fbq.queue.push(arguments);
+        };
+        fbq.push = fbq;
+        fbq.loaded = true;
+        fbq.version = '2.0';
+        fbq.queue = [];
+        window.fbq = fbq;
+        window._fbq = fbq;
+      }
       const script = document.createElement('script');
       script.async = true;
       script.src = 'https://connect.facebook.net/en_US/fbevents.js';
       document.head.appendChild(script);
       window.fbq('consent', 'grant');
+      window.fbq('set', 'autoConfig', false, PIXEL_ID);
       window.fbq('init', PIXEL_ID);
       window.fbq('track', 'PageView');
     }
+    const recordedLeads = new Set();
+    window.sucessoTrackLead = function (submissionId) {
+      if (consent !== 'yes' || !window.__sucessoMetaPixelStarted ||
+          typeof submissionId !== 'string' || !submissionId ||
+          recordedLeads.has(submissionId)) return;
+      recordedLeads.add(submissionId);
+      window.fbq('track', 'Lead');
+    };
     function render() {
       if (consent || !document.body) return;
       const banner = document.createElement('section');
