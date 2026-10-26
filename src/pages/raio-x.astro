@@ -2,7 +2,7 @@
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import MetaPixel from '../components/MetaPixel.astro';
 const title = 'Raio-X do Sucesso | Sucesso Empresarial';
-const description = 'Responda 9 perguntas e receba um mapa prático de oportunidades para o seu negócio.';
+const description = 'Responda 10 perguntas e receba um mapa prático de oportunidades para o seu negócio.';
 // A URL pública é o fallback de produção. Desenvolvimento local deve definir
 // PUBLIC_RAIO_X_API_BASE=http://127.0.0.1:3811 explicitamente.
 const apiBase = import.meta.env.PUBLIC_RAIO_X_API_BASE || 'https://raiox-api.sucesso.com.br';
@@ -48,7 +48,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
       <section class="form-panel" id="form-panel" hidden aria-labelledby="form-title">
         <div class="progress-head">
           <p class="kicker" id="form-title">SEU CONTEXTO</p>
-          <p class="progress-text"><span id="progress-current">1</span> de 9</p>
+          <p class="progress-text"><span id="progress-current">1</span> de 10</p>
         </div>
         <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
         <p class="status-message" id="form-status" role="status" aria-live="polite"></p>
