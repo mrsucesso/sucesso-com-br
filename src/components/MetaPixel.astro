@@ -1,0 +1,47 @@
+---
+const PIXEL_ID = '28536331392735087';
+---
+<script define:vars={{ PIXEL_ID }}>
+  (() => {
+    const storageKey = 'sucesso-meta-consent-v1';
+    let consent = null;
+    try { consent = localStorage.getItem(storageKey); } catch (_) {}
+    function startPixel() {
+      if (window.__sucessoMetaPixelStarted) return;
+      window.__sucessoMetaPixelStarted = true;
+      window.fbq = window.fbq || function () { (window.fbq.queue = window.fbq.queue || []).push(arguments); };
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      document.head.appendChild(script);
+      window.fbq('consent', 'grant');
+      window.fbq('init', PIXEL_ID);
+      window.fbq('track', 'PageView');
+    }
+    function render() {
+      if (consent || !document.body) return;
+      const banner = document.createElement('section');
+      banner.className = 'sucesso-meta-consent';
+      banner.setAttribute('aria-label', 'Preferências de medição');
+      banner.innerHTML = '<p>Podemos usar medição de anúncios para entender visitas às páginas públicas da Sucesso? Isso não afeta o uso do site.</p><button type="button" data-choice="yes">Permitir medição</button><button type="button" data-choice="no">Agora não</button>';
+      banner.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-choice]');
+        if (!button) return;
+        consent = button.dataset.choice;
+        try { localStorage.setItem(storageKey, consent); } catch (_) {}
+        if (consent === 'yes') startPixel();
+        banner.remove();
+      });
+      document.body.appendChild(banner);
+    }
+    if (consent === 'yes') startPixel();
+    else if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render, { once: true });
+    else render();
+  })();
+</script>
+<style>
+  :global(.sucesso-meta-consent) { position:fixed; right:1rem; bottom:1rem; z-index:9999; max-width:31rem; padding:1rem; background:#fff; color:#15233a; border:1px solid #d8dfeb; border-radius:.75rem; box-shadow:0 8px 30px rgba(0,0,0,.16); font:14px/1.5 system-ui,sans-serif; }
+  :global(.sucesso-meta-consent p) { margin:0 0 .75rem; }
+  :global(.sucesso-meta-consent button) { margin:0 .5rem .25rem 0; padding:.55rem .8rem; border:1px solid #1b4f8a; border-radius:.45rem; background:#1b4f8a; color:#fff; cursor:pointer; font:inherit; }
+  :global(.sucesso-meta-consent button[data-choice="no"]) { background:#fff; color:#1b4f8a; }
+</style>

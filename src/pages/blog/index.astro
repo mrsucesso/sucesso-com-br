@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import GoogleAnalytics from '../../components/GoogleAnalytics.astro';
+import MetaPixel from '../../components/MetaPixel.astro';
 
 const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const title = 'Blog | Sucesso Empresarial';
@@ -11,6 +12,7 @@ const description = 'Conteúdos práticos sobre inteligência artificial, automa
 <html lang="pt-BR">
   <head>
     <GoogleAnalytics />
+    <MetaPixel />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
