@@ -1,4 +1,5 @@
 ---
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 export interface Props {
   title: string;
   description: string;
@@ -14,6 +15,7 @@ const formattedDate = pubDate.toLocaleDateString('pt-BR', { year:'numeric', mont
 <!doctype html>
 <html lang="pt-BR">
   <head>
+    <GoogleAnalytics />
     <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} /><link rel="canonical" href={`https://sucesso.com.br${Astro.url.pathname}`} />
     <link rel="icon" type="image/jpeg" sizes="512x512" href="/images/favicon-sucesso-empresarial.jpg" /><link rel="apple-touch-icon" href="/images/favicon-sucesso-empresarial.jpg" />

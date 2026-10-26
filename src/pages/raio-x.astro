@@ -1,4 +1,5 @@
 ---
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 const title = 'Raio-X do Sucesso | Sucesso Empresarial';
 const description = 'Responda 9 perguntas e receba um mapa prático de oportunidades para o seu negócio.';
 // A URL pública é o fallback de produção. Desenvolvimento local deve definir
@@ -11,6 +12,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
 <!doctype html>
 <html lang="pt-BR">
   <head>
+    <GoogleAnalytics />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />

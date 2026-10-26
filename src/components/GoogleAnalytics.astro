@@ -1,0 +1,10 @@
+---
+const MEASUREMENT_ID = 'G-84JDLB0SS7';
+---
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`}></script>
+<script define:vars={{ MEASUREMENT_ID }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', MEASUREMENT_ID, { anonymize_ip: true });
+</script>
