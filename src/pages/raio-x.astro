@@ -117,7 +117,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
         <form id="contact-form" novalidate autocomplete="off">
           <label for="email">Seu melhor e-mail</label>
           <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required />
-          <label class="consent"><input id="sucesso-content" name="sucesso_content" type="checkbox" /><span>Quero receber conteúdos da Sucesso Empresarial por e-mail. Posso cancelar quando quiser.</span></label>
+          <label class="consent"><input id="sucesso-content" name="sucesso_content" type="checkbox" checked /><span>Quero receber conteúdos da Sucesso Empresarial por e-mail. Posso cancelar quando quiser.</span></label>
           <p class="privacy-note">O consentimento é opcional e separado do diagnóstico. Consulte nossa <a href="/privacidade/">política de privacidade</a>.</p>
           {turnstileSiteKey && <div id="turnstile-widget" class="turnstile-widget" aria-label="Verificação de segurança"></div>}
           <p class="status-message" id="contact-status" role="alert" aria-live="assertive"></p>
@@ -153,7 +153,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
       const progressBar = document.querySelector('#progress-bar');
       const formStatus = document.querySelector('#form-status');
       const contactContentConsent = document.querySelector('#sucesso-content');
-      contactContentConsent.checked = false;
+      contactContentConsent.checked = true;
       let step = 0;
       let lastSubmission = null;
       let turnstileToken = null;
