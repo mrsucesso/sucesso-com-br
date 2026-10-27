@@ -16,7 +16,9 @@ for (const token of [
   'connect.facebook.net/en_US/fbevents.js',
   "fbq('track', 'PageView')",
   'localStorage',
-  'Permitir medição',
+  'Podemos medir visitas para melhorar o site?',
+  'Você pode mudar isso depois.',
+  'Permitir',
   'Agora não',
 ]) {
   if (!component.includes(token)) throw new Error(`MetaPixel sem: ${token}`);

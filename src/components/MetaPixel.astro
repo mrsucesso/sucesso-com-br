@@ -44,7 +44,7 @@ const PIXEL_ID = '28536331392735087';
       const banner = document.createElement('section');
       banner.className = 'sucesso-meta-consent';
       banner.setAttribute('aria-label', 'Preferências de medição');
-      banner.innerHTML = '<p>Podemos usar medição de anúncios para entender visitas às páginas públicas da Sucesso? Isso não afeta o uso do site.</p><button type="button" data-choice="yes">Permitir medição</button><button type="button" data-choice="no">Agora não</button>';
+      banner.innerHTML = '<p><b>Podemos medir visitas para melhorar o site?</b><span>Você pode mudar isso depois.</span></p><div><button type="button" data-choice="yes">Permitir</button><button type="button" data-choice="no">Agora não</button></div>';
       banner.addEventListener('click', (event) => {
         const button = event.target.closest('button[data-choice]');
         if (!button) return;
@@ -61,8 +61,10 @@ const PIXEL_ID = '28536331392735087';
   })();
 </script>
 <style>
-  :global(.sucesso-meta-consent) { position:fixed; right:1rem; bottom:1rem; z-index:9999; max-width:31rem; padding:1rem; background:#fff; color:#15233a; border:1px solid #d8dfeb; border-radius:.75rem; box-shadow:0 8px 30px rgba(0,0,0,.16); font:14px/1.5 system-ui,sans-serif; }
-  :global(.sucesso-meta-consent p) { margin:0 0 .75rem; }
-  :global(.sucesso-meta-consent button) { margin:0 .5rem .25rem 0; padding:.55rem .8rem; border:1px solid #1b4f8a; border-radius:.45rem; background:#1b4f8a; color:#fff; cursor:pointer; font:inherit; }
+  :global(.sucesso-meta-consent) { position:fixed; right:1rem; bottom:1rem; z-index:9999; width:min(21rem,calc(100% - 2rem)); padding:.72rem .8rem; background:rgba(255,255,255,.97); color:#15233a; border:1px solid #d8dfeb; border-radius:.6rem; box-shadow:0 6px 18px rgba(0,0,0,.13); font:12px/1.4 system-ui,sans-serif; }
+  :global(.sucesso-meta-consent p) { margin:0 0 .55rem; }
+  :global(.sucesso-meta-consent p b) { display:block; font-size:.78rem; font-weight:650; }
+  :global(.sucesso-meta-consent p span) { display:block; margin-top:.12rem; color:#5d6879; font-size:.72rem; }
+  :global(.sucesso-meta-consent button) { margin:0 .35rem 0 0; padding:.38rem .6rem; border:1px solid #1b4f8a; border-radius:.35rem; background:#1b4f8a; color:#fff; cursor:pointer; font:600 .72rem/1.2 system-ui,sans-serif; }
   :global(.sucesso-meta-consent button[data-choice="no"]) { background:#fff; color:#1b4f8a; }
 </style>
