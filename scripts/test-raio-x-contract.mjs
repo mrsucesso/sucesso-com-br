@@ -10,6 +10,12 @@ if (!page.includes('name="company_name"') || !page.includes('Qual é o nome do s
 if (page.includes('data-step="0">\n            <label for="name"')) {
   throw new Error('Nome pessoal ainda está contado como pergunta do diagnóstico.');
 }
+if (!page.includes('type="checkbox" name="purchase_mode"') || !page.includes('Você pode marcar mais de uma forma')) {
+  throw new Error('A forma de compra deve permitir seleção múltipla.');
+}
+if (!page.includes('data.purchase_mode = [...form.querySelectorAll')) {
+  throw new Error('As múltiplas formas de compra não são serializadas como lista.');
+}
 for (const field of ['company_name', 'priority_30_days', 'opportunity_loss']) {
   if (!page.includes(`name="${field}"`)) {
     throw new Error(`Contrato quebrado: o campo obrigatório ${field} não é enviado pelo formulário.`);
