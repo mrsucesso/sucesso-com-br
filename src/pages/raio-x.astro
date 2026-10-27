@@ -270,12 +270,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
       .seven-day ol { padding-left: 22px; color: #d7e3e9; }
       .continuation { margin-top: 50px; }
       .continuation-grid { display: grid; gap: 12px; }
-      .continuation-option { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 5px 18px; width: 100%; text-align: left; color: var(--ink); background: rgba(13, 36, 53, .74); border: 1px solid var(--line); border-radius: 3px; padding: 19px 52px 19px 20px; cursor: pointer; min-height: 86px; transition: transform .18s, border-color .18s, background .18s; }
-      .continuation-option:hover { transform: translateY(-2px); border-color: var(--lime); background: rgba(24, 61, 65, .85); }
-      .continuation-option b { grid-column: 1; color: var(--ink); font-size: 1rem; }
-      .continuation-option span { grid-column: 1; color: #c2d0d8; font-size: .84rem; line-height: 1.45; }
+      .continuation-option { position: relative; display: flex; flex-direction: column; align-items: flex-start; width: 100%; text-align: left; color: var(--ink); background: #0d2435; border: 1px solid var(--line); border-radius: 3px; padding: 19px 58px 19px 20px; cursor: pointer; min-height: 98px; transition: transform .18s, border-color .18s, background .18s; }
+      .continuation-option:hover { transform: translateY(-2px); border-color: var(--lime); background: #183d41; }
+      .continuation-option b { display: block; margin: 0 0 8px; color: var(--ink); font-size: 1rem; line-height: 1.2; }
+      .continuation-option span { display: block; color: #c2d0d8; font-size: .84rem; line-height: 1.45; }
       .continuation-option i { position: absolute; right: 20px; top: 50%; color: var(--lime); font-size: 1.4rem; font-style: normal; transform: translateY(-50%); }
-      .continuation-option--primary { background: var(--lime); border-color: var(--lime); color: var(--navy); }
+      .continuation-option--primary { background: var(--lime); border-color: var(--lime); }
       .continuation-option--primary:hover { background: #dbff91; border-color: #dbff91; }
       .continuation-option--primary b { color: var(--navy); }
       .continuation-option--primary span { color: #21402a; }
