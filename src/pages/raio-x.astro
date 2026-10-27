@@ -164,8 +164,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
       function requestId() { return `rx-${crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`}`; }
       function getSource() { const params = new URLSearchParams(window.location.search); return sourceMap[params.get('origem')] || sourceMap[params.get('utm_source')] || 'other'; }
       function getUtm() { const params = new URLSearchParams(window.location.search); const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']; return Object.fromEntries(keys.map((key) => [key, params.get(key)]).filter(([, value]) => value)); }
-      function showOnly(panel) { [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel].forEach((item) => { item.hidden = item !== panel; }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-      function updateStep() { questions.forEach((question, index) => { question.hidden = index !== step; }); progressCurrent.textContent = String(step + 1); progressBar.style.width = `${((step + 1) / questions.length) * 100}%`; backButton.hidden = step === 0; nextButton.textContent = step === questions.length - 1 ? 'Continuar para o contato →' : 'Continuar →'; questions[step].querySelector('input, textarea')?.focus(); }
+      function showOnly(panel) { [intro, formPanel, contactPanel, loadingPanel, resultPanel, errorPanel].forEach((item) => { item.hidden = item !== panel; }); window.scrollTo(0, 0); }
+      function updateStep() { questions.forEach((question, index) => { question.hidden = index !== step; }); progressCurrent.textContent = String(step + 1); progressBar.style.width = `${((step + 1) / questions.length) * 100}%`; backButton.hidden = step === 0; nextButton.textContent = step === questions.length - 1 ? 'Continuar para o contato →' : 'Continuar →'; questions[step].querySelector('input, textarea')?.focus({ preventScroll: true }); }
       function validateCurrent() { const fields = [...questions[step].querySelectorAll('input:not([type="radio"]), textarea'), ...questions[step].querySelectorAll('input[type="radio"]:checked')]; const requiredField = questions[step].querySelector('input[required], textarea[required]'); if (requiredField?.type === 'radio' && !questions[step].querySelector('input[type="radio"]:checked')) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } if (requiredField && requiredField.type !== 'radio' && !requiredField.checkValidity()) { requiredField.reportValidity(); return false; } if (!fields.length && requiredField) { formStatus.textContent = 'Escolha uma opção para continuar.'; return false; } formStatus.textContent = ''; return true; }
       document.querySelector('#start-button').addEventListener('click', () => { showOnly(formPanel); updateStep(); });
       function initializeTurnstile() {
@@ -184,7 +184,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
           wait();
         });
       }
-      nextButton.addEventListener('click', () => { if (!validateCurrent()) return; if (step < questions.length - 1) { step += 1; updateStep(); } else { showOnly(contactPanel); document.querySelector('#email').focus(); initializeTurnstile().catch(() => { document.querySelector('#contact-status').textContent = 'Não foi possível carregar a verificação de segurança.'; }); } });
+      nextButton.addEventListener('click', () => { if (!validateCurrent()) return; if (step < questions.length - 1) { step += 1; updateStep(); } else { showOnly(contactPanel); document.querySelector('#email').focus({ preventScroll: true }); initializeTurnstile().catch(() => { document.querySelector('#contact-status').textContent = 'Não foi possível carregar a verificação de segurança.'; }); } });
       backButton.addEventListener('click', () => { if (step > 0) { step -= 1; updateStep(); } });
       function collectAnswers() { const data = Object.fromEntries(new FormData(form).entries()); const honeypot = data.website || ''; delete data.website; return { answers: data, honeypot }; }
       function escapeHtml(value) { return text(value).replace(/[&<>\"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' })[character]); }
@@ -215,8 +215,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
       .shell { width: min(100% - 40px, 780px); margin: 0 auto; padding: 90px 0 110px; }
       .intro { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; }
       .kicker, .label, .progress-text, .opportunity-number { color: var(--lime); font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; }
+      [hidden] { display: none !important; }
       h1, h2, h3, p { margin-top: 0; }
-      h1 { max-width: 720px; margin-bottom: 26px; font-size: clamp(2.45rem, 7vw, 5.4rem); line-height: .99; letter-spacing: -.075em; }
+      h1 { max-width: 720px; margin-bottom: 26px; font-size: clamp(1.96rem, 5.6vw, 4.32rem); line-height: .99; letter-spacing: -.075em; }
       h2 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.04; letter-spacing: -.06em; }
       h3 { line-height: 1.2; }
       .lead { max-width: 590px; color: var(--muted); font-size: clamp(1rem, 2vw, 1.16rem); }
@@ -288,7 +289,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '0x4AAAAAAE
       footer a { color: var(--muted); }
       @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
       @keyframes spin { to { transform: rotate(360deg); } }
-      @media (max-width: 600px) { .site-header { padding: 20px 20px 0; } .shell { width: min(100% - 32px, 780px); padding-top: 64px; } .intro { min-height: 70vh; } .choice-grid { grid-template-columns: 1fr; } .choice-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: clamp(2.5rem, 14vw, 4rem); } .progress-track { margin-bottom: 43px; } .form-actions { margin-top: 32px; } }
+      @media (max-width: 600px) { .site-header { padding: 20px 20px 0; } .shell { width: min(100% - 32px, 780px); padding-top: 64px; } .intro { min-height: 70vh; } .choice-grid { grid-template-columns: 1fr; } .choice-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: clamp(2rem, 11.2vw, 3.2rem); } .progress-track { margin-bottom: 43px; } .form-actions { margin-top: 32px; } }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
     </style>
   </body>
