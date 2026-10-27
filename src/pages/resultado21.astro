@@ -3,8 +3,8 @@ import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import MetaPixel from '../components/MetaPixel.astro';
 const checkoutUrl = 'https://pay.cakto.com.br/34cucrz';
 const canonicalUrl = 'https://sucesso.com.br/resultado21';
-const productName = 'IA Aplicada à Gestão e aos Negócios — Outubro/2026';
-const title = `${productName} | Resultado 21`;
+const productName = 'IA Aplicada à Gestão e aos Negócios';
+const title = `${productName} | Projeto Resultado 21`;
 const description = 'Oficina ao vivo para empresários e gestores aplicarem inteligência artificial a uma oportunidade real de receita durante 21 dias.';
 
 const etapas = [
@@ -35,10 +35,10 @@ const etapas = [
 ];
 
 const encontros = [
-  { data: '08/10', competencia: 'Conversar', aplicacao: 'Encontrar o dinheiro', entrega: 'Oportunidade escolhida, linha de base, primeira ação e placar.' },
-  { data: '15/10', competencia: 'Contextualizar', aplicacao: 'Diagnosticar o gargalo', entrega: 'Dados reais, segundo teste e ação comercial revisada.' },
-  { data: '22/10', competencia: 'Delegar', aplicacao: 'Executar com IA', entrega: 'Tarefa completa delegada à IA e roteiro reutilizável.' },
-  { data: '29/10', competencia: 'Padronizar', aplicacao: 'Transformar em processo', entrega: 'Resultado medido, procedimento final e próximo ciclo.' }
+  { semana: 'Semana 1', competencia: 'Conversar', aplicacao: 'Encontrar o dinheiro', entrega: 'Oportunidade escolhida, linha de base, primeira ação e placar.' },
+  { semana: 'Semana 2', competencia: 'Contextualizar', aplicacao: 'Diagnosticar o gargalo', entrega: 'Dados reais, segundo teste e ação comercial revisada.' },
+  { semana: 'Semana 3', competencia: 'Delegar', aplicacao: 'Executar com IA', entrega: 'Tarefa completa delegada à IA e roteiro reutilizável.' },
+  { semana: 'Semana 4', competencia: 'Padronizar', aplicacao: 'Transformar em processo', entrega: 'Resultado medido, procedimento final e próximo ciclo.' }
 ];
 
 const receita = [
@@ -334,7 +334,7 @@ const receita = [
         background: var(--green);
         box-shadow: 0 0 0 3px rgba(24,199,122,.18);
       }
-      .meeting time { display: block; margin: .45rem 0 1.3rem; color: var(--green-dark); font: 800 1.7rem/1 'Manrope', sans-serif; }
+      .meeting__week { display: block; margin: .45rem 0 1.3rem !important; color: var(--green-dark) !important; font: 800 1.7rem/1 'Manrope', sans-serif !important; }
       .meeting h3 { font-size: 1.08rem; }
       .meeting p { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
       .schedule-note { margin: 2rem 0 0; color: var(--muted); font-size: .92rem; }
@@ -459,7 +459,7 @@ const receita = [
         .method-card { min-height: 0; }
         .meeting { border-top: 0; border-left: 2px solid var(--navy-800); padding: .3rem 1rem 1.8rem 1.5rem; }
         .meeting::before { top: .25rem; left: -7px; }
-        .meeting time { margin-top: 0; }
+        .meeting__week { margin-top: 0 !important; }
         .offer-card { padding: 1.5rem; }
         .footer__inner { flex-direction: column; }
         footer { padding-bottom: 7rem; }
@@ -494,18 +494,18 @@ const receita = [
     <header class="topbar">
       <div class="container topbar__inner">
         <a class="brand" href="/" aria-label="Sucesso Empresarial — página inicial"><img src="/images/logo-sucesso-flat-branca.png" alt="Sucesso Empresarial" /></a>
-        <a class="topbar__link" href="#programa">Ver programa e datas</a>
+        <a class="topbar__link" href="#programa">Ver as quatro semanas</a>
       </div>
     </header>
 
     <main id="conteudo">
       <section class="hero">
         <div class="container hero__content">
-          <p class="eyebrow">Oficina ao vivo · outubro de 2026</p>
+          <p class="eyebrow">Projeto Resultado 21 · quatro quintas-feiras ao vivo</p>
           <h1>Encontre uma oportunidade real de receita e coloque a <span class="hero__accent">IA para trabalhar nela</span> em 21 dias.</h1>
           <p class="lead">Uma oficina prática para empresários e gestores que querem sair da conversa genérica sobre inteligência artificial e executar uma ação mensurável no próprio negócio.</p>
           <div class="hero__actions">
-            <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero participar em outubro</a>
+            <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero participar do Resultado 21</a>
             <div class="hero__price">R$ 497 <small>pagamento único</small></div>
           </div>
           <p class="microcopy">Turma limitada a 20 pessoas · Pix ou cartão · ChatGPT Plus contratado separadamente</p>
@@ -513,7 +513,7 @@ const receita = [
             <div class="fact"><strong>4 encontros</strong><span>ao vivo e on-line</span></div>
             <div class="fact"><strong>21 dias</strong><span>de aplicação acompanhada</span></div>
             <div class="fact"><strong>Quintas</strong><span>20h às 22h · Brasília</span></div>
-            <div class="fact"><strong>8 a 29/10</strong><span>turma de 2026</span></div>
+            <div class="fact"><strong>4 quintas-feiras</strong><span>um encontro por semana</span></div>
           </div>
         </div>
       </section>
@@ -552,13 +552,13 @@ const receita = [
 
       <section class="section section--white" id="programa">
         <div class="container">
-          <p class="eyebrow">Quatro quintas-feiras</p>
-          <h2>O projeto começa no primeiro encontro e fecha com a turma reunida.</h2>
+          <p class="eyebrow">Quatro quintas-feiras · uma semana por encontro</p>
+          <h2>Em quatro quintas-feiras, você sai da oportunidade escolhida para um processo que pode repetir.</h2>
           <p class="section-intro">Cada encontro parte do que foi realmente executado. Você volta com dados, identifica onde a ação parou e corrige o próximo movimento.</p>
           <div class="schedule">
             {encontros.map((encontro) => (
               <article class="meeting">
-                <time datetime={`2026-10-${encontro.data.slice(0, 2)}`}>{encontro.data}</time>
+                <p class="meeting__week">{encontro.semana}</p>
                 <h3>{encontro.competencia} → {encontro.aplicacao}</h3>
                 <p>{encontro.entrega}</p>
               </article>
@@ -623,9 +623,9 @@ const receita = [
       <section class="section section--dark" id="inscricao">
         <div class="container offer-wrap">
           <div class="offer-copy">
-            <p class="eyebrow">Inscrições · outubro de 2026</p>
+            <p class="eyebrow">Inscrições abertas</p>
             <h2>Entre com uma oportunidade. Saia com execução, medida e processo.</h2>
-            <p>O investimento para a edição de outubro é <strong>R$ 497</strong>. A sala terá no máximo <strong>20 pessoas</strong>, contando participantes principais e segundos assentos.</p>
+            <p>O investimento é <strong>R$ 497</strong>. A sala terá no máximo <strong>20 pessoas</strong>, contando participantes principais e segundos assentos.</p>
             <p>Para acompanhar as demonstrações no mesmo ambiente, você precisará de uma conta <strong>ChatGPT Plus ativa</strong>, contratada à parte.</p>
           </div>
           <aside class="offer-card">
@@ -653,7 +653,7 @@ const receita = [
             <article class="extra">
               <p class="extra__price">R$ 97</p>
               <h3>Gravações desta turma</h3>
-              <p>Disponíveis depois do Encontro 4, com acesso de 29/10/2026 a 29/10/2027. Não substituem a participação ao vivo.</p>
+              <p>Disponíveis depois do Encontro 4, com acesso por 12 meses após a liberação. Não substituem a participação ao vivo.</p>
             </article>
             <article class="extra">
               <p class="extra__price">R$ 197</p>
@@ -700,7 +700,7 @@ const receita = [
             </details>
             <details>
               <summary>Vou receber as gravações?</summary>
-              <p>As gravações desta turma são uma opção adicional de R$ 97 no checkout. Serão liberadas depois do Encontro 4 e ficarão disponíveis de 29/10/2026 a 29/10/2027.</p>
+              <p>As gravações desta turma são uma opção adicional de R$ 97 no checkout. Serão liberadas depois do Encontro 4 e ficarão disponíveis por 12 meses.</p>
             </details>
             <details>
               <summary>Posso levar meu sócio ou gestor?</summary>
@@ -716,7 +716,7 @@ const receita = [
 
       <section class="section final-cta">
         <div class="container">
-          <p class="eyebrow">08 a 29 de outubro</p>
+          <p class="eyebrow">Quatro quintas-feiras</p>
           <h2>Escolha um caso real e coloque a IA para trabalhar no seu negócio.</h2>
           <p>Quatro encontros ao vivo, aplicação entre as semanas e uma turma pequena o suficiente para corrigir projetos reais.</p>
           <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero participar por R$ 497</a>
@@ -740,7 +740,7 @@ const receita = [
     </footer>
 
     <div class="mobile-bar" aria-label="Inscrição">
-      <span><strong>R$ 497</strong>Outubro/2026</span>
+      <span><strong>R$ 497</strong>Projeto Resultado 21</span>
       <a class="cta" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Quero entrar</a>
     </div>
   </body>
