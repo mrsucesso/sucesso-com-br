@@ -1,7 +1,16 @@
 import fs from 'node:fs';
 
 const page = fs.readFileSync('src/pages/raio-x.astro', 'utf8');
-for (const field of ['priority_30_days', 'opportunity_loss']) {
+if (!page.includes('id="name-panel"') || !page.includes('id="person-name"')) {
+  throw new Error('A apresentação com nome pessoal fora do questionário não existe.');
+}
+if (!page.includes('name="company_name"') || !page.includes('Qual é o nome do seu negócio?')) {
+  throw new Error('Pergunta 01 deve coletar o nome do negócio.');
+}
+if (page.includes('data-step="0">\n            <label for="name"')) {
+  throw new Error('Nome pessoal ainda está contado como pergunta do diagnóstico.');
+}
+for (const field of ['company_name', 'priority_30_days', 'opportunity_loss']) {
   if (!page.includes(`name="${field}"`)) {
     throw new Error(`Contrato quebrado: o campo obrigatório ${field} não é enviado pelo formulário.`);
   }
