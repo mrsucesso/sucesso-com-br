@@ -16,8 +16,8 @@ if (!page.includes('type="checkbox" name="purchase_mode"') || !page.includes('Vo
 if (!page.includes('data.purchase_mode = [...form.querySelectorAll')) {
   throw new Error('As múltiplas formas de compra não são serializadas como lista.');
 }
-if (!page.includes('downloadActionPlan(data)') || !page.includes("pay.cakto.com.br/34cucrz?origem=raio-x") || !page.includes('mailto:mauricio@sucesso.com.br?subject=${subject}')) {
-  throw new Error('Os próximos passos do resultado precisam levar a destinos concretos.');
+if (!page.includes("/raio-x/obrigado/?diagnostico=${diagnosis}&origem=${origem}") || !page.includes('/resultado21/?origem=raio-x&diagnostico=${diagnosis}')) {
+  throw new Error('Os próximos passos precisam ir para obrigado ou LP, nunca checkout direto.');
 }
 for (const field of ['company_name', 'priority_30_days', 'opportunity_loss']) {
   if (!page.includes(`name="${field}"`)) {
